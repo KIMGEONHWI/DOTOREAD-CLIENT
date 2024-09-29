@@ -1,5 +1,5 @@
 import Roots from '@/Roots';
-import HomePage from '@/pages/Home/HomePage';
+import HomePage from '@/pages/Main/MainPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([

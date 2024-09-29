@@ -9,8 +9,8 @@ import styled from 'styled-components';
 function Header() {
 	return (
 		<HeaderWrapper>
-			<LogoIcon />
 			<HeaderLeftContent>
+				<LogoIcon />
 				<SearchBar />
 				<PlusFileIcon />
 			</HeaderLeftContent>
@@ -28,8 +28,9 @@ export default Header;
 const HeaderWrapper = styled.header`
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	height: 17.3rem;
-	padding: 7.6rem 4.3rem;
+	padding: 7.6rem 16.3rem;
 	background-color: ${({ theme }) => theme.colors.background};
 `;
 
@@ -37,7 +38,7 @@ const HeaderLeftContent = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 1.9rem;
+	gap: 1.8rem;
 `;
 
 const HeaderRightContent = styled.div`
@@ -45,5 +46,4 @@ const HeaderRightContent = styled.div`
 	justify-content: center;
 	align-items: center;
 	gap: 3.6rem;
-	margin-left: 54.241rem;
 `;

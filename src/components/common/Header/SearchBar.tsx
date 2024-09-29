@@ -25,7 +25,7 @@ const SearchBarContainer = styled.div`
 	width: 51.7rem;
 	height: 5.2rem;
 	border-bottom: 2px solid #ff6600;
-	margin-left: 5.43rem;
+	padding-left: 5.25rem;
 `;
 
 const SearchInput = styled.input`
