@@ -1,16 +1,16 @@
+import Roots from '@/Roots';
+import HomePage from '@/pages/Main/MainPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
-	//   {
-	//     path: "/1",
-	//     element: <Page1 />,
-	//   },
-	//   {
-	//     path: "/2",
-	//     element: <Page2 />,
-	//   },
-	//   {
-	//     path: "/3",
-	//     element: <Page3 />,
-	//   },
+	{
+		path: '',
+		element: <Roots />,
+		children: [
+			{
+				path: '/',
+				element: <HomePage />,
+			},
+		],
+	},
 ]);
