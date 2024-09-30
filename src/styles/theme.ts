@@ -31,37 +31,42 @@ const baseFontStyle = css`
 `;
 
 const fonts = {
-	Pretendard_Semibord_45px: css`
+	Pretendard_Bold_20px: css`
+		${baseFontStyle}
+		font-size: 20px;
+		font-weight: 700;
+	`,
+	Pretendard_Semibold_45px: css`
 		${baseFontStyle}
 		font-size: 45px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_38px: css`
+	Pretendard_Semibold_38px: css`
 		${baseFontStyle}
 		font-size: 38px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_30px: css`
+	Pretendard_Semibold_30px: css`
 		${baseFontStyle}
 		font-size: 30px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_22px: css`
+	Pretendard_Semibold_22px: css`
 		${baseFontStyle}
 		font-size: 22px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_18px: css`
+	Pretendard_Semibold_18px: css`
 		${baseFontStyle}
 		font-size: 18px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_13px: css`
+	Pretendard_Semibold_13px: css`
 		${baseFontStyle}
 		font-size: 13px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_10px: css`
+	Pretendard_Semibold_10px: css`
 		${baseFontStyle}
 		font-size: 10px;
 		font-weight: 600;
