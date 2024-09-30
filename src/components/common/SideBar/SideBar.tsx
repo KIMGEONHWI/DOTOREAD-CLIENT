@@ -12,9 +12,6 @@ import ShareIconClicked from '@/assets/ShareClicked.svg?react';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-//svg를 컴포넌트화 할 때 svg?react 뒤에 붙이기
-
-//React.ElementType
 interface Icon {
 	id: string;
 	default: React.ElementType;
@@ -29,7 +26,6 @@ const icons: Icon[] = [
 	{ id: 'mypage', default: MyPageIcon, clicked: MyPageIconClicked },
 ];
 
-//map 함수 문법  as?
 function SideBar() {
 	const [clicked, setClicked] = useState<string>('home');
 	return (
