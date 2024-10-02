@@ -5,8 +5,9 @@ import { Outlet } from 'react-router-dom';
 function Roots() {
 	return (
 		<>
-			<Header />
 			<SideBar />
+			<Header />
+
 			<Outlet />
 		</>
 	);

@@ -39,9 +39,8 @@ const Menus = styled.div`
 	display: flex;
 	width: 6.5rem;
 	flex-direction: column;
-	justify-content: center;
 	gap: 3rem;
-	top: 0.5em;
+	top: 17.8rem;
 	position: relative;
 `;
 
