@@ -4,10 +4,12 @@ import styled from 'styled-components';
 function Storage({ current, total }: { current: number; total: number }) {
 	return (
 		<StorageWrapper>
-			<Acorn />
-			<StorageCount>
-				{current}/{total}
-			</StorageCount>
+			<WrapperForDisplay>
+				<Acorn />
+				<StorageCount>
+					{current}/{total}
+				</StorageCount>
+			</WrapperForDisplay>
 		</StorageWrapper>
 	);
 }
@@ -15,8 +17,11 @@ function Storage({ current, total }: { current: number; total: number }) {
 export default Storage;
 
 const StorageWrapper = styled.div`
-	top: 25.3rem;
+	position: absolute;
+`;
+const WrapperForDisplay = styled.div`
 	position: relative;
+	top: 87.6rem;
 `;
 const StorageCount = styled.div`
 	text-align: center;
