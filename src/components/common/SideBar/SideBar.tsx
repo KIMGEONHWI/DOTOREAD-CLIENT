@@ -1,5 +1,5 @@
-import Storage from './Storage';
-import Icons from '@/constants/icons';
+import Storage from '@/components/common/SideBar/Storage';
+import Icons from '@/constants/Icons';
 import { useState } from 'react';
 import styled from 'styled-components';
 
