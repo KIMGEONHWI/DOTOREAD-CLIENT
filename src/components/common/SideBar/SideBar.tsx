@@ -1,37 +1,14 @@
-import Acorn from '@/assets/Acorn.svg?react';
-import BookMarkIcon from '@/assets/BookMark.svg?react';
-import BookMarkIconClicked from '@/assets/BookMarkClicked.svg?react';
-import HomeIcon from '@/assets/Home.svg?react';
-import HomeIconClicked from '@/assets/HomeClicked.svg?react';
-import MissionIcon from '@/assets/Mission.svg?react';
-import MissionIconclicked from '@/assets/MissionClicked.svg?react';
-import MyPageIcon from '@/assets/MyPage.svg?react';
-import MyPageIconClicked from '@/assets/MyPageClicked.svg?react';
-import ShareIcon from '@/assets/Share.svg?react';
-import ShareIconClicked from '@/assets/ShareClicked.svg?react';
+import Storage from './Storage';
+import Icons from '@/constants/icons';
 import { useState } from 'react';
 import styled from 'styled-components';
-
-interface Icon {
-	id: string;
-	default: React.ElementType;
-	clicked: React.ElementType;
-}
-
-const icons: Icon[] = [
-	{ id: 'home', default: HomeIcon, clicked: HomeIconClicked },
-	{ id: 'bookmark', default: BookMarkIcon, clicked: BookMarkIconClicked },
-	{ id: 'share', default: ShareIcon, clicked: ShareIconClicked },
-	{ id: 'mission', default: MissionIcon, clicked: MissionIconclicked },
-	{ id: 'mypage', default: MyPageIcon, clicked: MyPageIconClicked },
-];
 
 function SideBar() {
 	const [clicked, setClicked] = useState<string>('home');
 	return (
 		<SideBarWrapper>
 			<Menus>
-				{icons.map((icon) => (
+				{Icons.map((icon) => (
 					<Icon
 						key={icon.id}
 						as={clicked === icon.id ? icon.clicked : icon.default}
@@ -39,10 +16,7 @@ function SideBar() {
 					/>
 				))}
 			</Menus>
-			<StorageWrapper>
-				<Acorn />
-				<StorageCount>5/20</StorageCount>
-			</StorageWrapper>
+			<Storage current={5} total={20} />
 		</SideBarWrapper>
 	);
 }
@@ -72,14 +46,3 @@ const Menus = styled.div`
 `;
 
 const Icon = styled.svg``;
-const StorageWrapper = styled.div`
-	top: 25.3rem;
-	position: relative;
-`;
-const StorageCount = styled.div`
-	text-align: center;
-	${({ theme }) => theme.fonts.Pretendard_Bold_20px};
-	color: ${({ theme }) => theme.colors.orange1};
-	top: 0.82rem;
-	position: relative;
-`;
