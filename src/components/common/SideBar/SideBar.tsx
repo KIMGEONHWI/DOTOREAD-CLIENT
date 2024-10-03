@@ -1,3 +1,4 @@
+import BookMarkSlide from '@/components/BookMarkSlide/BookMarkSlide';
 import Storage from '@/components/common/SideBar/Storage';
 import Icons from '@/constants/Icons';
 import { useState } from 'react';
@@ -5,6 +6,7 @@ import styled from 'styled-components';
 
 function SideBar() {
 	const [clicked, setClicked] = useState<string>('home');
+
 	return (
 		<SideBarWrapper>
 			<Menus>
@@ -17,6 +19,7 @@ function SideBar() {
 				))}
 			</Menus>
 			<Storage current={5} total={20} />
+			<BookMarkSlide show={clicked === 'bookmark'} />
 		</SideBarWrapper>
 	);
 }
@@ -29,7 +32,7 @@ const SideBarWrapper = styled.div`
 	border-right: 0.35rem solid ${({ theme }) => theme.colors.gray1};
 	background-color: ${({ theme }) => theme.colors.background};
 	position: fixed;
-	z-index: 1000;
+	z-index: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
