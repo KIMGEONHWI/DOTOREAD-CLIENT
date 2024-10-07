@@ -17,7 +17,9 @@ function SortBtn() {
 		<SortBtnWrapper>
 			<Content>
 				<SortBy>{option}</SortBy>
-				<SortIcon onClick={handleIconClick} />
+				<Icon>
+					<SortIcon onClick={handleIconClick} />
+				</Icon>
 			</Content>
 			{showOptions && (
 				<Options>
@@ -47,13 +49,18 @@ const SortBtnWrapper = styled.button`
 const Content = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 1.9rem;
-	justify-content: center;
 `;
 
 const SortBy = styled.p`
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
 	color: ${({ theme }) => theme.colors.white1};
+	position: absolute;
+	left: 1.8rem;
+`;
+
+const Icon = styled.div`
+	position: absolute;
+	right: 1.8rem;
 `;
 
 const Options = styled.div`
