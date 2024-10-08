@@ -18,6 +18,7 @@ const NavbarWrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.gray1};
 	display: flex;
 	align-items: center;
+	position: absolute;
 `;
 const Name = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};

@@ -1,3 +1,4 @@
+import Default from '@/components/common/BookMarkList/Default';
 import Navbar from '@/components/common/BookMarkList/Navbar';
 import styled from 'styled-components';
 
@@ -5,6 +6,7 @@ function MainPage() {
 	return (
 		<MainPageWrapper>
 			<Navbar />
+			<Default message={'북마크'} />
 		</MainPageWrapper>
 	);
 }
