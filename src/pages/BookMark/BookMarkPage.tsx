@@ -35,7 +35,7 @@ export default BookMarkPage;
 const BookMarkPageWrapper = styled.div`
 	background-color: ${({ theme }) => theme.colors.background};
 	max-width: 100vw;
-	height: 100vh;
+	min-height: 100vh;
 `;
 const TitleWrapper = styled.div`
 	margin-left: 600px;
