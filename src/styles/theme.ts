@@ -21,6 +21,8 @@ const colors = {
 	bookmark_hover: '#343434',
 	bookmark_click: '#6E4A39',
 	bookmark_select: '#FFE5D9',
+
+	thumnail: '#D9D9D9',
 };
 
 const baseFontStyle = css`

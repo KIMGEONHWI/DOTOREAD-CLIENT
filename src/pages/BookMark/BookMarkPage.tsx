@@ -1,6 +1,8 @@
 import Classified from '@/assets/Classified.svg?react';
 import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
+import ListItem from '@/components/common/BookMarkList/ListItem';
+import Navbar from '@/components/common/BookMarkList/Navbar';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -25,7 +27,12 @@ function BookMarkPage() {
 
 	return (
 		<BookMarkPageWrapper>
-			<Title text={text} Icon={Icon} />
+			<BackgroundBox>
+				<Title text={text} Icon={Icon} />
+				{/* SortBtn 컴포넌트 자리 */}
+				<Navbar />
+				<ListItem />
+			</BackgroundBox>
 		</BookMarkPageWrapper>
 	);
 }
@@ -37,10 +44,21 @@ const BookMarkPageWrapper = styled.div`
 	max-width: 100vw;
 	min-height: 100vh;
 `;
+
+const BackgroundBox = styled.div`
+	width: 134.6rem;
+	height: 92.9rem;
+	border-radius: 20px;
+	background: ${({ theme }) => theme.colors.background_box};
+	position: fixed;
+	left: 44.2rem;
+`;
 const TitleWrapper = styled.div`
-	margin-left: 600px;
+	position: absolute;
+	left: 2.8rem;
+	top: 2rem;
 	display: flex;
-	gap: 0.5rem;
+	gap: 1rem;
 	align-items: center;
 `;
 const Category = styled.p`

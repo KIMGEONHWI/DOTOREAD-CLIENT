@@ -19,6 +19,8 @@ const NavbarWrapper = styled.div`
 	display: flex;
 	align-items: center;
 	position: absolute;
+	top: 10.6rem;
+	left: 2.8rem;
 `;
 const Name = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
