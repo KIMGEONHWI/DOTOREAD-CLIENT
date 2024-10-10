@@ -16,8 +16,8 @@ interface BookMarkSlideProps {
 function BookMarkSlide({ show }: BookMarkSlideProps) {
 	const navigate = useNavigate();
 
-	const handleNavigate = (text: string, iconType: string) => {
-		navigate('/bookmark', { state: { text, iconType } });
+	const handleNavigate = (text: string, iconType: string, category: string) => {
+		navigate('/bookmark', { state: { text, iconType, category } });
 	};
 	return (
 		<BookMarkSlideWrapper show={show}>
@@ -26,12 +26,12 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 				<BookMarkListBtn
 					text={'모든 북마크'}
 					leftIcon={<CloudIcon />}
-					onClick={() => handleNavigate('모든 북마크', 'everyBookmark')}
+					onClick={() => handleNavigate('모든 북마크', 'everyBookmark', '모든 북마크')}
 				></BookMarkListBtn>
 				<BookMarkListBtn
 					text={'미분류'}
 					leftIcon={<LeeterIcon />}
-					onClick={() => handleNavigate('미분류', 'unclassified')}
+					onClick={() => handleNavigate('미분류', 'unclassified', '미분류')}
 				></BookMarkListBtn>
 			</BookMarksContent>
 			<LineIcon />
@@ -46,7 +46,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 						text={folder.text}
 						leftIcon={<FolderIcon />}
 						rightIcon={<LucidIcon />}
-						onClick={() => handleNavigate(folder.text, 'classified')}
+						onClick={() => handleNavigate(folder.text, 'classified', folder.text)}
 					/>
 				))}
 			</FoldersContent>

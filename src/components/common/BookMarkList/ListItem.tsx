@@ -1,14 +1,21 @@
 import Lucide from '@/assets/Lucide.svg?react';
 import styled from 'styled-components';
 
-function ListItem() {
+interface ListItemProps {
+	name: string;
+	hashtag: string;
+	url: string;
+	date: string;
+}
+
+function ListItem({ name, hashtag, url, date }: ListItemProps) {
 	return (
 		<ListItemWrapper>
 			<Thumnail></Thumnail>
-			<Name>[2D 게임]</Name>
-			<Hastag>#게임 메니저 만들기</Hastag>
-			<Url>https://udangtangtang-cording-oldcast1e.tistory.com</Url>
-			<Date>9월 10일</Date>
+			<Name>[{name}]</Name>
+			<Hastag>#{hashtag}</Hastag>
+			<Url>{url}</Url>
+			<Date>{date}</Date>
 			{/* Icon 점세개거나 주황색 네모칸이거나 */}
 			<Icon>
 				<Lucide />

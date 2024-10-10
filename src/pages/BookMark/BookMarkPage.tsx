@@ -1,10 +1,13 @@
 import Classified from '@/assets/Classified.svg?react';
 import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
-import ListItem from '@/components/common/BookMarkList/ListItem';
+import BookMarkList from '@/components/BookMarkList/BookMarkList';
 import Navbar from '@/components/common/BookMarkList/Navbar';
+import { allBookmarks } from '@/constants/ListItems';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+
+// svg 를 속성으로 넘겨줄 수 없어서 Title 컴포넌트를 이 폴더에 정의함
 
 interface TitleProps {
 	text: string;
@@ -22,8 +25,15 @@ function Title({ text, Icon }: TitleProps) {
 
 function BookMarkPage() {
 	const location = useLocation();
-	const { text, iconType } = location.state || { text: '', iconType: '' };
+	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
+
+	let filteredBookmarks = [];
+	if (category === '모든 북마크') {
+		filteredBookmarks = allBookmarks;
+	} else {
+		filteredBookmarks = allBookmarks.filter((bookmark) => bookmark.category === category);
+	}
 
 	return (
 		<BookMarkPageWrapper>
@@ -31,7 +41,7 @@ function BookMarkPage() {
 				<Title text={text} Icon={Icon} />
 				{/* SortBtn 컴포넌트 자리 */}
 				<Navbar />
-				<ListItem />
+				<BookMarkList bookmarks={filteredBookmarks} />
 			</BackgroundBox>
 		</BookMarkPageWrapper>
 	);
@@ -61,6 +71,7 @@ const TitleWrapper = styled.div`
 	gap: 1rem;
 	align-items: center;
 `;
+
 const Category = styled.p`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_38px};
 	color: ${({ theme }) => theme.colors.white1};

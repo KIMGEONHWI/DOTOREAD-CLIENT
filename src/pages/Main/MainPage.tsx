@@ -1,12 +1,7 @@
-import Default from '@/components/common/BookMarkList/Default';
 import styled from 'styled-components';
 
 function MainPage() {
-	return (
-		<MainPageWrapper>
-			<Default message={'북마크'} />
-		</MainPageWrapper>
-	);
+	return <MainPageWrapper></MainPageWrapper>;
 }
 
 export default MainPage;

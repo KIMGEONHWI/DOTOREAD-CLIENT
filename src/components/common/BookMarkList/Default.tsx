@@ -19,7 +19,6 @@ const DefaultWrapper = styled.div`
 	height: 58.1rem;
 	border-radius: 10px;
 	border: 3.5px dashed ${({ theme }) => theme.colors.gray1};
-	margin-left: 600px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
