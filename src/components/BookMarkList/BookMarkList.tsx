@@ -59,6 +59,7 @@ const BookMarkListWrapper = styled.div`
 
 	&::-webkit-scrollbar-thumb {
 		border-radius: 15px;
+		cursor: pointer;
 		width: 0.7rem;
 		background: ${({ theme }) => theme.colors.white2};
 	}
