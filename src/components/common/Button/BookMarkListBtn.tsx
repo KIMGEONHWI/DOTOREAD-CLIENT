@@ -1,9 +1,16 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-function BookMarkListBtn({ text, leftIcon, rightIcon }: { text: string; leftIcon?: ReactNode; rightIcon?: ReactNode }) {
+interface BookMarkListBtnProps {
+	text: string;
+	leftIcon?: ReactNode;
+	rightIcon?: ReactNode;
+	onClick?: () => void;
+}
+
+function BookMarkListBtn({ text, leftIcon, rightIcon, onClick }: BookMarkListBtnProps) {
 	return (
-		<BookMarkListBtnWrapper>
+		<BookMarkListBtnWrapper onClick={onClick}>
 			{leftIcon && <LeftIconWrapper>{leftIcon}</LeftIconWrapper>}
 			<span>{text}</span>
 			{rightIcon && <RightIconWrapper>{rightIcon}</RightIconWrapper>}
