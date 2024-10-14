@@ -1,11 +1,11 @@
 import Classified from '@/assets/Classified.svg?react';
 import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
-import Navbar from '@/components/common/BookMarkList/Navbar';
 import Btn from '@/components/common/Button/Btn';
 import SortBtn from '@/components/common/Button/SortBtn';
 import { allBookmarks } from '@/constants/ListItems';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
+import Navbar from '@/pages/BookMark/Navbar';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
