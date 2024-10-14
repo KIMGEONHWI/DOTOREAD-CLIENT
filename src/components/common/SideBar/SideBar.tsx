@@ -2,11 +2,20 @@ import BookMarkSlide from '@/components/BookMarkSlide/BookMarkSlide';
 import Storage from '@/components/common/SideBar/Storage';
 import Icons from '@/constants/Icons';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function SideBar() {
 	const [clicked, setClicked] = useState<string>('home');
+	const navigate = useNavigate();
 
+	const hanleIconClick = (iconId: string) => {
+		// 'share' 'mission' 'mypage' 아이콘 클릭시 임시로 /로 가게 해두었습니다.
+		if (iconId != 'bookmark') {
+			navigate('/');
+		}
+		setClicked(iconId);
+	};
 	return (
 		<SideBarWrapper>
 			<Menus>
@@ -14,7 +23,7 @@ function SideBar() {
 					<Icon
 						key={icon.id}
 						as={clicked === icon.id ? icon.clicked : icon.default}
-						onClick={() => setClicked(icon.id)}
+						onClick={() => hanleIconClick(icon.id)}
 					/>
 				))}
 			</Menus>

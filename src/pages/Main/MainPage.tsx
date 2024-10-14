@@ -16,7 +16,7 @@ export default MainPage;
 const MainPageWrapper = styled.div`
 	display: flex;
 	width: 100%;
-	height: 100vw;
+	height: 100vh;
 	gap: 6.2rem;
-	background-color: black;
+	background-color: ${({ theme }) => theme.colors.background};
 `;

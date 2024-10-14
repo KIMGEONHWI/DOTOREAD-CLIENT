@@ -6,6 +6,7 @@ import LineIcon from '@/assets/Line.svg?react';
 import LucidIcon from '@/assets/Lucide.svg?react';
 import PlusIcon from '@/assets/Plus.svg?react';
 import { FOLDER_LIST } from '@/constants/FolderList';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface BookMarkSlideProps {
@@ -13,12 +14,25 @@ interface BookMarkSlideProps {
 }
 
 function BookMarkSlide({ show }: BookMarkSlideProps) {
+	const navigate = useNavigate();
+
+	const handleNavigate = (text: string, iconType: string, category: string) => {
+		navigate('/bookmark', { state: { text, iconType, category } });
+	};
 	return (
 		<BookMarkSlideWrapper show={show}>
 			<BookMarksContent>
 				<BookMarkTitle>BookMarks</BookMarkTitle>
-				<BookMarkListBtn text={'모든 북마크'} leftIcon={<CloudIcon />}></BookMarkListBtn>
-				<BookMarkListBtn text={'미분류'} leftIcon={<LeeterIcon />}></BookMarkListBtn>
+				<BookMarkListBtn
+					text={'모든 북마크'}
+					leftIcon={<CloudIcon />}
+					onClick={() => handleNavigate('모든 북마크', 'everyBookmark', '모든 북마크')}
+				></BookMarkListBtn>
+				<BookMarkListBtn
+					text={'미분류'}
+					leftIcon={<LeeterIcon />}
+					onClick={() => handleNavigate('미분류', 'unclassified', '미분류')}
+				></BookMarkListBtn>
 			</BookMarksContent>
 			<LineIcon />
 			<FoldersContent>
@@ -27,7 +41,13 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 					<PlusIcon />
 				</FoldersTitle>
 				{FOLDER_LIST.map((folder) => (
-					<BookMarkListBtn key={folder.id} text={folder.text} leftIcon={<FolderIcon />} rightIcon={<LucidIcon />} />
+					<BookMarkListBtn
+						key={folder.id}
+						text={folder.text}
+						leftIcon={<FolderIcon />}
+						rightIcon={<LucidIcon />}
+						onClick={() => handleNavigate(folder.text, 'classified', folder.text)}
+					/>
 				))}
 			</FoldersContent>
 		</BookMarkSlideWrapper>
