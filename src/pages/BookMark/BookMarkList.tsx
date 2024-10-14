@@ -1,5 +1,5 @@
-import Default from '../common/BookMarkList/Default';
-import ListItem from '../common/BookMarkList/ListItem';
+import Default from '../../components/common/BookMarkList/Default';
+import ListItem from '../../components/common/BookMarkList/ListItem';
 import LineBetweenBookmark from '@/assets/LineBetweenBookmark.svg?react';
 import React from 'react';
 import styled from 'styled-components';

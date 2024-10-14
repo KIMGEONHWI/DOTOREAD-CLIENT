@@ -1,9 +1,11 @@
 import Classified from '@/assets/Classified.svg?react';
 import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
-import BookMarkList from '@/components/BookMarkList/BookMarkList';
 import Navbar from '@/components/common/BookMarkList/Navbar';
+import Btn from '@/components/common/Button/Btn';
+import SortBtn from '@/components/common/Button/SortBtn';
 import { allBookmarks } from '@/constants/ListItems';
+import BookMarkList from '@/pages/BookMark/BookMarkList';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -39,7 +41,11 @@ function BookMarkPage() {
 		<BookMarkPageWrapper>
 			<BackgroundBox>
 				<Title text={text} Icon={Icon} />
-				{/* SortBtn 컴포넌트 자리 */}
+
+				<Btn id="aiClassify" />
+				<SortBtnWrapper>
+					<SortBtn />
+				</SortBtnWrapper>
 				<Navbar />
 				<BookMarkList bookmarks={filteredBookmarks} />
 			</BackgroundBox>
@@ -72,6 +78,12 @@ const TitleWrapper = styled.div`
 	align-items: center;
 `;
 
+const SortBtnWrapper = styled.div`
+	position: absolute;
+	right: 3.4rem;
+	top: 3.7rem;
+	z-index: 1;
+`;
 const Category = styled.p`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_38px};
 	color: ${({ theme }) => theme.colors.white1};
