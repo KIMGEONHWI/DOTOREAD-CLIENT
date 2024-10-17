@@ -11,19 +11,25 @@ interface Bookmark {
 	url: string;
 	date: string;
 }
+// 북마크 하나당 선택 가능 여부가 아니라 전체 리스트의 선택 가능여부이기에
 interface BookMarkListProps {
 	bookmarks: Bookmark[];
+	isSelectable: boolean;
 }
 
-function BookMarkList({ bookmarks }: BookMarkListProps) {
-	console.log('Bookmarks:', bookmarks);
-	console.log('bookmarks length:', bookmarks.length);
+function BookMarkList({ bookmarks, isSelectable }: BookMarkListProps) {
 	return (
 		<BookMarkListWrapper>
 			{bookmarks.length > 0 ? (
 				bookmarks.map((bookmark, index) => (
 					<React.Fragment key={bookmark.id}>
-						<ListItem name={bookmark.name} hashtag={bookmark.hashtag} url={bookmark.url} date={bookmark.date} />
+						<ListItem
+							name={bookmark.name}
+							hashtag={bookmark.hashtag}
+							url={bookmark.url}
+							date={bookmark.date}
+							isSelectable={isSelectable}
+						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>
 								<LineBetweenBookmark />

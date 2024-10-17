@@ -6,6 +6,7 @@ import SortBtn from '@/components/common/Button/SortBtn';
 import { allBookmarks } from '@/constants/ListItems';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
 import Navbar from '@/pages/BookMark/Navbar';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -38,20 +39,39 @@ function BookMarkPage() {
 		filteredBookmarks = allBookmarks.filter((bookmark) => bookmark.category === category);
 	}
 
+	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
+
+	const handleAiClassifyBtn = () => {
+		setAiClassifyActive(!isAiClassifyActive);
+	};
+
+	// 화면 나가면 상태 초기화
+	useEffect(() => {
+		return () => {
+			setAiClassifyActive(false);
+		};
+	}, [location]);
+
 	return (
 		<BookMarkPageWrapper>
 			<BackgroundBox>
 				<Title text={text} Icon={Icon} />
 				{category === '미분류' && (
-					<BtnWrapperInBookMarkPage>
+					<BtnWrapperForAiClassify onClick={handleAiClassifyBtn}>
 						<Btn id="aiClassify" />
-					</BtnWrapperInBookMarkPage>
+					</BtnWrapperForAiClassify>
 				)}
+				{isAiClassifyActive && (
+					<BtnWrapperForChooseAll>
+						<Btn id="chooseAll" />
+					</BtnWrapperForChooseAll>
+				)}
+
 				<SortBtnWrapper>
 					<SortBtn />
 				</SortBtnWrapper>
-				<Navbar />
-				<BookMarkList bookmarks={filteredBookmarks} />
+				{!isAiClassifyActive && <Navbar />}
+				<BookMarkList bookmarks={filteredBookmarks} isSelectable={isAiClassifyActive} />
 			</BackgroundBox>
 		</BookMarkPageWrapper>
 	);
@@ -81,10 +101,17 @@ const TitleWrapper = styled.div`
 	gap: 1rem;
 	align-items: center;
 `;
-const BtnWrapperInBookMarkPage = styled.div`
+const BtnWrapperForAiClassify = styled.div`
 	position: absolute;
 	top: 3.7rem;
-	left: 97.8rem;
+	left: 97.3rem;
+	z-index: 10000;
+`;
+
+const BtnWrapperForChooseAll = styled.div`
+	position: absolute;
+	top: 3.7rem;
+	left: 76.3rem;
 	z-index: 10000;
 `;
 

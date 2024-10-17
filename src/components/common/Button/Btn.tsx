@@ -24,7 +24,7 @@ function Btn({ id }: { id: string }) {
 			id={id}
 			onClick={handleClick}
 			bordercolor={bordercolor}
-			backgroundcolor={clicked ? 'orange2' : backgroundcolor}
+			backgroundcolor={clicked ? 'orange1' : backgroundcolor}
 		>
 			<BtnName color={clicked ? 'white' : color}>{text}</BtnName>
 		</BtnWrapper>

@@ -1,4 +1,6 @@
 import Lucide from '@/assets/Lucide.svg?react';
+import LucideGray from '@/assets/LucideGray.svg?react';
+import LucideOrange from '@/assets/LucideOrange.svg?react';
 import styled from 'styled-components';
 
 interface ListItemProps {
@@ -6,9 +8,10 @@ interface ListItemProps {
 	hashtag: string;
 	url: string;
 	date: string;
+	isSelectable: boolean;
 }
 
-function ListItem({ name, hashtag, url, date }: ListItemProps) {
+function ListItem({ name, hashtag, url, date, isSelectable }: ListItemProps) {
 	return (
 		<ListItemWrapper>
 			<Thumnail></Thumnail>
@@ -16,10 +19,15 @@ function ListItem({ name, hashtag, url, date }: ListItemProps) {
 			<Hastag>#{hashtag}</Hastag>
 			<Url>{url}</Url>
 			<Date>{date}</Date>
-			{/* Icon 점세개거나 주황색 네모칸이거나 */}
-			<Icon>
-				<Lucide />
-			</Icon>
+			{!isSelectable ? (
+				<Icon>
+					<Lucide />
+				</Icon>
+			) : (
+				<Icon>
+					<LucideGray />
+				</Icon>
+			)}
 		</ListItemWrapper>
 	);
 }
