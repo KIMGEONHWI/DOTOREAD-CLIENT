@@ -31,6 +31,7 @@ function BookMarkPage() {
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
 
 	let filteredBookmarks = [];
+
 	if (category === '모든 북마크') {
 		filteredBookmarks = allBookmarks;
 	} else {
@@ -41,8 +42,11 @@ function BookMarkPage() {
 		<BookMarkPageWrapper>
 			<BackgroundBox>
 				<Title text={text} Icon={Icon} />
-
-				<Btn id="aiClassify" />
+				{category === '미분류' && (
+					<BtnWrapperInBookMarkPage>
+						<Btn id="aiClassify" />
+					</BtnWrapperInBookMarkPage>
+				)}
 				<SortBtnWrapper>
 					<SortBtn />
 				</SortBtnWrapper>
@@ -76,6 +80,12 @@ const TitleWrapper = styled.div`
 	display: flex;
 	gap: 1rem;
 	align-items: center;
+`;
+const BtnWrapperInBookMarkPage = styled.div`
+	position: absolute;
+	top: 3.7rem;
+	left: 97.8rem;
+	z-index: 10000;
 `;
 
 const SortBtnWrapper = styled.div`

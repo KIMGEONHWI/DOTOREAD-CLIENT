@@ -35,7 +35,7 @@ export default Btn;
 
 const BtnWrapper = styled.button<{ id: string; bordercolor: string; backgroundcolor: string }>`
 	cursor: pointer;
-	margin-left: 30rem;
+	z-index: 1;
 	width: 20.2rem;
 	height: 4.8rem;
 	border-radius: 15px;

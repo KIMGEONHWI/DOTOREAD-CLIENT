@@ -1,6 +1,6 @@
-import Default from './Default';
-import ListItem from './ListItem';
 import LineBetweenBookmark from '@/assets/LineBetweenBookmark.svg?react';
+import Default from '@/pages/BookMark/Default';
+import ListItem from '@/pages/BookMark/ListItem';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -16,6 +16,8 @@ interface BookMarkListProps {
 }
 
 function BookMarkList({ bookmarks }: BookMarkListProps) {
+	console.log('Bookmarks:', bookmarks);
+	console.log('bookmarks length:', bookmarks.length);
 	return (
 		<BookMarkListWrapper>
 			{bookmarks.length > 0 ? (
@@ -30,9 +32,9 @@ function BookMarkList({ bookmarks }: BookMarkListProps) {
 					</React.Fragment>
 				))
 			) : (
-				<DefaultWrapper>
+				<DefaultWrapperInBookMarkList>
 					<Default message="북마크가 없습니다." />
-				</DefaultWrapper>
+				</DefaultWrapperInBookMarkList>
 			)}
 		</BookMarkListWrapper>
 	);
@@ -69,6 +71,4 @@ const LineWrapper = styled.div`
 	display: flex;
 	align-items: center;
 `;
-const DefaultWrapper = styled.div`
-	position: absolute;
-`;
+const DefaultWrapperInBookMarkList = styled.div``;
