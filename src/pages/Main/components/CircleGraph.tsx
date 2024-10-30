@@ -11,6 +11,4 @@ function CircleGraph() {
 
 export default CircleGraph;
 
-const CircleGraphWrapper = styled.div`
-	padding-top: 3.1rem;
-`;
+const CircleGraphWrapper = styled.div``;

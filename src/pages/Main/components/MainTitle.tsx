@@ -14,10 +14,10 @@ export default MainTitle;
 const MainTitleWrapper = styled.div`
 	display: flex;
 	width: 43.3rem;
+	min-width: 43.3rem;
 	height: 15.9rem;
 	flex-direction: column;
 	justify-content: center;
-	margin-left: 29.6rem;
 	margin-top: 3.1rem;
 `;
 
