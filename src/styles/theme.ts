@@ -7,6 +7,7 @@ const colors = {
 
 	white1: '#FFFFFF',
 	white2: '#DEDEDE',
+	white3: '#FCFCFC',
 
 	gray1: '#3B3B3B',
 	gray2: '#5C5C5C',
@@ -22,14 +23,11 @@ const colors = {
 	bookmark_click: '#6E4A39',
 	bookmark_select: '#FFE5D9',
 
-
 	thumnail: '#D9D9D9',
 	transparent: 'rgba(0,0,0,0)',
-
 };
 
 const baseFontStyle = css`
-	color: var(--white1, #fff);
 	font-family: Pretendard;
 	font-style: normal;
 	line-height: normal;
@@ -46,6 +44,11 @@ const fonts = {
 		${baseFontStyle}
 		font-size: 20px;
 		font-weight: 700;
+	`,
+	Pretendard_Semibold_49px: css`
+		${baseFontStyle}
+		font-size: 49.976px;
+		font-weight: 600;
 	`,
 	Pretendard_Semibold_45px: css`
 		${baseFontStyle}
