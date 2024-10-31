@@ -1,3 +1,4 @@
+import AiClassificationPage from './components/AiClassification/AiClassificationPage';
 import BookMarkPage from './pages/BookMark/BookMarkPage';
 import Roots from '@/Roots';
 import MainPage from '@/pages/Main/MainPage';
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/bookmark',
 				element: <BookMarkPage />,
+			},
+			{
+				path: '/ai',
+				element: <AiClassificationPage />,
 			},
 		],
 	},
