@@ -15,9 +15,10 @@ interface Bookmark {
 interface BookMarkListProps {
 	bookmarks: Bookmark[];
 	isSelectable: boolean;
+	isAllSelected: boolean;
 }
 
-function BookMarkList({ bookmarks, isSelectable }: BookMarkListProps) {
+function BookMarkList({ bookmarks, isSelectable, isAllSelected }: BookMarkListProps) {
 	return (
 		<BookMarkListWrapper>
 			{bookmarks.length > 0 ? (
@@ -29,6 +30,7 @@ function BookMarkList({ bookmarks, isSelectable }: BookMarkListProps) {
 							url={bookmark.url}
 							date={bookmark.date}
 							isSelectable={isSelectable}
+							isAllSelected={isAllSelected}
 						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>

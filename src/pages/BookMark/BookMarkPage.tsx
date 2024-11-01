@@ -40,9 +40,14 @@ function BookMarkPage() {
 	}
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
+	const [isAllSelected, setAllSelected] = useState(false);
 
 	const handleAiClassifyBtn = () => {
 		setAiClassifyActive(!isAiClassifyActive);
+	};
+
+	const handleChooseAllBtn = () => {
+		setAllSelected(!isAllSelected); 
 	};
 
 	// 화면 나가면 상태 초기화
@@ -62,7 +67,7 @@ function BookMarkPage() {
 					</BtnWrapperForAiClassify>
 				)}
 				{isAiClassifyActive && (
-					<BtnWrapperForChooseAll>
+					<BtnWrapperForChooseAll onClick={handleChooseAllBtn}>
 						<Btn id="chooseAll" />
 					</BtnWrapperForChooseAll>
 				)}
@@ -71,7 +76,7 @@ function BookMarkPage() {
 					<SortBtn />
 				</SortBtnWrapper>
 				{!isAiClassifyActive && <Navbar />}
-				<BookMarkList bookmarks={filteredBookmarks} isSelectable={isAiClassifyActive} />
+				<BookMarkList bookmarks={filteredBookmarks} isSelectable={isAiClassifyActive} isAllSelected={isAllSelected}/>
 			</BackgroundBox>
 		</BookMarkPageWrapper>
 	);
