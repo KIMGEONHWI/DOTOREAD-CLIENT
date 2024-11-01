@@ -2,6 +2,7 @@ import Lucide from '@/assets/Lucide.svg?react';
 import LucideGray from '@/assets/LucideGray.svg?react';
 import LucideOrange from '@/assets/LucideOrange.svg?react';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ListItemProps {
@@ -14,6 +15,7 @@ interface ListItemProps {
 }
 
 function ListItem({ name, hashtag, url, date, isSelectable, isAllSelected }: ListItemProps) {
+	const location = useLocation();
 	const [isClicked, setIsClicked] = useState(isAllSelected);
 	const IconComponent = isClicked ? LucideOrange : isSelectable ? LucideGray : Lucide;
 	const handleClick = () => {
@@ -29,10 +31,18 @@ function ListItem({ name, hashtag, url, date, isSelectable, isAllSelected }: Lis
 		};
 	}, [isSelectable]);
 
-	// 다시 전체 선택 눌렀을 때 풀리게
+	// 다시 전체 선택 눌렀을 때 풀리게 
+	// 근데 이미 몇개 선택 후에 눌렀을땐 나머지 listitem 선택되게
 	useEffect(() => {
 		setIsClicked(isAllSelected);
 	}, [isAllSelected]);
+
+	// 화면 나가면 상태 초기화
+	useEffect(() => {
+		return () => {
+			setIsClicked(false);
+		};
+	}, [location]);
 
 	return (
 		<ListItemWrapper onClick={handleClick} isClicked={isClicked}>
