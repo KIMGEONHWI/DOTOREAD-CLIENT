@@ -28,6 +28,8 @@ function Title({ text, Icon }: TitleProps) {
 
 function BookMarkPage() {
 	const location = useLocation();
+	// BookMarkSlide로부터 객체 받아온다.
+
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
 
@@ -73,7 +75,6 @@ function BookMarkPage() {
 						<Btn id="chooseAll" />
 					</BtnWrapperForChooseAll>
 				)}
-
 				<SortBtnWrapper>
 					<SortBtn />
 				</SortBtnWrapper>

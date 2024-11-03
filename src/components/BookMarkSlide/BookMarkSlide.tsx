@@ -15,10 +15,10 @@ interface BookMarkSlideProps {
 
 function BookMarkSlide({ show }: BookMarkSlideProps) {
 	const navigate = useNavigate();
-
 	const handleNavigate = (text: string, iconType: string, category: string) => {
 		navigate('/bookmark', { state: { text, iconType, category } });
 	};
+
 	return (
 		<BookMarkSlideWrapper show={show}>
 			<BookMarksContent>

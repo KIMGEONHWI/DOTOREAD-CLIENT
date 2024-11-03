@@ -60,7 +60,7 @@ const BookMarkListWrapper = styled.div`
 
 	&::-webkit-scrollbar {
 		width: 0.7rem;
-		height: 19.6rem;
+		height: 70rem;
 	}
 
 	&::-webkit-scrollbar-track {
@@ -70,6 +70,7 @@ const BookMarkListWrapper = styled.div`
 	&::-webkit-scrollbar-thumb {
 		border-radius: 15px;
 		cursor: pointer;
+		height: 19.6rem;
 		width: 0.7rem;
 		background: ${({ theme }) => theme.colors.white2};
 	}
