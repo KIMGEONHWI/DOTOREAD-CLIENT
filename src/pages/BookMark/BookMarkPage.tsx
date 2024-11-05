@@ -3,9 +3,8 @@ import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
 import BookMarkList from '@/components/BookMarkList/BookMarkList';
 import Navbar from '@/components/common/BookMarkList/Navbar';
-import Btn from '@/components/common/Button/Btn';
 import { allBookmarks } from '@/constants/ListItems';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 // svg 를 속성으로 넘겨줄 수 없어서 Title 컴포넌트를 이 폴더에 정의함
@@ -16,16 +15,10 @@ interface TitleProps {
 }
 
 function Title({ text, Icon }: TitleProps) {
-	const navigate = useNavigate();
-
-	const handleClick = () => {
-		navigate('/ai');
-	};
 	return (
 		<TitleWrapper>
 			{Icon && <Icon />}
 			<Category>{text}</Category>
-			<Btn id="aiClassify" onClick={handleClick} />
 		</TitleWrapper>
 	);
 }

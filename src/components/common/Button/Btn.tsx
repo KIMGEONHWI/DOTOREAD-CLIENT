@@ -1,4 +1,4 @@
-import Buttons from '@/constants/ButtonList';
+import { Buttons } from '@/constants/ButtonList';
 import { useState } from 'react';
 import styled from 'styled-components';
 

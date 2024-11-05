@@ -3,6 +3,7 @@ import Btn from '../common/Button/Btn';
 import ClassificationArticle from './ClassificationArticle';
 import AiIcon from '@/assets/Ai.svg?react';
 import { AiClassifiedList } from '@/constants/AiClassificationList';
+import { Buttons } from '@/constants/ButtonList';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -41,14 +42,25 @@ const AiClassificationPage = () => {
 					</HeaderRight>
 				</Header>
 				<ClassificationBtnBox>
-					{Object.keys(groupedByFolder).map((folder) => (
-						<AiClassificationBtn
-							key={folder}
-							text={folder}
-							onClick={() => handleBoxClick(folder)}
-							isClicked={clickedFolders[folder] || false}
-						/>
-					))}
+					{Object.keys(groupedByFolder).map((folder) => {
+						const defaultButtonProps = Buttons.find((button) => button.id === 'aiClassify') || {
+							color: 'white1',
+							bordercolor: 'gray2',
+							backgroundcolor: 'gray1',
+						};
+
+						return (
+							<AiClassificationBtn
+								key={folder}
+								text={folder}
+								onClick={() => handleBoxClick(folder)}
+								isClicked={clickedFolders[folder] || false}
+								color={defaultButtonProps.color}
+								bordercolor={defaultButtonProps.bordercolor}
+								backgroundcolor={defaultButtonProps.backgroundcolor}
+							/>
+						);
+					})}
 				</ClassificationBtnBox>
 				<ClassificationBoxWrapper>
 					{Object.entries(groupedByFolder).map(([folder, articles]) => (
