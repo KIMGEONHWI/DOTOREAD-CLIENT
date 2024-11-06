@@ -1,8 +1,13 @@
-import Buttons from '@/constants/ButtonList';
+import { Buttons } from '@/constants/ButtonList';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-function Btn({ id }: { id: string }) {
+interface BtnProps {
+	id: string;
+	onClick?: () => void;
+}
+
+function Btn({ id, onClick }: BtnProps) {
 	const button = Buttons.find((button) => button.id === id);
 	const [clicked, setClicked] = useState(false);
 
@@ -14,8 +19,9 @@ function Btn({ id }: { id: string }) {
 	const { text, color, bordercolor, backgroundcolor } = button;
 
 	const handleClick = () => {
-		if (id === 'aiClassify') {
-			setClicked(!clicked);
+		setClicked(!clicked);
+		if (onClick) {
+			onClick();
 		}
 	};
 
@@ -33,7 +39,12 @@ function Btn({ id }: { id: string }) {
 
 export default Btn;
 
-const BtnWrapper = styled.button<{ id: string; bordercolor: string; backgroundcolor: string }>`
+
+const BtnWrapper = styled.button<{
+	id: string;
+	bordercolor: string;
+	backgroundcolor: string;
+}>`
 	cursor: pointer;
 	z-index: 1;
 	width: 20.2rem;
