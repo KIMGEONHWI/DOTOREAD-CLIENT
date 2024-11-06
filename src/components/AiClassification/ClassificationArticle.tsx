@@ -7,12 +7,23 @@ interface ClassificationArticleProps {
 	hashtag: string;
 	folder: string;
 	date: string;
+	showDeleteIcon?: boolean;
 }
 
-const ClassificationArticle = ({ title, folder, date, hashtag }: ClassificationArticleProps) => {
+interface StyledAiDeleteIconProps {
+	show: boolean;
+}
+
+const ClassificationArticle = ({
+	title,
+	folder,
+	date,
+	hashtag,
+	showDeleteIcon = false,
+}: ClassificationArticleProps) => {
 	return (
 		<ArticleWrapper>
-			<StyledAiDeleteIcon />
+			<StyledAiDeleteIcon show={showDeleteIcon} />
 			<ArticleMini>
 				<ArticleMiniTop>
 					<ArticleMiniTitle>{title}</ArticleMiniTitle>
@@ -44,8 +55,9 @@ const ArticleWrapper = styled.div`
 	border-radius: 20px;
 `;
 
-const StyledAiDeleteIcon = styled(AiDeleteIcon)`
+const StyledAiDeleteIcon = styled(AiDeleteIcon)<StyledAiDeleteIconProps>`
 	margin-left: 27.5rem;
+	visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
 `;
 
 const ArticleMini = styled.div`

@@ -1,3 +1,4 @@
+import CarouselWrapper from './components/Carouselwrapper';
 import CircleGraph from './components/CircleGraph';
 import MainScore from './components/MainScore';
 import MainTitle from './components/MainTitle';
@@ -16,6 +17,9 @@ const MainPage = () => {
 					))}
 				</MainScoreBox>
 			</MainPageBanner>
+			<ArticleDashboard>
+				<CarouselWrapper />
+			</ArticleDashboard>
 		</MainPageWrapper>
 	);
 };
@@ -23,7 +27,6 @@ const MainPage = () => {
 export default MainPage;
 
 const MainPageWrapper = styled.div`
-	display: flex;
 	width: 100%;
 	height: 100vh;
 	background-color: ${({ theme }) => theme.colors.background};
@@ -44,3 +47,5 @@ const MainScoreBox = styled.div`
 	margin-top: 11rem;
 	gap: 1.154rem;
 `;
+
+const ArticleDashboard = styled.div``;

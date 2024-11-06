@@ -78,6 +78,7 @@ const AiClassificationPage = () => {
 										hashtag={article.hashtag}
 										folder={article.folder}
 										date={article.date}
+										showDeleteIcon={true}
 									/>
 								))}
 							</ClassificationArticleBox>
