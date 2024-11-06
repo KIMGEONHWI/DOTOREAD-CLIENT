@@ -1,14 +1,10 @@
-import Google from './Google';
 import Login from './Login';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
 	{
 		path: '/login',
-		children: [
-			{ path: '', element: <Login /> },
-			{ path: 'google', element: <Google /> },
-		],
+		children: [{ path: '', element: <Login /> }],
 	},
 	//   {
 	//     path: "/1",
