@@ -1,8 +1,8 @@
 import BookMarkSlide from '@/components/BookMarkSlide/BookMarkSlide';
 import Storage from '@/components/common/SideBar/Storage';
 import Icons from '@/constants/Icons';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 function SideBar() {
@@ -16,6 +16,14 @@ function SideBar() {
 		}
 		setClicked(iconId);
 	};
+
+	const location = useLocation();
+	useEffect(() => {
+		if (location.pathname === '/bookmark') {
+			setClicked('bookmark');
+		}
+	}, [location.pathname]);
+	
 	return (
 		<SideBarWrapper>
 			<Menus>

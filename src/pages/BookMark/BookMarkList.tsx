@@ -1,6 +1,6 @@
-import Default from '../common/BookMarkList/Default';
-import ListItem from '../common/BookMarkList/ListItem';
 import LineBetweenBookmark from '@/assets/LineBetweenBookmark.svg?react';
+import Default from '@/pages/BookMark/Default';
+import ListItem from '@/pages/BookMark/ListItem';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -11,17 +11,27 @@ interface Bookmark {
 	url: string;
 	date: string;
 }
+// 북마크 하나당 선택 가능 여부가 아니라 전체 리스트의 선택 가능여부이기에
 interface BookMarkListProps {
 	bookmarks: Bookmark[];
+	isSelectable: boolean;
+	isAllSelected: boolean;
 }
 
-function BookMarkList({ bookmarks }: BookMarkListProps) {
+function BookMarkList({ bookmarks, isSelectable, isAllSelected }: BookMarkListProps) {
 	return (
 		<BookMarkListWrapper>
 			{bookmarks.length > 0 ? (
 				bookmarks.map((bookmark, index) => (
 					<React.Fragment key={bookmark.id}>
-						<ListItem name={bookmark.name} hashtag={bookmark.hashtag} url={bookmark.url} date={bookmark.date} />
+						<ListItem
+							name={bookmark.name}
+							hashtag={bookmark.hashtag}
+							url={bookmark.url}
+							date={bookmark.date}
+							isSelectable={isSelectable}
+							isAllSelected={isAllSelected}
+						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>
 								<LineBetweenBookmark />
@@ -30,9 +40,9 @@ function BookMarkList({ bookmarks }: BookMarkListProps) {
 					</React.Fragment>
 				))
 			) : (
-				<DefaultWrapper>
+				<DefaultWrapperInBookMarkList>
 					<Default message="북마크가 없습니다." />
-				</DefaultWrapper>
+				</DefaultWrapperInBookMarkList>
 			)}
 		</BookMarkListWrapper>
 	);
@@ -50,7 +60,7 @@ const BookMarkListWrapper = styled.div`
 
 	&::-webkit-scrollbar {
 		width: 0.7rem;
-		height: 19.6rem;
+		height: 70rem;
 	}
 
 	&::-webkit-scrollbar-track {
@@ -59,6 +69,8 @@ const BookMarkListWrapper = styled.div`
 
 	&::-webkit-scrollbar-thumb {
 		border-radius: 15px;
+		cursor: pointer;
+		height: 19.6rem;
 		width: 0.7rem;
 		background: ${({ theme }) => theme.colors.white2};
 	}
@@ -68,6 +80,4 @@ const LineWrapper = styled.div`
 	display: flex;
 	align-items: center;
 `;
-const DefaultWrapper = styled.div`
-	position: absolute;
-`;
+const DefaultWrapperInBookMarkList = styled.div``;

@@ -30,7 +30,7 @@ function Btn({ id, onClick }: BtnProps) {
 			id={id}
 			onClick={handleClick}
 			bordercolor={bordercolor}
-			backgroundcolor={clicked ? 'orange2' : backgroundcolor}
+			backgroundcolor={clicked ? 'orange1' : backgroundcolor}
 		>
 			<BtnName color={clicked ? 'white' : color}>{text}</BtnName>
 		</BtnWrapper>
@@ -39,11 +39,14 @@ function Btn({ id, onClick }: BtnProps) {
 
 export default Btn;
 
+
 const BtnWrapper = styled.button<{
 	id: string;
 	bordercolor: string;
 	backgroundcolor: string;
 }>`
+	cursor: pointer;
+	z-index: 1;
 	width: 20.2rem;
 	height: 4.8rem;
 	border-radius: 15px;
