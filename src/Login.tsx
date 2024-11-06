@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
-// 로그인 버튼 누를때 내 애플리케이션 고유 식별자인 CLIENT_ID와 기타 정보를 담아 Google OAuth 인가 URL을 만든다.
-// 인가 코드 받으면 기존 /login/google Google컴포로 redirect
-// 백에게 인가 코드 보내주기
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+// 로그인 버튼 누를때 내 애플리케이션 고유 식별자인 CLIENT_ID ,REDIRECT_URI 등의 기타 정보를 담아 Google OAuth 인가 URL을 만든다.
+// 로그인 완료되면 /login/google Google컴포로 redirect
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-const AUTHORIZE_URI = import.meta.env.VITE_GOOGLE_AUTHORIZE_URI; // 구글 서버 인증 주소
-//여기 const REDIRECT_URI = `${window.location.origin}`; 하면 redirec_uri 에러뜨던데 이유가 뭘까
-const REDIRECT_URI = `${window.location.origin}/login/google`;
+const AUTHORIZE_URI = import.meta.env.VITE_GOOGLE_AUTHORIZE_URI;
+const REDIRECT_URI = `${BASE_URL}/login/google`;
 
 const Login = () => {
 	const [loading, setLoading] = useState<boolean>(false);

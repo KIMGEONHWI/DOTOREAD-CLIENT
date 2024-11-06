@@ -11,10 +11,6 @@ export const router = createBrowserRouter([
 		],
 	},
 	//   {
-	//     path: "/2",
-	//     element: <Page2 />,
-	//   },
-	//   {
 	//     path: "/3",
 	//     element: <Page3 />,
 	//   },
