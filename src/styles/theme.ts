@@ -26,6 +26,8 @@ const colors = {
 
 	thumnail: '#D9D9D9',
 	transparent: 'rgba(0,0,0,0)',
+
+	modal_background: 'rgba(217, 217, 217, 0.3)',
 };
 
 const baseFontStyle = css`
