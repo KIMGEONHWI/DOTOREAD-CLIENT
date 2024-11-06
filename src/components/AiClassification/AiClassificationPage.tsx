@@ -1,20 +1,35 @@
+// AiClassificationPage.tsx
 import AiClassificationBtn from '../common/Button/AiClassificationBtn';
 import Btn from '../common/Button/Btn';
+import Modal from '../common/Modal/Modal';
 import ClassificationArticle from './ClassificationArticle';
 import AiIcon from '@/assets/Ai.svg?react';
 import { AiClassifiedList } from '@/constants/AiClassificationList';
 import { Buttons } from '@/constants/ButtonList';
+import useModal from '@/hooks/useModal';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 const AiClassificationPage = () => {
 	const [clickedFolders, setClickedFolders] = useState<Record<string, boolean>>({});
+	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
+	const [modalContent, setModalContent] = useState<string>(''); // 모달의 제목 내용을 설정할 상태
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
 			...prev,
 			[folder]: !prev[folder],
 		}));
+	};
+
+	const handleFinishClassify = () => {
+		setModalContent('AI 분류 완료하기'); // finishClassify 버튼 클릭 시 모달 내용 설정
+		openModal();
+	};
+
+	const handleCancelClassify = () => {
+		setModalContent('AI 분류 취소하기'); // cancelClassify 버튼 클릭 시 모달 내용 설정
+		openModal();
 	};
 
 	const groupedByFolder = AiClassifiedList.reduce(
@@ -37,8 +52,8 @@ const AiClassificationPage = () => {
 						<Title>Ai분류하기</Title>
 					</HeaderLeft>
 					<HeaderRight>
-						<Btn id="finishClassify" />
-						<Btn id="cancelClassify" />
+						<Btn id="finishClassify" onClick={handleFinishClassify} />
+						<Btn id="cancelClassify" onClick={handleCancelClassify} />
 					</HeaderRight>
 				</Header>
 				<ClassificationBtnBox>
@@ -85,6 +100,17 @@ const AiClassificationPage = () => {
 					))}
 				</ClassificationBoxWrapper>
 			</AiClassificationPageContent>
+			{/* Modal 컴포넌트 */}
+			<Modal isOpen={isModalOpen} onClose={closeModal} id="ok">
+				<ModalContent>
+					<ModalTitle>{modalContent}</ModalTitle>
+					<ModalText>
+						{modalContent === 'AI 분류 완료하기'
+							? '북마크가 모두 해당 폴더로 이동합니다.'
+							: 'AI 분류 작업을 취소하시겠습니까?'}
+					</ModalText>
+				</ModalContent>
+			</Modal>
 		</AiClassificationPageWrapper>
 	);
 };
@@ -187,4 +213,22 @@ const ClassificationArticleBox = styled.div`
 	&::-webkit-scrollbar-track {
 		background: transparent;
 	}
+`;
+
+const ModalContent = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding-top: 2rem;
+`;
+
+const ModalTitle = styled.h2`
+	${({ theme }) => theme.fonts.Pretendard_Semibold_30px};
+	color: ${({ theme }) => theme.colors.white1};
+`;
+
+const ModalText = styled.p`
+	${({ theme }) => theme.fonts.Pretendard_Semibold_18px};
+	color: ${({ theme }) => theme.colors.white1};
 `;

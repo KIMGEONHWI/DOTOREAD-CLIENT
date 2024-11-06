@@ -7,6 +7,7 @@ import LineIcon from '@/assets/Line.svg?react';
 import LucidIcon from '@/assets/Lucide.svg?react';
 import PlusIcon from '@/assets/Plus.svg?react';
 import { FOLDER_LIST } from '@/constants/FolderList';
+import useModal from '@/hooks/useModal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -17,11 +18,8 @@ interface BookMarkSlideProps {
 
 function BookMarkSlide({ show }: BookMarkSlideProps) {
 	const navigate = useNavigate();
-	const [isModalOpen, setModalOpen] = useState(false);
+	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	const [folderName, setFolderName] = useState('');
-
-	const handleOpenModal = () => setModalOpen(true);
-	const handleCloseModal = () => setModalOpen(false);
 
 	const handleNavigate = (text: string, iconType: string, category: string) => {
 		navigate('/bookmark', { state: { text, iconType, category } });
@@ -46,7 +44,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 			<FoldersContent>
 				<FoldersTitle>
 					Folders
-					<PlusIcon onClick={handleOpenModal} style={{ cursor: 'pointer' }} />
+					<PlusIcon onClick={openModal} style={{ cursor: 'pointer' }} />
 				</FoldersTitle>
 				{FOLDER_LIST.map((folder) => (
 					<BookMarkListBtn
@@ -60,7 +58,8 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 			</FoldersContent>
 
 			{/* Modal */}
-			<Modal id="create" isOpen={isModalOpen} onClose={handleCloseModal}>
+			<Modal id="create" isOpen={isModalOpen} onClose={closeModal}>
+				{' '}
 				<Title>생성할 폴더 이름을 입력해주세요.</Title>
 				<Input type="text" placeholder="폴더 이름" value={folderName} onChange={(e) => setFolderName(e.target.value)} />
 			</Modal>
