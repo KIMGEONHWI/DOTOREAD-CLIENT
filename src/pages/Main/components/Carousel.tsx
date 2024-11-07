@@ -1,5 +1,5 @@
-import ArrowLeft from '@/assets/arrow-left.svg?react';
-import ArrowRight from '@/assets/arrow-right.svg?react';
+import ArrowLeftSvg from '@/assets/arrow-left.svg?react';
+import ArrowRightSvg from '@/assets/arrow-right.svg?react';
 import ClassificationArticle from '@/components/AiClassification/ClassificationArticle';
 import { FreshArticleList, RottenArticleList } from '@/constants/FreshRottenList';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -12,36 +12,6 @@ interface CarouselProps {
 
 const Carousel = ({ listType }: CarouselProps) => {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
-
-	const scrollPrev = useCallback(() => {
-		if (emblaApi) {
-			emblaApi.scrollPrev();
-			console.log('이전 버튼 누름');
-		} else {
-			console.log('else');
-		}
-		console.log('밖');
-	}, [emblaApi]);
-
-	const scrollNext = () => {
-		console.log('응');
-	};
-	// const scrollNext = useCallback(() => {
-	// 	if (emblaApi) {
-	// 		emblaApi.scrollNext();
-	// 		console.log('다음 버튼 누름');
-	// 	} else {
-	// 		console.log('else');
-	// 	}
-	// 	console.log('밖');
-	// }, [emblaApi]);
-
-	// useEffect(() => {
-	// 	if (emblaApi) {
-	// 		console.log('Embla API:', emblaApi);
-	// 		console.log('Embla Ref:', emblaRef); // DOM 요소 확인
-	// 	}
-	// }, [emblaApi, emblaRef]);
 
 	useEffect(() => {
 		if (emblaApi) {
@@ -62,15 +32,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 					}
 				});
 			};
-
 			updateClasses();
-			emblaApi.on('select', updateClasses);
-			emblaApi.on('reInit', updateClasses);
-
-			return () => {
-				emblaApi.off('select', updateClasses);
-				emblaApi.off('reInit', updateClasses);
-			};
 		}
 	}, [emblaApi]);
 
@@ -78,7 +40,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 
 	return (
 		<CarouselComponent>
-			<PrevButton aria-label="Previous slide" onClick={scrollPrev}>
+			<PrevButton>
 				<ArrowLeft />
 			</PrevButton>
 			<CarouselContainer ref={emblaRef}>
@@ -90,13 +52,13 @@ const Carousel = ({ listType }: CarouselProps) => {
 								hashtag={article.hashtag}
 								folder={article.folder}
 								date={article.date}
-								forCarousel={true}
+								forcarousel={true}
 							/>
 						</Slide>
 					))}
 				</Container>
 			</CarouselContainer>
-			<NextButton aria-label="Next slide" onClick={scrollNext}>
+			<NextButton>
 				<ArrowRight />
 			</NextButton>
 		</CarouselComponent>
@@ -137,27 +99,36 @@ const Slide = styled.div`
 		filter: brightness(100%);
 	}
 `;
-
+const ArrowLeft = styled(ArrowLeftSvg)`
+	cursor: pointer;
+`;
+const ArrowRight = styled(ArrowRightSvg)`
+	cursor: pointer;
+`;
 const PrevButton = styled.button`
-	left: 30rem;
+	left: 31.3rem;
 	position: absolute;
 	top: 7rem;
 	border: none;
 	color: white;
 	padding: 10px 20px;
 	cursor: pointer;
-	z-index: 10000;
+	z-index: 1;
 	pointer-events: auto;
+	background-color: red;
 `;
 
 const NextButton = styled.button`
 	right: 14.918rem;
 	position: absolute;
+	width: 20rem;
+	height: 20rem;
 	top: 7rem;
 	border: none;
 	color: white;
 	padding: 10px 20px;
 	cursor: pointer;
-	z-index: 10000;
+	z-index: 2;
 	pointer-events: auto;
+	background-color: red;
 `;

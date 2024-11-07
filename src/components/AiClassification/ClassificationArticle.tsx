@@ -8,7 +8,7 @@ interface ClassificationArticleProps {
 	folder: string;
 	date: string;
 	showDeleteIcon?: boolean;
-	forCarousel?: boolean;
+	forcarousel?: boolean;
 }
 
 interface StyledAiDeleteIconProps {
@@ -21,22 +21,22 @@ const ClassificationArticle = ({
 	date,
 	hashtag,
 	showDeleteIcon = false,
-	forCarousel = false,
+	forcarousel = false,
 }: ClassificationArticleProps) => {
 	return (
-		<ArticleWrapper forCarousel={forCarousel}>
+		<ArticleWrapper forcarousel={forcarousel}>
 			<StyledAiDeleteIcon show={showDeleteIcon} />
-			<ArticleMini forCarousel={forCarousel}>
+			<ArticleMini forcarousel={forcarousel}>
 				<ArticleMiniTop>
-					<ArticleMiniTitle forCarousel={forCarousel}>{title}</ArticleMiniTitle>
-					<ArticleMiniHashtag forCarousel={forCarousel}>#{hashtag}</ArticleMiniHashtag>
+					<ArticleMiniTitle forcarousel={forcarousel}>{title}</ArticleMiniTitle>
+					<ArticleMiniHashtag forcarousel={forcarousel}>#{hashtag}</ArticleMiniHashtag>
 				</ArticleMiniTop>
 				<ArticleMiniBottom>
 					<ArticleMiniBottomLeft>
 						<ArticleFolderIcon />
-						<ArticleFolderName forCarousel={forCarousel}>{folder}</ArticleFolderName>
+						<ArticleFolderName forcarousel={forcarousel}>{folder}</ArticleFolderName>
 					</ArticleMiniBottomLeft>
-					<ArticleDate forCarousel={forCarousel}>{date}</ArticleDate>
+					<ArticleDate forcarousel={forcarousel}>{date}</ArticleDate>
 				</ArticleMiniBottom>
 			</ArticleMini>
 		</ArticleWrapper>
@@ -45,18 +45,18 @@ const ClassificationArticle = ({
 
 export default ClassificationArticle;
 
-const ArticleWrapper = styled.div<{ forCarousel?: boolean }>`
+const ArticleWrapper = styled.div<{ forcarousel?: boolean }>`
 	flex: 0 0 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 1.1rem 1.5rem;
-	gap: ${({ forCarousel }) => (forCarousel ? '11.723rem' : '7.723rem')};
+	gap: ${({ forcarousel }) => (forcarousel ? '11.723rem' : '7.723rem')};
 
-	width: ${({ forCarousel }) => (forCarousel ? '40rem' : '33.4118rem')};
-	height: ${({ forCarousel }) => (forCarousel ? '25.5rem' : '21.3rem')};
+	width: ${({ forcarousel }) => (forcarousel ? '40rem' : '33.4118rem')};
+	height: ${({ forcarousel }) => (forcarousel ? '25.5rem' : '21.3rem')};
 	background: ${({ theme }) => theme.colors.white1};
-	border-radius: ${({ forCarousel }) => (forCarousel ? '30px' : '20px')};
+	border-radius: ${({ forcarousel }) => (forcarousel ? '30px' : '20px')};
 `;
 
 const StyledAiDeleteIcon = styled(AiDeleteIcon)<StyledAiDeleteIconProps>`
@@ -64,12 +64,12 @@ const StyledAiDeleteIcon = styled(AiDeleteIcon)<StyledAiDeleteIconProps>`
 	visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
 `;
 
-const ArticleMini = styled.div<{ forCarousel?: boolean }>`
+const ArticleMini = styled.div<{ forcarousel?: boolean }>`
 	display: flex;
 	flex-direction: column;
-	width: ${({ forCarousel }) => (forCarousel ? '36.3rem' : '30.3212rem')};
-	height: ${({ forCarousel }) => (forCarousel ? '8.9rem' : '8.8541rem')};
-	border-radius: ${({ forCarousel }) => (forCarousel ? '20px' : '15.137px')};
+	width: ${({ forcarousel }) => (forcarousel ? '36.3rem' : '30.3212rem')};
+	height: ${({ forcarousel }) => (forcarousel ? '8.9rem' : '8.8541rem')};
+	border-radius: ${({ forcarousel }) => (forcarousel ? '20px' : '15.137px')};
 	padding: 0.973rem 0.996rem 0.707rem;
 	gap: 2rem;
 	background: ${({ theme }) => theme.colors.article_content};
@@ -79,22 +79,22 @@ const ArticleMiniTop = styled.div`
 	display: flex;
 `;
 
-const ArticleMiniTitle = styled.h3<{ forCarousel?: boolean }>`
+const ArticleMiniTitle = styled.h3<{ forcarousel?: boolean }>`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: ${({ theme }) => theme.colors.white1};
-	${({ theme, forCarousel }) =>
-		forCarousel ? theme.fonts.Pretendard_Semibold_22px : theme.fonts.Pretendard_Semibold_18px};
+	${({ theme, forcarousel }) =>
+		forcarousel ? theme.fonts.Pretendard_Semibold_22px : theme.fonts.Pretendard_Semibold_18px};
 `;
 
-const ArticleMiniHashtag = styled.p<{ forCarousel?: boolean }>`
+const ArticleMiniHashtag = styled.p<{ forcarousel?: boolean }>`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: ${({ theme }) => theme.colors.white1};
-	${({ theme, forCarousel }) =>
-		forCarousel ? theme.fonts.Pretendard_Semibold_22px : theme.fonts.Pretendard_Semibold_18px};
+	${({ theme, forcarousel }) =>
+		forcarousel ? theme.fonts.Pretendard_Semibold_22px : theme.fonts.Pretendard_Semibold_18px};
 `;
 
 const ArticleMiniBottom = styled.div`
@@ -108,14 +108,14 @@ const ArticleMiniBottomLeft = styled.div`
 	align-items: center;
 `;
 
-const ArticleFolderName = styled.div<{ forCarousel?: boolean }>`
-	${({ theme, forCarousel }) =>
-		forCarousel ? theme.fonts.Pretendard_Semibold_13px : theme.fonts.Pretendard_Semibold_10px};
+const ArticleFolderName = styled.div<{ forcarousel?: boolean }>`
+	${({ theme, forcarousel }) =>
+		forcarousel ? theme.fonts.Pretendard_Semibold_13px : theme.fonts.Pretendard_Semibold_10px};
 	color: ${({ theme }) => theme.colors.white1};
 `;
 
-const ArticleDate = styled.p<{ forCarousel?: boolean }>`
+const ArticleDate = styled.p<{ forcarousel?: boolean }>`
 	color: ${({ theme }) => theme.colors.white1};
-	${({ theme, forCarousel }) =>
-		forCarousel ? theme.fonts.Pretendard_Regular_12px : theme.fonts.Pretendard_Regular_9px};
+	${({ theme, forcarousel }) =>
+		forcarousel ? theme.fonts.Pretendard_Regular_12px : theme.fonts.Pretendard_Regular_9px};
 `;
