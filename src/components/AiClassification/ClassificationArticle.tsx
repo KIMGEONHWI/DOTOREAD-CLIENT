@@ -8,6 +8,7 @@ interface ClassificationArticleProps {
 	folder: string;
 	date: string;
 	showDeleteIcon?: boolean;
+	forCarousel?: boolean;
 }
 
 interface StyledAiDeleteIconProps {
@@ -20,21 +21,22 @@ const ClassificationArticle = ({
 	date,
 	hashtag,
 	showDeleteIcon = false,
+	forCarousel = false,
 }: ClassificationArticleProps) => {
 	return (
-		<ArticleWrapper>
+		<ArticleWrapper forCarousel={forCarousel}>
 			<StyledAiDeleteIcon show={showDeleteIcon} />
-			<ArticleMini>
+			<ArticleMini forCarousel={forCarousel}>
 				<ArticleMiniTop>
-					<ArticleMiniTitle>{title}</ArticleMiniTitle>
-					<ArticleMiniHashtag>#{hashtag}</ArticleMiniHashtag>
+					<ArticleMiniTitle forCarousel={forCarousel}>{title}</ArticleMiniTitle>
+					<ArticleMiniHashtag forCarousel={forCarousel}>#{hashtag}</ArticleMiniHashtag>
 				</ArticleMiniTop>
 				<ArticleMiniBottom>
 					<ArticleMiniBottomLeft>
 						<ArticleFolderIcon />
-						<ArticleFolderName>{folder}</ArticleFolderName>
+						<ArticleFolderName forCarousel={forCarousel}>{folder}</ArticleFolderName>
 					</ArticleMiniBottomLeft>
-					<ArticleDate>{date}</ArticleDate>
+					<ArticleDate forCarousel={forCarousel}>{date}</ArticleDate>
 				</ArticleMiniBottom>
 			</ArticleMini>
 		</ArticleWrapper>
@@ -43,16 +45,18 @@ const ClassificationArticle = ({
 
 export default ClassificationArticle;
 
-const ArticleWrapper = styled.div`
+const ArticleWrapper = styled.div<{ forCarousel?: boolean }>`
 	flex: 0 0 auto;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	padding: 1.1rem 1.5rem;
-	gap: 7.723rem;
-	width: 33.4118rem;
-	height: 21.3rem;
+	gap: ${({ forCarousel }) => (forCarousel ? '11.723rem' : '7.723rem')};
+
+	width: ${({ forCarousel }) => (forCarousel ? '40rem' : '33.4118rem')};
+	height: ${({ forCarousel }) => (forCarousel ? '25.5rem' : '21.3rem')};
 	background: ${({ theme }) => theme.colors.white1};
-	border-radius: 20px;
+	border-radius: ${({ forCarousel }) => (forCarousel ? '30px' : '20px')};
 `;
 
 const StyledAiDeleteIcon = styled(AiDeleteIcon)<StyledAiDeleteIconProps>`
@@ -60,14 +64,14 @@ const StyledAiDeleteIcon = styled(AiDeleteIcon)<StyledAiDeleteIconProps>`
 	visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
 `;
 
-const ArticleMini = styled.div`
+const ArticleMini = styled.div<{ forCarousel?: boolean }>`
 	display: flex;
 	flex-direction: column;
-	width: 30.3212rem;
-	height: 8.8541rem;
-	border-radius: 15.137px;
+	width: ${({ forCarousel }) => (forCarousel ? '36.3rem' : '30.3212rem')};
+	height: ${({ forCarousel }) => (forCarousel ? '8.9rem' : '8.8541rem')};
+	border-radius: ${({ forCarousel }) => (forCarousel ? '20px' : '15.137px')};
 	padding: 0.973rem 0.996rem 0.707rem;
-	gap: 3rem;
+	gap: 2rem;
 	background: ${({ theme }) => theme.colors.article_content};
 `;
 
@@ -75,20 +79,22 @@ const ArticleMiniTop = styled.div`
 	display: flex;
 `;
 
-const ArticleMiniTitle = styled.h3`
+const ArticleMiniTitle = styled.h3<{ forCarousel?: boolean }>`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: ${({ theme }) => theme.colors.white1};
-	${({ theme }) => theme.fonts.Pretendard_Semibold_18px};
+	${({ theme, forCarousel }) =>
+		forCarousel ? theme.fonts.Pretendard_Semibold_22px : theme.fonts.Pretendard_Semibold_18px};
 `;
 
-const ArticleMiniHashtag = styled.p`
+const ArticleMiniHashtag = styled.p<{ forCarousel?: boolean }>`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: ${({ theme }) => theme.colors.white1};
-	${({ theme }) => theme.fonts.Pretendard_Semibold_18px};
+	${({ theme, forCarousel }) =>
+		forCarousel ? theme.fonts.Pretendard_Semibold_22px : theme.fonts.Pretendard_Semibold_18px};
 `;
 
 const ArticleMiniBottom = styled.div`
@@ -99,15 +105,17 @@ const ArticleMiniBottom = styled.div`
 
 const ArticleMiniBottomLeft = styled.div`
 	display: flex;
+	align-items: center;
 `;
 
-const ArticleFolderName = styled.p`
-	${({ theme }) => theme.fonts.Pretendard_Semibold_10px};
+const ArticleFolderName = styled.div<{ forCarousel?: boolean }>`
+	${({ theme, forCarousel }) =>
+		forCarousel ? theme.fonts.Pretendard_Semibold_13px : theme.fonts.Pretendard_Semibold_10px};
 	color: ${({ theme }) => theme.colors.white1};
-	padding-top: 0.5rem;
 `;
 
-const ArticleDate = styled.p`
+const ArticleDate = styled.p<{ forCarousel?: boolean }>`
 	color: ${({ theme }) => theme.colors.white1};
-	${({ theme }) => theme.fonts.Pretendard_Regular_9px};
+	${({ theme, forCarousel }) =>
+		forCarousel ? theme.fonts.Pretendard_Regular_12px : theme.fonts.Pretendard_Regular_9px};
 `;

@@ -48,4 +48,6 @@ const MainScoreBox = styled.div`
 	gap: 1.154rem;
 `;
 
-const ArticleDashboard = styled.div``;
+const ArticleDashboard = styled.div`
+	margin-top: 10.9rem;
+`;

@@ -1,0 +1,33 @@
+.embla {
+  overflow: hidden;
+  width: 100%;
+
+}
+
+.embla__viewport {
+  overflow: hidden;
+  position: relative;
+}
+
+.embla__container {
+  display: flex;
+  will-change: transform;
+  align-items: center;
+  margin: 0 auto;
+   z-index:-1;
+}
+
+
+.embla__slide {
+  flex: 0 0 23%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, filter 0.3s;
+  filter: brightness(50%); }
+
+
+.embla__slide.is-selected, .embla__slide.is-prev, .embla__slide.is-next {
+  filter: brightness(100%);
+ 
+}
+
