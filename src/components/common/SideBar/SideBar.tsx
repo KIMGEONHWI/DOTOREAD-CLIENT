@@ -19,11 +19,11 @@ function SideBar() {
 
 	const location = useLocation();
 	useEffect(() => {
-		if (location.pathname === '/bookmark') {
+		if (location.pathname === '/bookmark' || location.pathname === '/ai') {
 			setClicked('bookmark');
 		}
 	}, [location.pathname]);
-	
+
 	return (
 		<SideBarWrapper>
 			<Menus>
@@ -64,4 +64,6 @@ const Menus = styled.div`
 	position: relative;
 `;
 
-const Icon = styled.svg``;
+const Icon = styled.svg`
+	cursor: pointer;
+`;

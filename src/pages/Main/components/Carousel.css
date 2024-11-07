@@ -2,7 +2,9 @@
   overflow: hidden;
   width: 100%;
    position: relative;  
-  z-index: -1;     
+   /* 사이드바보다 뒤에*/
+  z-index: -1;    
+
 
 }
 
@@ -16,6 +18,7 @@
   will-change: transform;
   align-items: center;
   margin: 0 auto;
+   /* 사이드바보다 뒤에*/
    z-index:-1;
 }
 
@@ -33,3 +36,24 @@
  
 }
 
+.embla__button {
+  position: absolute;
+  top: 7.1rem;
+  z-index: 10; 
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.embla__button--prev {
+  left: 30rem;
+}
+
+.embla__button--next {
+  right: 27.9rem;
+}
+
+button{
+    cursor: pointer; 
+}
