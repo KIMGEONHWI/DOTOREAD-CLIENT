@@ -1,6 +1,8 @@
 .embla {
   overflow: hidden;
   width: 100%;
+   position: relative;  
+  z-index: -1;     
 
 }
 
@@ -19,7 +21,7 @@
 
 
 .embla__slide {
-  flex: 0 0 23%;
+  flex: 0 0 21%;
   position: relative;
   overflow: hidden;
   transition: transform 0.3s, filter 0.3s;

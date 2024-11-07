@@ -28,8 +28,11 @@ export default MainPage;
 
 const MainPageWrapper = styled.div`
 	width: 100%;
-	height: 100vh;
+	min-height: 100vh;
 	background-color: ${({ theme }) => theme.colors.background};
+	position: relative; /* position을 relative 또는 다른 값으로 설정 */
+	z-index: -10;
+	padding-bottom: 11.9rem;
 `;
 
 const MainPageBanner = styled.div`
