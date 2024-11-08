@@ -1,17 +1,14 @@
 import Login from './Login';
+import MainPage from './MainPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
 	{
 		path: '/login',
-		children: [{ path: '', element: <Login /> }],
+		element: <Login />,
 	},
-	//   {
-	//     path: "/1",
-	//     element: <Page1 />,
-	//   },
-	//   {
-	//     path: "/3",
-	//     element: <Page3 />,
-	//   },
+	{
+		path: '/',
+		element: <MainPage />,
+	},
 ]);
