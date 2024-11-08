@@ -10,7 +10,6 @@ function SideBar() {
 	const navigate = useNavigate();
 
 	const hanleIconClick = (iconId: string) => {
-		// 'share' 'mission' 'mypage' 아이콘 클릭시 임시로 /로 가게 해두었습니다.
 		if (iconId != 'bookmark') {
 			navigate('/');
 		}
@@ -49,7 +48,7 @@ const SideBarWrapper = styled.div`
 	border-right: 0.35rem solid ${({ theme }) => theme.colors.gray1};
 	background-color: ${({ theme }) => theme.colors.background};
 	position: fixed;
-	z-index: 0;
+	z-index: 10;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

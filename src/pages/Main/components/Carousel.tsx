@@ -3,7 +3,7 @@ import ArrowRightSvg from '@/assets/arrow-right.svg?react';
 import ClassificationArticle from '@/components/AiClassification/ClassificationArticle';
 import { FreshArticleList, RottenArticleList } from '@/constants/FreshRottenList';
 import useEmblaCarousel from 'embla-carousel-react';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 interface CarouselProps {
@@ -115,14 +115,11 @@ const PrevButton = styled.button`
 	cursor: pointer;
 	z-index: 1;
 	pointer-events: auto;
-	background-color: red;
 `;
 
 const NextButton = styled.button`
 	right: 14.918rem;
 	position: absolute;
-	width: 20rem;
-	height: 20rem;
 	top: 7rem;
 	border: none;
 	color: white;
@@ -130,5 +127,4 @@ const NextButton = styled.button`
 	cursor: pointer;
 	z-index: 2;
 	pointer-events: auto;
-	background-color: red;
 `;

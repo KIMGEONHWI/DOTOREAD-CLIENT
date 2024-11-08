@@ -1,4 +1,4 @@
-import CarouselWrapper from './components/Carouselwrapper';
+import CarouselWrapper from './components/CarouselWrapper';
 import CircleGraph from './components/CircleGraph';
 import MainScore from './components/MainScore';
 import MainTitle from './components/MainTitle';
@@ -31,7 +31,7 @@ const MainPageWrapper = styled.div`
 	min-height: 100vh;
 	background-color: ${({ theme }) => theme.colors.background};
 	position: relative;
-	z-index: -10;
+	z-index: 0;
 `;
 
 const MainPageBanner = styled.div`
