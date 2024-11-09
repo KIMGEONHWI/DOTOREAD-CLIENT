@@ -3,7 +3,7 @@ import ArrowRightSvg from '@/assets/arrow-right.svg?react';
 import ClassificationArticle from '@/components/AiClassification/ClassificationArticle';
 import { FreshArticleList, RottenArticleList } from '@/constants/FreshRottenList';
 import useEmblaCarousel from 'embla-carousel-react';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
 interface CarouselProps {
@@ -13,7 +13,24 @@ interface CarouselProps {
 const Carousel = ({ listType }: CarouselProps) => {
 	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
 
+	const scrollPrev = useCallback(() => {
+		if (emblaApi) {
+			emblaApi.scrollPrev();
+		} else {
+			console.log('else');
+		}
+	}, [emblaApi]);
+
+	const scrollNext = useCallback(() => {
+		if (emblaApi) {
+			emblaApi.scrollNext();
+		} else {
+			console.log('else');
+		}
+	}, [emblaApi]);
+
 	useEffect(() => {
+		console.log('emblaApi:', emblaApi);
 		if (emblaApi) {
 			const updateClasses = () => {
 				const slides = emblaApi.slideNodes();
@@ -32,6 +49,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 					}
 				});
 			};
+			emblaApi.on('select', updateClasses);
 			updateClasses();
 		}
 	}, [emblaApi]);
@@ -40,7 +58,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 
 	return (
 		<CarouselComponent>
-			<PrevButton>
+			<PrevButton onClick={scrollPrev}>
 				<ArrowLeft />
 			</PrevButton>
 			<CarouselContainer ref={emblaRef}>
@@ -58,7 +76,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 					))}
 				</Container>
 			</CarouselContainer>
-			<NextButton>
+			<NextButton onClick={scrollNext}>
 				<ArrowRight />
 			</NextButton>
 		</CarouselComponent>
@@ -72,22 +90,19 @@ const CarouselComponent = styled.div`
 const CarouselContainer = styled.div`
 	overflow: hidden;
 	width: 100%;
-	position: relative;
 `;
 
 const Container = styled.div`
 	display: flex;
-	will-change: transform;
 	align-items: center;
-	margin: 0 auto;
+
 	gap: 2.9rem;
 `;
 
 const Slide = styled.div`
-	flex: 0 0 21%;
+	flex: 0 0 20% 
 
 	position: relative;
-	overflow: hidden;
 	transition:
 		transform 0.3s,
 		filter 0.3s;
