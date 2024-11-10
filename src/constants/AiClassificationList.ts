@@ -134,4 +134,13 @@ export const AiClassifiedList = [
 		category: '미분류',
 		folder: '리액트',
 	},
+	{
+		id: '16',
+		title: '2D 게임',
+		hashtag: '미분류됨 2 셀피 메니저 만들기',
+		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
+		date: '9월 10일',
+		category: '미분류',
+		folder: '리액트2',
+	},
 ];

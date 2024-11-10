@@ -139,6 +139,26 @@ const ClassificationBoxWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 2.1rem;
+
+	max-height: 70rem;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 0.7rem;
+		height: 70rem;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: none;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 15px;
+		cursor: pointer;
+		height: 19.6rem;
+		width: 0.7rem;
+		background: ${({ theme }) => theme.colors.white2};
+	}
 `;
 
 const ClassificationBtnBox = styled.div`
@@ -146,6 +166,7 @@ const ClassificationBtnBox = styled.div`
 	width: 127.8rem;
 	height: 9.3rem;
 	padding: 2.7rem 0 2.9rem 0;
+	overflow: hidden;
 	gap: 1rem;
 `;
 
@@ -159,7 +180,7 @@ const ClassificationBox = styled.div<{ isClicked: boolean }>`
 	padding: 1.4rem 2.1rem;
 	gap: 1.3rem;
 	background-color: ${({ theme, isClicked }) => (isClicked ? theme.colors.orange4 : theme.colors.background_box)};
-	overflow: hidden;
+	overflow -x : hidden;
 	cursor: pointer;
 `;
 
