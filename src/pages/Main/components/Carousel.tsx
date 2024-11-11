@@ -11,7 +11,7 @@ interface CarouselProps {
 }
 
 const Carousel = ({ listType }: CarouselProps) => {
-	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+	const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, skipSnaps: false });
 
 	const scrollPrev = useCallback(() => {
 		if (emblaApi) {
@@ -104,8 +104,8 @@ const Slide = styled.div`
 
 	position: relative;
 	transition:
-		transform 0.3s,
-		filter 0.3s;
+		transform 0.5s,
+		filter 0.5s;
 	filter: brightness(50%);
 
 	&.is-selected,
