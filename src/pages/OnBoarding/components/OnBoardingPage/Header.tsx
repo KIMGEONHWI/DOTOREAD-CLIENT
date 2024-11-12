@@ -1,15 +1,21 @@
 import LogoIcon from '@/assets/LogoOnBoarding.svg?react';
 import Btn from '@/components/common/Button/Btn';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface HeaderScrollProps {
 	isScrolled: boolean;
 }
 const Header = ({ isScrolled }: HeaderScrollProps) => {
+	const navigate = useNavigate();
+	const handleStartClick = () => {
+		console.log('누름');
+		navigate('/start');
+	};
 	return (
 		<HeaderWrapper isScrolled={isScrolled}>
 			<LogoIcon />
-			<Btn id="start" />
+			<Btn id="start" onClick={handleStartClick} />
 		</HeaderWrapper>
 	);
 };

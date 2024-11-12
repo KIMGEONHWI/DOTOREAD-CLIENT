@@ -1,8 +1,8 @@
-import OnBoarding1 from './components/OnBoarding1';
-import OnBoarding2 from './components/OnBoarding2';
-import OnBoarding3 from './components/OnBoarding3';
-import OnBoarding4 from './components/OnBoarding4';
-import Header from '@/components/OnBoarding/Header';
+import OnBoarding1 from './components/OnBoardingPage/OnBoarding1';
+import OnBoarding2 from './components/OnBoardingPage/OnBoarding2';
+import OnBoarding3 from './components/OnBoardingPage/OnBoarding3';
+import OnBoarding4 from './components/OnBoardingPage/OnBoarding4';
+import Header from '@/pages/OnBoarding/components/OnBoardingPage/Header';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 

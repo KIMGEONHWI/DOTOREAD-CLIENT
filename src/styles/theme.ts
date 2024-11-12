@@ -1,6 +1,5 @@
 import { css } from 'styled-components';
 
-
 const colors = {
 	orange1: '#F15A25',
 	orange2: 'rgba(209, 68, 7, 0.24)',
@@ -60,7 +59,9 @@ const fonts = {
 		font-weight: 600;
 	`,
 	Pretendard_Semibold_45px: css`
-		${baseFontStyle}
+		font-family: Pretendard;
+		font-style: normal;
+		line-height: 45px;
 		font-size: 45px;
 		font-weight: 600;
 	`,
@@ -129,6 +130,13 @@ const fonts = {
 		${baseFontStyle}
 		font-size: 9px;
 		font-weight: 400;
+	`,
+	Roboto_20px: css`
+		font-family: Roboto;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: normal;
 	`,
 };
 

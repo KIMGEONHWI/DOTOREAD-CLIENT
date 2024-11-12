@@ -1,6 +1,7 @@
 import AiClassificationPage from './components/AiClassification/AiClassificationPage';
 import BookMarkPage from './pages/BookMark/BookMarkPage';
 import OnBoardingPage from './pages/OnBoarding/OnBoardingPage';
+import OnBoardingStartPage from './pages/OnBoarding/OnBoardingStartPage';
 import Roots from '@/Roots';
 import MainPage from '@/pages/Main/MainPage';
 import { createBrowserRouter } from 'react-router-dom';
@@ -13,6 +14,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/',
 				element: <OnBoardingPage />,
+			},
+			{
+				path: '/start',
+				element: <OnBoardingStartPage />,
 			},
 			{
 				path: '/main',

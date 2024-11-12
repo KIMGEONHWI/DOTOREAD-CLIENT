@@ -10,9 +10,8 @@ function SideBar() {
 	const navigate = useNavigate();
 
 	const hanleIconClick = (iconId: string) => {
-		// 'share' 'mission' 'mypage' 아이콘 클릭시 임시로 /로 가게 해두었습니다.
 		if (iconId != 'bookmark') {
-			navigate('/');
+			navigate('/main');
 		}
 		setClicked(iconId);
 	};
@@ -23,7 +22,7 @@ function SideBar() {
 			setClicked('bookmark');
 		}
 	}, [location.pathname]);
-	
+
 	return (
 		<SideBarWrapper>
 			<Menus>
