@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 interface ClassificationArticleProps {
 	title: string;
-	hashtag: string;
+	hashtag?: string;
 	folder: string;
 	date: string;
 	showDeleteIcon?: boolean;
 	forcarousel?: boolean;
+	imageUrl?: string | null;
 }
 
 interface StyledAiDeleteIconProps {
@@ -19,17 +20,16 @@ const ClassificationArticle = ({
 	title,
 	folder,
 	date,
-	hashtag,
 	showDeleteIcon = false,
 	forcarousel = false,
+	imageUrl,
 }: ClassificationArticleProps) => {
 	return (
-		<ArticleWrapper forcarousel={forcarousel}>
+		<ArticleWrapper forcarousel={forcarousel} imageUrl={imageUrl}>
 			<StyledAiDeleteIcon show={showDeleteIcon} />
 			<ArticleMini forcarousel={forcarousel}>
 				<ArticleMiniTop>
 					<ArticleMiniTitle forcarousel={forcarousel}>{title}</ArticleMiniTitle>
-					<ArticleMiniHashtag forcarousel={forcarousel}>#{hashtag}</ArticleMiniHashtag>
 				</ArticleMiniTop>
 				<ArticleMiniBottom>
 					<ArticleMiniBottomLeft>
@@ -45,17 +45,18 @@ const ClassificationArticle = ({
 
 export default ClassificationArticle;
 
-const ArticleWrapper = styled.div<{ forcarousel?: boolean }>`
+const ArticleWrapper = styled.div<{ forcarousel?: boolean; imageUrl?: string | null }>`
 	flex: 0 0 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 1.1rem 1.5rem;
+	cursor: pointer;
 	gap: ${({ forcarousel }) => (forcarousel ? '11.723rem' : '7.723rem')};
-
 	width: ${({ forcarousel }) => (forcarousel ? '40rem' : '33.4118rem')};
 	height: ${({ forcarousel }) => (forcarousel ? '25.5rem' : '21.3rem')};
-	background: ${({ theme }) => theme.colors.white1};
+	background: ${({ theme, imageUrl }) =>
+		imageUrl ? `url(${imageUrl}) center / cover no-repeat` : theme.colors.white1};
 	border-radius: ${({ forcarousel }) => (forcarousel ? '30px' : '20px')};
 `;
 

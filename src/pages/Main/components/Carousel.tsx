@@ -35,7 +35,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 			const updateClasses = () => {
 				const slides = emblaApi.slideNodes();
 				const numSlides = slides.length;
-				const selectedIndex = (emblaApi.selectedScrollSnap() + 2) % slides.length;
+				const selectedIndex = (emblaApi.selectedScrollSnap() + 1) % slides.length;
 				slides.forEach((slide, index) => {
 					slide.classList.remove('is-selected', 'is-prev', 'is-next');
 					if (index === selectedIndex) {
@@ -67,10 +67,10 @@ const Carousel = ({ listType }: CarouselProps) => {
 						<Slide key={article.id}>
 							<ClassificationArticle
 								title={article.title}
-								hashtag={article.hashtag}
 								folder={article.folder}
-								date={article.date}
+								date={article.created_at}
 								forcarousel={true}
+								imageUrl={article.imageUrl}
 							/>
 						</Slide>
 					))}
