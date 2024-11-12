@@ -1,5 +1,6 @@
 import Login from './Login';
 import MainPage from './MainPage';
+import OnBoardingPage from './OnBoardingPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
@@ -8,7 +9,11 @@ export const router = createBrowserRouter([
 		element: <Login />,
 	},
 	{
-		path: '/',
+		path: '/main',
 		element: <MainPage />,
+	},
+	{
+		path: '/',
+		element: <OnBoardingPage />,
 	},
 ]);
