@@ -41,5 +41,4 @@ const OnBoardingPageWrapper = styled.div`
 	width: 100%;
 
 	background-color: ${({ theme }) => theme.colors.background};
-	z-index: -1;
 `;

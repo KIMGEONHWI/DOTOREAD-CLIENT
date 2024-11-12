@@ -1,17 +1,28 @@
+import LogoIcon from '@/assets/LogoOnBoarding.svg?react';
+import Btn from '@/components/common/Button/Btn';
 import styled from 'styled-components';
 
 interface HeaderScrollProps {
 	isScrolled: boolean;
 }
 const Header = ({ isScrolled }: HeaderScrollProps) => {
-	return <HeaderWrapper isScrolled={isScrolled}></HeaderWrapper>;
+	return (
+		<HeaderWrapper isScrolled={isScrolled}>
+			<LogoIcon />
+			<Btn id="start" />
+		</HeaderWrapper>
+	);
 };
 
 export default Header;
 
 const HeaderWrapper = styled.header<HeaderScrollProps>`
+	display: flex;
+	align-items: center;
+	gap: 115.023rem;
+	justify-content: center;
 	width: 100vw;
-	height: 15.8rem;
+	height: 13.8rem;
 	flex-shrink: 0;
 	position: fixed;
 	top: 0;

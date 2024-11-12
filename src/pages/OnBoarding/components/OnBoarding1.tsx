@@ -8,8 +8,8 @@ export default OnBoarding1;
 
 const OnBoarding1Wrapper = styled(BackgroundImage)`
 	display: flex;
-
-	width: 100%;
+	width: 100vw;
+	height: 100vh;
 	object-fit: cover;
-	z-index: 0;
+	background: lightgray 50%;
 `;
