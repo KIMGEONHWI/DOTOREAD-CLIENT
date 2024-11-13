@@ -1,10 +1,15 @@
 import GoogleLogo from '@/assets/Google.svg?react';
 import styled from 'styled-components';
 
+const GOOGLE_URL = import.meta.env.VITE_GOOGLE_URL;
+
 function Button() {
+	const handleClick = () => {
+		window.location.href = `${GOOGLE_URL}`;
+	};
 	return (
 		<ButtonWrapper>
-			<SignInBtn>
+			<SignInBtn onClick={handleClick} type="button">
 				<GoogleLogo />
 				Sign In with Google
 			</SignInBtn>

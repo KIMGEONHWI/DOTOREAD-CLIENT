@@ -1,4 +1,3 @@
-import Login from './Login';
 import AiClassificationPage from './components/AiClassification/AiClassificationPage';
 import BookMarkPage from './pages/BookMark/BookMarkPage';
 import OnBoardingPage from './pages/OnBoarding/OnBoardingPage';
@@ -22,10 +21,6 @@ export const router = createBrowserRouter([
 			{
 				path: '/main',
 				element: <MainPage />,
-			},
-			{
-				path: '/login',
-				element: <Login />,
 			},
 			{
 				path: '/bookmark',

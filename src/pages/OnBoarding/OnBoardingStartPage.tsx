@@ -54,5 +54,4 @@ const TextTitle = styled.div`
 const SubDescription = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_45px};
 	color: ${({ theme }) => theme.colors.white1};
-	margin-botton: 6.7rem;
 `;
