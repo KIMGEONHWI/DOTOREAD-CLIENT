@@ -6,12 +6,16 @@ import LeeterIcon from '@/assets/Letter.svg?react';
 import LineIcon from '@/assets/Line.svg?react';
 import LucidIcon from '@/assets/Lucide.svg?react';
 import PlusIcon from '@/assets/Plus.svg?react';
-import { FOLDER_LIST } from '@/constants/FolderList';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+interface Folder {
+	id: string;
+	name: string;
+}
 
 interface BookMarkSlideProps {
 	show: boolean;
@@ -21,43 +25,60 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 	const navigate = useNavigate();
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	const [folderName, setFolderName] = useState('');
+	const [folders, setFolders] = useState<Folder[]>([]);
+	const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+	useEffect(() => {
+		const fetchFolders = async () => {
+			try {
+				const accessToken = localStorage.getItem('access-token');
+				if (!accessToken) {
+					console.error('Access token not found');
+					return;
+				}
+
+				const response = await axios.get(`${BASE_URL}/api/v1/folders`, {
+					headers: {
+						access: `${accessToken}`,
+					},
+				});
+				setFolders(response.data.result);
+				console.log('Folders fetched:', response.data);
+			} catch (error) {
+				console.error('Error fetching folders:', error);
+			}
+		};
+
+		if (show) {
+			fetchFolders();
+		}
+	}, [show, BASE_URL]);
 
 	const handleNavigate = (text: string, iconType: string, category: string) => {
 		navigate('/bookmark', { state: { text, iconType, category } });
 	};
 
-	const BASE_URL = import.meta.env.VITE_BASE_URL;
-
 	const handleAddFolder = async () => {
 		try {
 			const accessToken = localStorage.getItem('access-token');
-
 			if (!accessToken) {
 				console.error('Access token not found');
 				return;
 			}
 
-			const data = {
-				name: folderName,
-			};
-
-			console.log('전송 데이터:', data);
-
+			const data = { name: folderName };
 			const response = await axios.post(`${BASE_URL}/api/v1/folders`, data, {
 				headers: {
 					access: `${accessToken}`,
 				},
-				withCredentials: true,
 			});
-
 			console.log('Folder created:', response.data);
+			setFolders((prevFolders) => [...prevFolders, response.data]);
 			closeModal();
 		} catch (error) {
 			console.error('Error creating folder:', error);
 		}
 	};
-
-	console.log(import.meta.env.VITE_BASE_URL);
 
 	return (
 		<BookMarkSlideWrapper $show={show}>
@@ -80,18 +101,17 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 					Folders
 					<PlusIcon onClick={openModal} style={{ cursor: 'pointer' }} />
 				</FoldersTitle>
-				{FOLDER_LIST.map((folder) => (
+				{folders.map((folder) => (
 					<BookMarkListBtn
 						key={folder.id}
-						text={folder.text}
+						text={folder.name}
 						leftIcon={<FolderIcon />}
 						rightIcon={<LucidIcon />}
-						onClick={() => handleNavigate(folder.text, 'classified', folder.text)}
+						onClick={() => handleNavigate(folder.name, 'classified', folder.name)}
 					/>
 				))}
 			</FoldersContent>
 
-			{/* Modal */}
 			<Modal id="create" isOpen={isModalOpen} onClose={closeModal} onConfirm={handleAddFolder}>
 				<Title>생성할 폴더 이름을 입력해주세요.</Title>
 				<Input type="text" placeholder="폴더 이름" value={folderName} onChange={(e) => setFolderName(e.target.value)} />
