@@ -1,0 +1,103 @@
+export const FreshArticleList = [
+	{
+		id: '1',
+		title: '메모리 관리 in Python',
+		imageUrl: 'https://velog.velcdn.com/images/roo333/post/e06e5c7c-ee64-4186-820c-256f7dfa08d0/image.jpg',
+		url: 'https://velog.io/@roo333/메모리-관리-in-Python',
+		created_at: '9월 10일',
+		folder: '파이썬',
+	},
+	{
+		id: '2',
+		title: 'ssh 로 명령어 수행하기',
+		imageUrl: 'https://velog.velcdn.com/images%2Fdame_sol%2Fpost%2F08926987-fb80-40c1-9ccc-57997e809cec%2Fimage.png',
+		url: 'https://velog.io/@dame_sol/ssh-로-명령어-수행하기',
+		created_at: '9월 11일',
+		folder: '리눅스',
+	},
+	{
+		id: '3',
+		title: '[자료구조] 파이썬 스택(stack) 총정리',
+		imageUrl:
+			'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FvoG9V%2Fbtq7FiAhpID%2FRtWY3eZUYAuei3awqrAeV1%2Fimg.png',
+		url: 'https://gorokke.tistory.com/129',
+		created_at: '9월 12일',
+		folder: '자료구조',
+	},
+	{
+		id: '4',
+		title: '[자료구조] BFS, DFS 총정리',
+		imageUrl: 'https://blog.kakaocdn.net/dn/cnBbXO/btq7Ezo2lSi/O7leynSS29WiJj2hQVr341/img.gif',
+		url: 'https://gorokke.tistory.com/131',
+		created_at: '9월 13일',
+		folder: '자료구조',
+	},
+	{
+		id: '5',
+		title: '람다(lambda) 총 정리, key sort, key 정렬',
+		imageUrl: null,
+		url: 'https://gorokke.tistory.com/38',
+		created_at: '9월 14일',
+		folder: '파이썬',
+	},
+	{
+		id: '6',
+		title: '블렌더 강좌 2.90.1 - 바다 Ocean 만들기',
+		imageUrl:
+			'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F9m7SD%2FbtqMzFpsmkt%2Fw1kNl5I7Dkf5Iu4p1gKlL0%2Fimg.png',
+		url: 'https://www.godhasdone.com/61#google_vignette',
+		created_at: '9월 15일',
+		folder: '블랜더',
+	},
+];
+export const RottenArticleList = [
+	{
+		id: '7',
+		title: 'New jeans all songs Playlist',
+		imageUrl: 'https://img.youtube.com/vi/IhpGzwEbElw/0.jpg',
+		url: 'https://www.youtube.com/watch?v=IhpGzwEbElw',
+		created_at: '9월 10일',
+		folder: '유튜브',
+	},
+	{
+		id: '8',
+		title: 'NewJeans (뉴진스) ETA Official MV (Performance ver.)',
+		imageUrl: 'https://img.youtube.com/vi/s4Ow55AbdCg/0.jpg',
+		url: 'https://www.youtube.com/watch?v=s4Ow55AbdCg',
+		created_at: '9월 11일',
+		folder: '유튜브',
+	},
+	{
+		id: '9',
+		title: '반려식물 키우기 효과 6가지',
+		imageUrl: ' https://www.knnews.co.kr/edb/nimages/2022/01/2022010614513235704.jpg',
+		url: 'https://www.mabopractice.com/blog/63649e9bf511d425d6c32a88',
+		created_at: '9월 12일',
+		folder: '반려식물',
+	},
+	{
+		id: '10',
+		title: '집에서 키우기 쉬운 반려식물 추천 리스트 5',
+		imageUrl: null,
+		url: 'https://jtse.tistory.com/entry/집에서-키우기-쉬운-반려식물-추천-리스트-5#google_vignette',
+		created_at: '9월 13일',
+		folder: '반려식물',
+	},
+	{
+		id: '11',
+		title: '3d Abstract 사진 | Unsplash에서 무료 이미지 다운로드',
+		imageUrl:
+			'https://media.istockphoto.com/id/1386618240/ko/사진/3차원-추상파-배경.webp?a=1&b=1&s=612x612&w=0&k=20&c=gM_XmZPU322DDfTcYaCL3uXynoRHW3JzDt7CBQ2F_Wc=',
+		url: 'https://unsplash.com/ko/s/사진/3d-abstract',
+		created_at: '9월 14일',
+		folder: '미분류',
+	},
+	{
+		id: '12',
+		title: 'Rubio, Waltz nominations presage tough U.S. line on North Korea, China and possibly allies',
+		imageUrl: 'https://imgnews.pstatic.net/image/640/2024/11/12/0000061438_001_20241112191310574.jpg?type=w860',
+		url: 'https://n.news.naver.com/article/newspaper/640/0000061438?date=20241113',
+		created_at: '9월 15일',
+		folder: '뉴스',
+	},
+];

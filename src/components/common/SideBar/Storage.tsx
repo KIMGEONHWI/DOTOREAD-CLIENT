@@ -18,6 +18,7 @@ export default Storage;
 
 const StorageWrapper = styled.div`
 	position: absolute;
+	cursor: pointer;
 `;
 const WrapperForDisplay = styled.div`
 	position: relative;
