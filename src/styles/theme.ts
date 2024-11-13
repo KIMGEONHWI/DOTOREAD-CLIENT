@@ -4,9 +4,11 @@ const colors = {
 	orange1: '#F15A25',
 	orange2: 'rgba(209, 68, 7, 0.24)',
 	orange3: '#FFE5D9',
+	orange4: '#AA4623',
 
 	white1: '#FFFFFF',
 	white2: '#DEDEDE',
+	white3: '#FCFCFC',
 
 	gray1: '#3B3B3B',
 	gray2: '#5C5C5C',
@@ -21,47 +23,67 @@ const colors = {
 	bookmark_hover: '#343434',
 	bookmark_click: '#6E4A39',
 	bookmark_select: '#FFE5D9',
+
+	thumnail: '#D9D9D9',
+	transparent: 'rgba(0,0,0,0)',
+
+	modal_background: 'rgba(217, 217, 217, 0.3)',
 };
 
 const baseFontStyle = css`
-	color: var(--white1, #fff);
 	font-family: Pretendard;
 	font-style: normal;
 	line-height: normal;
 `;
 
 const fonts = {
-	Pretendard_Semibord_45px: css`
+	Pretendard_Bold_68px: css`
+		${baseFontStyle}
+		font-size: 68px;
+		font-weight: 700;
+	`,
+
+	Pretendard_Bold_20px: css`
+		${baseFontStyle}
+		font-size: 20px;
+		font-weight: 700;
+	`,
+	Pretendard_Semibold_49px: css`
+		${baseFontStyle}
+		font-size: 49.976px;
+		font-weight: 600;
+	`,
+	Pretendard_Semibold_45px: css`
 		${baseFontStyle}
 		font-size: 45px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_38px: css`
+	Pretendard_Semibold_38px: css`
 		${baseFontStyle}
 		font-size: 38px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_30px: css`
+	Pretendard_Semibold_30px: css`
 		${baseFontStyle}
 		font-size: 30px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_22px: css`
+	Pretendard_Semibold_22px: css`
 		${baseFontStyle}
 		font-size: 22px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_18px: css`
+	Pretendard_Semibold_18px: css`
 		${baseFontStyle}
 		font-size: 18px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_13px: css`
+	Pretendard_Semibold_13px: css`
 		${baseFontStyle}
 		font-size: 13px;
 		font-weight: 600;
 	`,
-	Pretendard_Semibord_10px: css`
+	Pretendard_Semibold_10px: css`
 		${baseFontStyle}
 		font-size: 10px;
 		font-weight: 600;
