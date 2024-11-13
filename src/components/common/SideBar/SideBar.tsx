@@ -44,7 +44,7 @@ export default SideBar;
 
 const SideBarWrapper = styled.div`
 	width: 12rem;
-	height: 108rem;
+	height: 100vh;
 	border-right: 0.35rem solid ${({ theme }) => theme.colors.gray1};
 	background-color: ${({ theme }) => theme.colors.background};
 	position: fixed;

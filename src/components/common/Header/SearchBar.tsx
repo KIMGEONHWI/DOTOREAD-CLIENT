@@ -38,4 +38,5 @@ const SearchInput = styled.input`
 	&::placeholder {
 		color: ${({ theme }) => theme.colors.gray3};
 	}
+	color: ${({ theme }) => theme.colors.white1};
 `;
