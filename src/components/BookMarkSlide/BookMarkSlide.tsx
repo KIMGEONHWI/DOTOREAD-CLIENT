@@ -26,6 +26,8 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 		navigate('/bookmark', { state: { text, iconType, category } });
 	};
 
+	const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 	const handleAddFolder = async () => {
 		try {
 			const accessToken = localStorage.getItem('access-token');
@@ -41,7 +43,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 
 			console.log('전송 데이터:', data);
 
-			const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/folders`, data, {
+			const response = await axios.post(`${BASE_URL}/api/v1/folders`, data, {
 				headers: {
 					access: `${accessToken}`,
 				},
