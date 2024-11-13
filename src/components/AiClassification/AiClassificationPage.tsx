@@ -1,4 +1,3 @@
-// AiClassificationPage.tsx
 import AiClassificationBtn from '../common/Button/AiClassificationBtn';
 import Btn from '../common/Button/Btn';
 import Modal from '../common/Modal/Modal';
@@ -206,7 +205,7 @@ const ClassificationBox = styled.div<{ isClicked: boolean }>`
 	padding: 1.4rem 2.1rem;
 	gap: 1.3rem;
 	background-color: ${({ theme, isClicked }) => (isClicked ? theme.colors.orange4 : theme.colors.background_box)};
-	overflow -x : hidden;
+	overflow-x: hidden;
 	cursor: pointer;
 `;
 

@@ -12,10 +12,6 @@ interface ClassificationArticleProps {
 	imageUrl?: string | null;
 }
 
-interface StyledAiDeleteIconProps {
-	show: boolean;
-}
-
 const ClassificationArticle = ({
 	title,
 	folder,
@@ -26,7 +22,7 @@ const ClassificationArticle = ({
 }: ClassificationArticleProps) => {
 	return (
 		<ArticleWrapper forcarousel={forcarousel} imageUrl={imageUrl}>
-			<StyledAiDeleteIcon show={showDeleteIcon} />
+			<StyledAiDeleteIcon $show={showDeleteIcon} />
 			<ArticleMini forcarousel={forcarousel}>
 				<ArticleMiniTop>
 					<ArticleMiniTitle forcarousel={forcarousel}>{title}</ArticleMiniTitle>
@@ -60,9 +56,9 @@ const ArticleWrapper = styled.div<{ forcarousel?: boolean; imageUrl?: string | n
 	border-radius: ${({ forcarousel }) => (forcarousel ? '30px' : '20px')};
 `;
 
-const StyledAiDeleteIcon = styled(AiDeleteIcon)<StyledAiDeleteIconProps>`
+const StyledAiDeleteIcon = styled(AiDeleteIcon)<{ $show: boolean }>`
 	margin-left: 27.5rem;
-	visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
+	visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
 `;
 
 const ArticleMini = styled.div<{ forcarousel?: boolean }>`
@@ -81,15 +77,6 @@ const ArticleMiniTop = styled.div`
 `;
 
 const ArticleMiniTitle = styled.h3<{ forcarousel?: boolean }>`
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	color: ${({ theme }) => theme.colors.white1};
-	${({ theme, forcarousel }) =>
-		forcarousel ? theme.fonts.Pretendard_Semibold_22px : theme.fonts.Pretendard_Semibold_18px};
-`;
-
-const ArticleMiniHashtag = styled.p<{ forcarousel?: boolean }>`
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
