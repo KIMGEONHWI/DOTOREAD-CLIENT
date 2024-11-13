@@ -12,7 +12,7 @@ import styled from 'styled-components';
 const AiClassificationPage = () => {
 	const [clickedFolders, setClickedFolders] = useState<Record<string, boolean>>({});
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
-	const [modalContent, setModalContent] = useState<string>(''); // 모달의 제목 내용을 설정할 상태
+	const [modalContent, setModalContent] = useState<string>(''); 
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
@@ -22,12 +22,12 @@ const AiClassificationPage = () => {
 	};
 
 	const handleFinishClassify = () => {
-		setModalContent('AI 분류 완료하기'); // finishClassify 버튼 클릭 시 모달 내용 설정
+		setModalContent('AI 분류 완료하기'); 
 		openModal();
 	};
 
 	const handleCancelClassify = () => {
-		setModalContent('AI 분류 취소하기'); // cancelClassify 버튼 클릭 시 모달 내용 설정
+		setModalContent('AI 분류 취소하기'); 
 		openModal();
 	};
 

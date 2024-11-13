@@ -9,6 +9,7 @@ import PlusIcon from '@/assets/Plus.svg?react';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -28,31 +29,31 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 	const [folders, setFolders] = useState<Folder[]>([]);
 	const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-	useEffect(() => {
-		const fetchFolders = async () => {
-			try {
-				const accessToken = localStorage.getItem('access-token');
-				if (!accessToken) {
-					console.error('Access token not found');
-					return;
-				}
-
-				const response = await axios.get(`${BASE_URL}/api/v1/folders`, {
-					headers: {
-						access: `${accessToken}`,
-					},
-				});
-				setFolders(response.data.result);
-				console.log('Folders fetched:', response.data);
-			} catch (error) {
-				console.error('Error fetching folders:', error);
+	const fetchFolders = useCallback(async () => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
 			}
-		};
 
+			const response = await axios.get(`${BASE_URL}/api/v1/folders`, {
+				headers: {
+					access: `${accessToken}`,
+				},
+			});
+			setFolders(response.data.result || []);
+			console.log('Folders fetched:', response.data);
+		} catch (error) {
+			console.error('Error fetching folders:', error);
+		}
+	}, [BASE_URL]);
+
+	useEffect(() => {
 		if (show) {
 			fetchFolders();
 		}
-	}, [show, BASE_URL]);
+	}, [show, fetchFolders]);
 
 	const handleNavigate = (text: string, iconType: string, category: string) => {
 		navigate('/bookmark', { state: { text, iconType, category } });
@@ -73,10 +74,33 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 				},
 			});
 			console.log('Folder created:', response.data);
-			setFolders((prevFolders) => [...prevFolders, response.data]);
+
 			closeModal();
+			setFolderName('');
+			await fetchFolders();
 		} catch (error) {
 			console.error('Error creating folder:', error);
+		}
+	};
+
+	const handleDeleteFolder = async (folderId: string) => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+
+			await axios.delete(`${BASE_URL}/api/v1/folders/${folderId}`, {
+				headers: {
+					access: `${accessToken}`,
+				},
+			});
+			console.log('Folder deleted:', folderId);
+
+			await fetchFolders();
+		} catch (error) {
+			console.error('Error deleting folder:', error);
 		}
 	};
 
@@ -108,6 +132,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 						leftIcon={<FolderIcon />}
 						rightIcon={<LucidIcon />}
 						onClick={() => handleNavigate(folder.name, 'classified', folder.name)}
+						onDelete={() => handleDeleteFolder(folder.id)}
 					/>
 				))}
 			</FoldersContent>
