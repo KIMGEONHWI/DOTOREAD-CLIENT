@@ -6,8 +6,9 @@ const OnBoarding3 = () => {
 			<Description>
 				<TextTitle>읽지 않은 북마크를 정리하며 도토리를 얻으세요</TextTitle>
 				<SubDescription>
-					도토릿은 사용자가 저장한 북마크를 실제로 읽도록 돕습니다.<br />읽지 않은 북마크를 확인하고 미션을 통해 도토리를
-					얻으세요.
+					도토릿은 사용자가 저장한 북마크를 실제로 읽도록 돕습니다.
+					<br />
+					읽지 않은 북마크를 확인하고 미션을 통해 도토리를 얻으세요.
 				</SubDescription>
 			</Description>
 		</OnBoarding3Wrapper>
@@ -28,7 +29,7 @@ const Description = styled.div`
 	top: 25.3rem;
 	display: flex;
 	flex-direction: column;
-	algin-items: center;
+	align-items: center;
 	justify-content: center;
 	gap: 3.9rem;
 `;

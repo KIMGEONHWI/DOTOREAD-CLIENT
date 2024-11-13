@@ -22,7 +22,9 @@ const Header = ({ isScrolled }: HeaderScrollProps) => {
 
 export default Header;
 
-const HeaderWrapper = styled.header<HeaderScrollProps>`
+const HeaderWrapper = styled.header.withConfig({
+	shouldForwardProp: (prop) => prop !== 'isScrolled',
+})<HeaderScrollProps>`
 	display: flex;
 	align-items: center;
 	gap: 115.023rem;

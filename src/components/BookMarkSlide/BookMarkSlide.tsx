@@ -26,7 +26,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 	};
 
 	return (
-		<BookMarkSlideWrapper show={show}>
+		<BookMarkSlideWrapper $show={show}>
 			<BookMarksContent>
 				<BookMarkTitle>BookMarks</BookMarkTitle>
 				<BookMarkListBtn
@@ -69,9 +69,9 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 
 export default BookMarkSlide;
 
-const BookMarkSlideWrapper = styled.div<{ show: boolean }>`
+const BookMarkSlideWrapper = styled.div<{ $show: boolean }>`
 	position: fixed;
-	left: ${({ show }) => (show ? '12rem' : '-30rem')};
+	left: ${({ $show }) => ($show ? '12rem' : '-30rem')};
 	top: 17.3rem;
 	width: 28.2rem;
 	height: 90.7rem;

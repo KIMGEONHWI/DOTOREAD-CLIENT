@@ -21,7 +21,7 @@ const OnBoarding2Wrapper = styled.div`
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	algin-items: center;
+	align-items: center;
 	justify-content: center;
 	width: 100%;
 	height: 100vh;
@@ -34,7 +34,7 @@ const Description = styled.div`
 	top: 25.3rem;
 	display: flex;
 	flex-direction: column;
-	algin-items: center;
+	align-items: center;
 	justify-content: center;
 	gap: 3.9rem;
 `;

@@ -49,7 +49,7 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
 
 	return (
 		<Container size={size}>
-			<SvgContainer size={size} startAngle={startAngle}>
+			<SvgContainer size={size} $startAngle={startAngle}>
 				<path
 					d={describeArc(size / 2, size / 2, radius, startAngle, endAngle)}
 					fill="none"
@@ -85,10 +85,10 @@ const Container = styled.div<{ size: number }>`
 	height: ${({ size }) => size}px;
 `;
 
-const SvgContainer = styled.svg<{ size: number; startAngle: number }>`
+const SvgContainer = styled.svg<{ size: number; $startAngle: number }>`
 	width: ${({ size }) => size}px;
 	height: ${({ size }) => size}px;
-	transform: rotate(${({ startAngle }) => startAngle}deg);
+	transform: rotate(${({ $startAngle }) => $startAngle}deg);
 `;
 
 const TextContainer = styled.div`
