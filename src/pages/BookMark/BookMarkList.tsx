@@ -11,14 +11,15 @@ interface Bookmark {
 	url: string;
 	date: string;
 }
-// 북마크 하나당 선택 가능 여부가 아니라 전체 리스트의 선택 가능여부이기에
+
 interface BookMarkListProps {
 	bookmarks: Bookmark[];
 	isSelectable: boolean;
 	isAllSelected: boolean;
+	setHasSelectedItems: (hasSelected: boolean) => void;
 }
 
-function BookMarkList({ bookmarks, isSelectable, isAllSelected }: BookMarkListProps) {
+function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedItems }: BookMarkListProps) {
 	return (
 		<BookMarkListWrapper>
 			{bookmarks.length > 0 ? (
@@ -31,6 +32,7 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected }: BookMarkListPr
 							date={bookmark.date}
 							isSelectable={isSelectable}
 							isAllSelected={isAllSelected}
+							setHasSelectedItems={setHasSelectedItems}
 						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>
@@ -80,4 +82,5 @@ const LineWrapper = styled.div`
 	display: flex;
 	align-items: center;
 `;
+
 const DefaultWrapperInBookMarkList = styled.div``;

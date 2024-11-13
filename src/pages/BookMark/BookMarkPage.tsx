@@ -7,7 +7,7 @@ import { allBookmarks } from '@/constants/ListItems';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
 import Navbar from '@/pages/BookMark/Navbar';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 // svg 를 속성으로 넘겨줄 수 없어서 Title 컴포넌트를 이 폴더에 정의함
@@ -28,13 +28,11 @@ function Title({ text, Icon }: TitleProps) {
 
 function BookMarkPage() {
 	const location = useLocation();
-	// BookMarkSlide로부터 객체 받아온다.
-
+	const navigate = useNavigate();
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
 
 	let filteredBookmarks = [];
-
 	if (category === '모든 북마크') {
 		filteredBookmarks = allBookmarks;
 	} else {
@@ -43,21 +41,43 @@ function BookMarkPage() {
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
+	const [hasSelectedItems, setHasSelectedItems] = useState(false);
 
 	const handleAiClassifyBtn = () => {
 		setAiClassifyActive(!isAiClassifyActive);
 		setAllSelected(false);
+		setHasSelectedItems(false);
 	};
 
 	const handleChooseAllBtn = () => {
-		setAllSelected(!isAllSelected);
+		const newSelectionState = !isAllSelected;
+		setAllSelected(newSelectionState);
+		setHasSelectedItems(newSelectionState);
 	};
 
-	// 화면 나가면 상태 초기화
+	// 선택된 항목이 있을 때 Enter 키를 눌러 /ai 경로로 이동하는 로직
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Enter' && hasSelectedItems) {
+				navigate('/ai');
+			}
+		};
+
+		if (isAiClassifyActive) {
+			window.addEventListener('keydown', handleKeyDown);
+		}
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isAiClassifyActive, hasSelectedItems, navigate]);
+
+	// 컴포넌트가 언마운트되거나 경로가 변경될 때 상태 초기화
 	useEffect(() => {
 		return () => {
 			setAiClassifyActive(false);
 			setAllSelected(false);
+			setHasSelectedItems(false);
 		};
 	}, [location]);
 
@@ -79,7 +99,12 @@ function BookMarkPage() {
 					<SortBtn />
 				</SortBtnWrapper>
 				{!isAiClassifyActive && <Navbar />}
-				<BookMarkList bookmarks={filteredBookmarks} isSelectable={isAiClassifyActive} isAllSelected={isAllSelected} />
+				<BookMarkList
+					bookmarks={filteredBookmarks}
+					isSelectable={isAiClassifyActive}
+					isAllSelected={isAllSelected}
+					setHasSelectedItems={setHasSelectedItems}
+				/>
 			</BackgroundBox>
 		</BookMarkPageWrapper>
 	);
@@ -101,6 +126,7 @@ const BackgroundBox = styled.div`
 	position: fixed;
 	left: 44.2rem;
 `;
+
 const TitleWrapper = styled.div`
 	position: absolute;
 	left: 2.8rem;
@@ -109,6 +135,7 @@ const TitleWrapper = styled.div`
 	gap: 1rem;
 	align-items: center;
 `;
+
 const BtnWrapperForAiClassify = styled.div`
 	position: absolute;
 	top: 3.7rem;
@@ -129,6 +156,7 @@ const SortBtnWrapper = styled.div`
 	top: 3.7rem;
 	z-index: 1;
 `;
+
 const Category = styled.p`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_38px};
 	color: ${({ theme }) => theme.colors.white1};
