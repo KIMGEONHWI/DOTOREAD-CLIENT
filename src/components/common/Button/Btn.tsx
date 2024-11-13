@@ -7,6 +7,11 @@ interface BtnProps {
 	onClick?: () => void;
 }
 
+interface BtnWrapperProps {
+	$bordercolor: string;
+	$backgroundcolor: string;
+}
+
 function Btn({ id, onClick }: BtnProps) {
 	const button = Buttons.find((button) => button.id === id);
 	const [clicked, setClicked] = useState(false);
@@ -29,8 +34,8 @@ function Btn({ id, onClick }: BtnProps) {
 		<BtnWrapper
 			id={id}
 			onClick={handleClick}
-			bordercolor={bordercolor}
-			backgroundcolor={clicked ? 'orange1' : backgroundcolor}
+			$bordercolor={bordercolor}
+			$backgroundcolor={clicked ? 'orange1' : backgroundcolor}
 		>
 			<BtnName color={clicked ? 'white' : color}>{text}</BtnName>
 		</BtnWrapper>
@@ -39,12 +44,7 @@ function Btn({ id, onClick }: BtnProps) {
 
 export default Btn;
 
-
-const BtnWrapper = styled.button<{
-	id: string;
-	bordercolor: string;
-	backgroundcolor: string;
-}>`
+const BtnWrapper = styled.button<BtnWrapperProps>`
 	cursor: pointer;
 	z-index: 1;
 	width: 20.2rem;
@@ -53,8 +53,8 @@ const BtnWrapper = styled.button<{
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 3px solid ${({ theme, bordercolor }) => theme.colors[bordercolor]};
-	background-color: ${({ theme, backgroundcolor }) => theme.colors[backgroundcolor]};
+	border: 3px solid ${({ theme, $bordercolor }) => theme.colors[$bordercolor]};
+	background-color: ${({ theme, $backgroundcolor }) => theme.colors[$backgroundcolor]};
 	box-shadow: ${({ id }) =>
 		id === 'aiClassify' ? '0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset' : 'none'};
 `;
