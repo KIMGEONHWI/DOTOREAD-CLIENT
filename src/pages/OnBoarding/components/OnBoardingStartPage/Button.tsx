@@ -7,6 +7,7 @@ function Button() {
 	const handleClick = () => {
 		window.location.href = `${GOOGLE_URL}`;
 	};
+
 	return (
 		<ButtonWrapper>
 			<SignInBtn onClick={handleClick} type="button">

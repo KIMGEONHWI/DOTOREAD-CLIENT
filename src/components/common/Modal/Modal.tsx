@@ -7,10 +7,11 @@ interface ModalProps {
 	isOpen: boolean;
 	id: string;
 	onClose: () => void;
+	onConfirm: () => void;
 	children: ReactNode;
 }
 
-const Modal = ({ isOpen, onClose, id, children }: ModalProps) => {
+const Modal = ({ isOpen, onClose, id, onConfirm, children }: ModalProps) => {
 	if (!isOpen) return null;
 
 	return ReactDOM.createPortal(
@@ -18,7 +19,7 @@ const Modal = ({ isOpen, onClose, id, children }: ModalProps) => {
 			<ModalContainer>
 				<CloseButton onClick={onClose}>×</CloseButton>
 				{children}
-				<Btn id={id} />
+				<Btn id={id} onClick={onConfirm} />
 			</ModalContainer>
 		</Overlay>,
 		document.getElementById('modal-root') as HTMLElement,

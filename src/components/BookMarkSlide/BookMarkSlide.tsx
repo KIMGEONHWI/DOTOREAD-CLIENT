@@ -8,6 +8,7 @@ import LucidIcon from '@/assets/Lucide.svg?react';
 import PlusIcon from '@/assets/Plus.svg?react';
 import { FOLDER_LIST } from '@/constants/FolderList';
 import useModal from '@/hooks/useModal';
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -24,6 +25,39 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 	const handleNavigate = (text: string, iconType: string, category: string) => {
 		navigate('/bookmark', { state: { text, iconType, category } });
 	};
+
+	const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+	const handleAddFolder = async () => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+
+			const data = {
+				name: folderName,
+			};
+
+			console.log('전송 데이터:', data);
+
+			const response = await axios.post(`${BASE_URL}/api/v1/folders`, data, {
+				headers: {
+					access: `${accessToken}`,
+				},
+				withCredentials: true,
+			});
+
+			console.log('Folder created:', response.data);
+			closeModal();
+		} catch (error) {
+			console.error('Error creating folder:', error);
+		}
+	};
+
+	console.log(import.meta.env.VITE_BASE_URL);
 
 	return (
 		<BookMarkSlideWrapper $show={show}>
@@ -58,8 +92,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 			</FoldersContent>
 
 			{/* Modal */}
-			<Modal id="create" isOpen={isModalOpen} onClose={closeModal}>
-				{' '}
+			<Modal id="create" isOpen={isModalOpen} onClose={closeModal} onConfirm={handleAddFolder}>
 				<Title>생성할 폴더 이름을 입력해주세요.</Title>
 				<Input type="text" placeholder="폴더 이름" value={folderName} onChange={(e) => setFolderName(e.target.value)} />
 			</Modal>
