@@ -9,9 +9,10 @@ interface ListItem {
 }
 
 // 분류된 FoldersList
+// 유니티 폴더 아이콘 눌렀을때 북마크 없습니다 잘 뜨는지 확인하기 위해 주석 처리해뒀습니다.
 const classifiedBookmarks: ListItem[] = [
 	// {
-	// 	id: '1',
+	// 	id: 'c1',
 	// 	name: '2D 게임',
 	// 	hashtag: '유니티 셀피 메니저 만들기',
 	// 	url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -20,7 +21,7 @@ const classifiedBookmarks: ListItem[] = [
 	// 	category: '유니티',
 	// },
 	{
-		id: '2',
+		id: 'c2',
 		name: '3D 게임',
 		hashtag: 'bbb 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -29,7 +30,7 @@ const classifiedBookmarks: ListItem[] = [
 		category: 'bbb',
 	},
 	// {
-	// 	id: '3',
+	// 	id: 'c3',
 	// 	name: '2D 게임',
 	// 	hashtag: '유니티 셀피 메니저 만들기',
 	// 	url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -38,7 +39,7 @@ const classifiedBookmarks: ListItem[] = [
 	// 	category: '유니티',
 	// },
 	{
-		id: '4',
+		id: 'c4',
 		name: '3D 게임',
 		hashtag: 'bbb 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -47,7 +48,7 @@ const classifiedBookmarks: ListItem[] = [
 		category: 'bbb',
 	},
 	// {
-	// 	id: '5',
+	// 	id: 'c5',
 	// 	name: '2D 게임',
 	// 	hashtag: '유니티 셀피 메니저 만들기',
 	// 	url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -56,7 +57,7 @@ const classifiedBookmarks: ListItem[] = [
 	// 	category: '유니티',
 	// },
 	{
-		id: '6',
+		id: 'c6',
 		name: '3D 게임',
 		hashtag: 'bbb 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -65,7 +66,7 @@ const classifiedBookmarks: ListItem[] = [
 		category: 'bbb',
 	},
 	// {
-	// 	id: '7',
+	// 	id: 'c7',
 	// 	name: '2D 게임',
 	// 	hashtag: '유니티 셀피 메니저 만들기',
 	// 	url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -74,7 +75,7 @@ const classifiedBookmarks: ListItem[] = [
 	// 	category: '유니티',
 	// },
 	{
-		id: '8',
+		id: 'c8',
 		name: '3D 게임',
 		hashtag: 'bbb 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -87,7 +88,7 @@ const classifiedBookmarks: ListItem[] = [
 //미분류
 const unclassifiedBookmarks: ListItem[] = [
 	{
-		id: '1',
+		id: 'u1',
 		name: '2D 게임',
 		hashtag: '미분류됨 1 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -96,7 +97,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '2',
+		id: 'u2',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -105,7 +106,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '3',
+		id: 'u3',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -114,7 +115,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '4',
+		id: 'u4',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -123,7 +124,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '5',
+		id: 'u5',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -132,7 +133,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '6',
+		id: 'u6',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -141,7 +142,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '7',
+		id: 'u7',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -150,7 +151,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '8',
+		id: 'u8',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -159,7 +160,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '9',
+		id: 'u9',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -168,7 +169,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '11',
+		id: 'u11',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -177,7 +178,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '12',
+		id: 'u12',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -186,7 +187,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '13',
+		id: 'u13',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -195,7 +196,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '14',
+		id: 'u14',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -204,7 +205,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '15',
+		id: 'u15',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',
@@ -213,7 +214,7 @@ const unclassifiedBookmarks: ListItem[] = [
 		category: '미분류',
 	},
 	{
-		id: '16',
+		id: 'u16',
 		name: '2D 게임',
 		hashtag: '미분류됨 2 셀피 메니저 만들기',
 		url: 'https://udangtangtang-cording-oldcastle.tistory.com',

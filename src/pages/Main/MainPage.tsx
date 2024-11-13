@@ -1,3 +1,4 @@
+import CarouselWrapper from './components/CarouselWrapper';
 import CircleGraph from './components/CircleGraph';
 import MainScore from './components/MainScore';
 import MainTitle from './components/MainTitle';
@@ -16,6 +17,9 @@ const MainPage = () => {
 					))}
 				</MainScoreBox>
 			</MainPageBanner>
+			<ArticleDashboard>
+				<CarouselWrapper />
+			</ArticleDashboard>
 		</MainPageWrapper>
 	);
 };
@@ -23,10 +27,11 @@ const MainPage = () => {
 export default MainPage;
 
 const MainPageWrapper = styled.div`
-	display: flex;
 	width: 100%;
-	height: 100vh;
+	min-height: 100vh;
 	background-color: ${({ theme }) => theme.colors.background};
+	position: relative;
+	z-index: 0;
 `;
 
 const MainPageBanner = styled.div`
@@ -43,4 +48,12 @@ const MainScoreBox = styled.div`
 	flex-direction: column;
 	margin-top: 11rem;
 	gap: 1.154rem;
+`;
+
+const ArticleDashboard = styled.div`
+	margin-top: 10.9rem;
+	background: linear-gradient(0deg, #efefef -9.72%, #6d6d6d 22.83%, #343434 79.73%, #000 100%);
+	position: relative;
+	z-index: -10;
+	padding-bottom: 11.9rem;
 `;

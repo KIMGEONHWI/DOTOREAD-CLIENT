@@ -18,7 +18,7 @@ function SideBar() {
 
 	const location = useLocation();
 	useEffect(() => {
-		if (location.pathname === '/bookmark') {
+		if (location.pathname === '/bookmark' || location.pathname === '/ai') {
 			setClicked('bookmark');
 		}
 	}, [location.pathname]);
@@ -48,7 +48,7 @@ const SideBarWrapper = styled.div`
 	border-right: 0.35rem solid ${({ theme }) => theme.colors.gray1};
 	background-color: ${({ theme }) => theme.colors.background};
 	position: fixed;
-	z-index: 0;
+	z-index: 10;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -63,4 +63,6 @@ const Menus = styled.div`
 	position: relative;
 `;
 
-const Icon = styled.svg``;
+const Icon = styled.svg`
+	cursor: pointer;
+`;
