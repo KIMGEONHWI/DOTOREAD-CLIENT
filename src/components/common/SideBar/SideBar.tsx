@@ -11,7 +11,7 @@ function SideBar() {
 
 	const hanleIconClick = (iconId: string) => {
 		if (iconId != 'bookmark') {
-			navigate('/');
+			navigate('/main');
 		}
 		setClicked(iconId);
 	};

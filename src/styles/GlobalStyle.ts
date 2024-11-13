@@ -142,6 +142,9 @@ const GlobalStyle = createGlobalStyle`
     color: black;
     text-decoration: none;
     }
+   body::-webkit-scrollbar {
+    display: none; 
+  }
 `;
 
 export default GlobalStyle;

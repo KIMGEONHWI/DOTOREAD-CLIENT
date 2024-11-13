@@ -1,0 +1,38 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" fill="#F5F5F5"/>
+<g id="Section 1">
+<path d="M-2759 -1102C-2759 -1103.1 -2758.1 -1104 -2757 -1104H1994C1995.1 -1104 1996 -1103.1 1996 -1102V5992C1996 5993.1 1995.1 5994 1994 5994H-2757C-2758.1 5994 -2759 5993.1 -2759 5992V-1102Z" fill="#A1A1A1" fill-opacity="0.8"/>
+<path d="M-2757 -1103H1994V-1105H-2757V-1103ZM1995 -1102V5992H1997V-1102H1995ZM1994 5993H-2757V5995H1994V5993ZM-2758 5992V-1102H-2760V5992H-2758ZM-2757 5993C-2757.55 5993 -2758 5992.55 -2758 5992H-2760C-2760 5993.66 -2758.66 5995 -2757 5995V5993ZM1995 5992C1995 5992.55 1994.55 5993 1994 5993V5995C1995.66 5995 1997 5993.66 1997 5992H1995ZM1994 -1103C1994.55 -1103 1995 -1102.55 1995 -1102H1997C1997 -1103.66 1995.66 -1105 1994 -1105V-1103ZM-2757 -1105C-2758.66 -1105 -2760 -1103.66 -2760 -1102H-2758C-2758 -1102.55 -2757.55 -1103 -2757 -1103V-1105Z" fill="black" fill-opacity="0.1"/>
+<g id="&#236;&#152;&#168;&#235;&#179;&#180;&#235;&#148;&#169;1 &#62; &#236;&#139;&#156;&#236;&#158;&#145;&#237;&#149;&#152;&#234;&#184;&#176;">
+<rect width="1920" height="1080" transform="translate(-281 -636)" fill="black"/>
+<g id="Continue with Google / Left Aligned / Fixed" filter="url(#filter0_dd_467_1613)">
+<rect x="-15" y="-15" width="345" height="54" rx="10" fill="white"/>
+<g id="Google Logo">
+<rect width="24" height="24" fill="white"/>
+<g id="logo googleg 48dp">
+<path id="Shape" fill-rule="evenodd" clip-rule="evenodd" d="M23.04 12.2614C23.04 11.4459 22.9668 10.6618 22.8309 9.90909H12V14.3575H18.1891C17.9225 15.795 17.1123 17.013 15.8943 17.8284V20.7139H19.6109C21.7855 18.7118 23.04 15.7636 23.04 12.2614Z" fill="#4285F4"/>
+<path id="Shape_2" fill-rule="evenodd" clip-rule="evenodd" d="M12 23.4998C15.105 23.4998 17.7081 22.4701 19.6109 20.7137L15.8943 17.8282C14.8645 18.5182 13.5472 18.926 12 18.926C9.00474 18.926 6.46951 16.903 5.56519 14.1848H1.72314V17.1644C3.61542 20.9228 7.50451 23.4998 12 23.4998Z" fill="#34A853"/>
+<path id="Shape_3" fill-rule="evenodd" clip-rule="evenodd" d="M5.56523 14.1851C5.33523 13.4951 5.20455 12.758 5.20455 12.0001C5.20455 11.2421 5.33523 10.5051 5.56523 9.81506V6.83552H1.72318C0.944318 8.38802 0.5 10.1444 0.5 12.0001C0.5 13.8557 0.944318 15.6121 1.72318 17.1646L5.56523 14.1851Z" fill="#FBBC05"/>
+<path id="Shape_4" fill-rule="evenodd" clip-rule="evenodd" d="M12 5.07386C13.6884 5.07386 15.2043 5.65409 16.3961 6.79364L19.6945 3.49523C17.7029 1.63955 15.0997 0.5 12 0.5C7.50451 0.5 3.61542 3.07705 1.72314 6.83545L5.56519 9.815C6.46951 7.09682 9.00474 5.07386 12 5.07386Z" fill="#EA4335"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<filter id="filter0_dd_467_1613" x="-18" y="-18" width="351" height="62" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="2"/>
+<feGaussianBlur stdDeviation="1.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.168 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_467_1613"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="1.5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.084 0"/>
+<feBlend mode="normal" in2="effect1_dropShadow_467_1613" result="effect2_dropShadow_467_1613"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_467_1613" result="shape"/>
+</filter>
+</defs>
+</svg>

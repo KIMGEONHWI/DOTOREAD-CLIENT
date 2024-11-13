@@ -37,6 +37,11 @@ const baseFontStyle = css`
 `;
 
 const fonts = {
+	Pretendard_Bold_70px: css`
+		${baseFontStyle}
+		font-size: 70px;
+		font-weight: 700;
+	`,
 	Pretendard_Bold_68px: css`
 		${baseFontStyle}
 		font-size: 68px;
@@ -54,7 +59,9 @@ const fonts = {
 		font-weight: 600;
 	`,
 	Pretendard_Semibold_45px: css`
-		${baseFontStyle}
+		font-family: Pretendard;
+		font-style: normal;
+		line-height: 45px;
 		font-size: 45px;
 		font-weight: 600;
 	`,
@@ -68,6 +75,12 @@ const fonts = {
 		font-size: 30px;
 		font-weight: 600;
 	`,
+	Pretendard_Semibold_25px: css`
+		${baseFontStyle}
+		font-size: 22px;
+		font-weight: 500;
+	`,
+
 	Pretendard_Semibold_22px: css`
 		${baseFontStyle}
 		font-size: 22px;
@@ -117,6 +130,13 @@ const fonts = {
 		${baseFontStyle}
 		font-size: 9px;
 		font-weight: 400;
+	`,
+	Roboto_20px: css`
+		font-family: Roboto;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: normal;
 	`,
 };
 

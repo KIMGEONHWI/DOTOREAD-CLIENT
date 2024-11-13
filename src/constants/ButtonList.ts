@@ -11,6 +11,7 @@ export type ButtonProps = {
 };
 
 export const Buttons: ButtonProps[] = [
+	{ id: 'start', text: '시작하기', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange1' },
 	{ id: 'aiClassify', text: 'AI 분류하기', color: 'orange1', bordercolor: 'orange1', backgroundcolor: 'transparent' },
 	{ id: 'chooseAll', text: '전체 선택', color: 'white1', bordercolor: 'gray2', backgroundcolor: 'gray1' },
 	{ id: 'cancelClassify', text: '분류 취소하기', color: 'white1', bordercolor: 'gray2', backgroundcolor: 'gray1' },
