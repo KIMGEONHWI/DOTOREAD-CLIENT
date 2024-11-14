@@ -3,14 +3,12 @@ import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
 import Btn from '@/components/common/Button/Btn';
 import SortBtn from '@/components/common/Button/SortBtn';
-import { allBookmarks } from '@/constants/ListItems';
+import { allBookmarks, classifiedBookmarks, unclassifiedBookmarks } from '@/constants/ListItems';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
 import Navbar from '@/pages/BookMark/Navbar';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-// svg 를 속성으로 넘겨줄 수 없어서 Title 컴포넌트를 이 폴더에 정의함
 
 interface TitleProps {
 	text: string;
@@ -31,12 +29,20 @@ function BookMarkPage() {
 	const navigate = useNavigate();
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
+	let filteredBookmarks: any[];
 
-	let filteredBookmarks = [];
 	if (category === '모든 북마크') {
 		filteredBookmarks = allBookmarks;
-	} else {
-		filteredBookmarks = allBookmarks.filter((bookmark) => bookmark.category === category);
+		console.log('여기');
+		console.log(filteredBookmarks);
+	} else if (category === '미분류') {
+		filteredBookmarks = unclassifiedBookmarks;
+		console.log('저기');
+		console.log(filteredBookmarks);
+	} else if (category) {
+		filteredBookmarks = classifiedBookmarks;
+		console.log('마지막');
+		console.log(filteredBookmarks);
 	}
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);

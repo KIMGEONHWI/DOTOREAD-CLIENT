@@ -5,16 +5,16 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 interface ListItemProps {
-	name: string;
-	hashtag: string;
+	title: string;
 	url: string;
+	img: string | null;
 	date: string;
 	isSelectable: boolean;
 	isAllSelected: boolean;
 	setHasSelectedItems: (hasSelected: boolean) => void;
 }
 
-function ListItem({ name, hashtag, url, date, isSelectable, isAllSelected, setHasSelectedItems }: ListItemProps) {
+function ListItem({ title, url, date, img, isSelectable, isAllSelected, setHasSelectedItems }: ListItemProps) {
 	const [isClicked, setIsClicked] = useState(isAllSelected);
 	const IconComponent = isClicked ? LucideOrange : isSelectable ? LucideGray : Lucide;
 
@@ -33,9 +33,8 @@ function ListItem({ name, hashtag, url, date, isSelectable, isAllSelected, setHa
 
 	return (
 		<ListItemWrapper onClick={handleClick} isClicked={isClicked}>
-			<Thumnail></Thumnail>
-			<Name>[{name}]</Name>
-			<Hastag>#{hashtag}</Hastag>
+			<Thumnail style={{ backgroundImage: `url(${img})` }}></Thumnail>
+			<Name>[{title}]</Name>
 			<Url>{url}</Url>
 			<Date>{date}</Date>
 			<Icon>
@@ -78,13 +77,6 @@ const Name = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
 	position: absolute;
 	left: 14.7rem;
-`;
-
-const Hastag = styled.div`
-	color: ${({ theme }) => theme.colors.white1};
-	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
-	position: absolute;
-	left: 22.5rem;
 `;
 
 const Url = styled.div`

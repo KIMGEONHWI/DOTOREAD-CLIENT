@@ -131,7 +131,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 						text={folder.name}
 						leftIcon={<FolderIcon />}
 						rightIcon={<LucidIcon />}
-						onClick={() => handleNavigate(folder.name, 'classified', folder.name)}
+						onClick={() => handleNavigate(folder.name, 'classified', folder.id)}
 						onDelete={() => handleDeleteFolder(folder.id)}
 					/>
 				))}
