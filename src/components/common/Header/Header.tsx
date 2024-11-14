@@ -5,19 +5,50 @@ import HelpIcon from '@/assets/Help.svg?react';
 import InformationIcon from '@/assets/Information.svg?react';
 import LogoIcon from '@/assets/Logo.svg?react';
 import PlusFileIcon from '@/assets/PlusFile.svg?react';
+import { fetchUnclassifiedBookmarks } from '@/constants/ListItems';
 import useModal from '@/hooks/useModal';
+import axios from 'axios';
 import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 function Header() {
+	// const navigate = useNavigate();
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
-	const [folderName, setFolderName] = useState('');
+	const [url, setUrl] = useState('');
+
+	// const returnBookMarkPage = (text: string, iconType: string, category: string) => {
+	// 	navigate('/bookmark', { state: { text, iconType, category } });
+	// };
+	const addUrl = async () => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+			const data = { url };
+			const response = await axios.post(`${BASE_URL}/api/v1/bookmarks`, data, {
+				headers: {
+					access: `${accessToken}`,
+				},
+			});
+			await fetchUnclassifiedBookmarks();
+			console.log('bookmark created:', response.data);
+			// returnBookMarkPage('모든 북마크', 'everyBookmark', '모든 북마크');
+			closeModal();
+		} catch (error) {
+			console.error('Error creating folder:', error);
+		}
+	};
 	return (
 		<HeaderWrapper>
 			<HeaderLeftContent>
 				<LogoIcon />
 				<SearchBar />
-				<PlusFileIcon onClick={openModal} />
+				<PlusFileIcon onClick={openModal} style={{ cursor: 'pointer' }} />
 			</HeaderLeftContent>
 			<HeaderRightContent>
 				<BellIcon />
@@ -26,10 +57,10 @@ function Header() {
 			</HeaderRightContent>
 
 			{/* Modal */}
-			<Modal id="plus" isOpen={isModalOpen} onClose={closeModal}>
+			<Modal id="plus" isOpen={isModalOpen} onClose={closeModal} onConfirm={addUrl}>
 				{' '}
 				<Title>URL로 북마크 추가하기</Title>
-				<Input type="text" placeholder="http://" value={folderName} onChange={(e) => setFolderName(e.target.value)} />
+				<Input type="text" placeholder="http://" value={url} onChange={(e) => setUrl(e.target.value)} />
 			</Modal>
 		</HeaderWrapper>
 	);

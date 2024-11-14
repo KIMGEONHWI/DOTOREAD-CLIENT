@@ -12,7 +12,7 @@ function SearchBar() {
 	return (
 		<SearchBarContainer>
 			<SearchInput type="text" placeholder="Search" value={query} onChange={handleSearchChange} />
-			<SearchIcon />
+			<SearchIcon style={{ cursor: 'pointer' }} />
 		</SearchBarContainer>
 	);
 }

@@ -26,7 +26,8 @@ function transformApiResponseToItems(responseData: any[]): ListItem[] {
 // 미분류
 const unclassifiedBookmarks: ListItem[] = [];
 
-async function fetchUnclassifiedBookmarks() {
+export async function fetchUnclassifiedBookmarks() {
+	console.log(' fetchUnclassifiedBookmarks 실행');
 	const accessToken = localStorage.getItem('access-token');
 
 	if (!accessToken) {

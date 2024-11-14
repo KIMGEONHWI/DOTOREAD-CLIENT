@@ -44,7 +44,7 @@ function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookM
 			)}
 
 			<Modal id="delete" isOpen={isModalOpen} onClose={closeModal} onConfirm={onDelete ?? (() => {})}>
-				<Title>"{text}"폴더를 삭제하시 겠습니까?</Title>
+				<Title>"{text}"폴더를 삭제하시겠습니까?</Title>
 				<ModalText>북마크가 모두 미분류 폴더로 이동합니다.</ModalText>
 			</Modal>
 		</BookMarkListBtnWrapper>
