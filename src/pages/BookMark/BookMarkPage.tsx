@@ -62,11 +62,6 @@ function BookMarkPage() {
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
 
-	const [filteredBookmarks, setFilteredBookmarks] = useState<ListItem[]>([]);	
-	// {folderId} 를 포함해서 요청 보내야해서 ListItem.ts 가 아닌 BookMarkPage.tsx에 연결함
-	
-
-
 	const [filteredBookmarks, setFilteredBookmarks] = useState<ListItem[]>([]);
 
 	const fetchClassifiedBookmarks = async (category: string) => {
