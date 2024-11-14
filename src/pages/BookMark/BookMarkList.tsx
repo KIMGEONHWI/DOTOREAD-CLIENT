@@ -20,7 +20,6 @@ interface BookMarkListProps {
 }
 
 function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedItems }: BookMarkListProps) {
-	console.log('Rendering BookMarkList, bookmarks:', bookmarks);
 	return (
 		<BookMarkListWrapper>
 			{bookmarks.length > 0 ? (

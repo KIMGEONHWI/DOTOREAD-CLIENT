@@ -3,7 +3,8 @@ import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
 import Btn from '@/components/common/Button/Btn';
 import SortBtn from '@/components/common/Button/SortBtn';
-import { allBookmarks, classifiedBookmarks, unclassifiedBookmarks } from '@/constants/ListItems';
+import { allBookmarks, transformApiResponseToItems, unclassifiedBookmarks } from '@/constants/ListItems';
+import ListItem from '@/constants/ListItems';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
 import Navbar from '@/pages/BookMark/Navbar';
 import { useEffect, useState } from 'react';
@@ -29,21 +30,63 @@ function BookMarkPage() {
 	const navigate = useNavigate();
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
-	let filteredBookmarks: any[];
 
-	if (category === '모든 북마크') {
-		filteredBookmarks = allBookmarks;
-		console.log('여기');
-		console.log(filteredBookmarks);
-	} else if (category === '미분류') {
-		filteredBookmarks = unclassifiedBookmarks;
-		console.log('저기');
-		console.log(filteredBookmarks);
-	} else if (category) {
-		filteredBookmarks = classifiedBookmarks;
-		console.log('마지막');
-		console.log(filteredBookmarks);
-	}
+	const [filteredBookmarks, setFilteredBookmarks] = useState<ListItem[]>([]);
+
+	const classifiedBookmarks: ListItem[] = [];
+
+	// {folderId} 를 포함해서 요청 보내야해서 ListItem.ts 가 아닌 BookMarkPage.tsx에 연결함
+	const fetchClassifiedBookmarks = async (category: string) => {
+		const accessToken = localStorage.getItem('access-token');
+		if (!accessToken) {
+			console.error('Access token not found in LocalStorage');
+			return;
+		}
+		try {
+			const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/bookmarks/all/${category}?sortType=DESC`, {
+				method: 'GET',
+				headers: {
+					access: `${accessToken}`,
+				},
+			});
+			const data = await response.json();
+			if (data.isSuccess) {
+				classifiedBookmarks.length = 0;
+				classifiedBookmarks.push(...transformApiResponseToItems(data.result));
+				console.log('ClassifiedBookmarks:', classifiedBookmarks);
+				console.log('result', data.result);
+				return classifiedBookmarks;
+			} else {
+				console.error('Failed to fetch ClassifiedBookmarks:', data.message);
+				return [];
+			}
+		} catch (error) {
+			console.error('Error fetching ClassifiedBookmarks:', error);
+			return [];
+		}
+	};
+
+	useEffect(() => {
+		if (category === '모든 북마크') {
+			setFilteredBookmarks(allBookmarks);
+			console.log('모든 북마크', filteredBookmarks);
+		} else if (category === '미분류') {
+			setFilteredBookmarks(unclassifiedBookmarks);
+			console.log('미분류', filteredBookmarks);
+		} else if (iconType == 'classified') {
+			console.log(category);
+			fetchClassifiedBookmarks(category)
+				.then((classifiedBookmarks) => {
+					if (classifiedBookmarks !== undefined) {
+						setFilteredBookmarks(classifiedBookmarks);
+					}
+					console.log('분류된 북마크', filteredBookmarks);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, [category]);
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
@@ -105,12 +148,14 @@ function BookMarkPage() {
 					<SortBtn />
 				</SortBtnWrapper>
 				{!isAiClassifyActive && <Navbar />}
-				<BookMarkList
-					bookmarks={filteredBookmarks}
-					isSelectable={isAiClassifyActive}
-					isAllSelected={isAllSelected}
-					setHasSelectedItems={setHasSelectedItems}
-				/>
+				{filteredBookmarks !== undefined && (
+					<BookMarkList
+						bookmarks={filteredBookmarks}
+						isSelectable={isAiClassifyActive}
+						isAllSelected={isAllSelected}
+						setHasSelectedItems={setHasSelectedItems}
+					/>
+				)}
 			</BackgroundBox>
 		</BookMarkPageWrapper>
 	);

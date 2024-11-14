@@ -1,5 +1,7 @@
+import ListItem from '@/pages/BookMark/ListItem';
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-interface ListItem {
+export default interface ListItem {
 	id: string;
 	title: string;
 	url: string;
@@ -52,36 +54,6 @@ async function fetchUnclassifiedBookmarks() {
 }
 fetchUnclassifiedBookmarks();
 
-// 분류된;
-const classifiedBookmarks: ListItem[] = [];
-
-async function fetchClassifiedBookmarks() {
-	const accessToken = localStorage.getItem('access-token');
-	if (!accessToken) {
-		console.error('Access token not found in LocalStorage');
-		return;
-	}
-	try {
-		const response = await fetch(`${BASE_URL}/api/v1/bookmarks/all//${folderId}?sortType=DESC`, {
-			method: 'GET',
-			headers: {
-				access: `${accessToken}`,
-			},
-		});
-		const data = await response.json();
-		if (data.isSuccess) {
-			classifiedBookmarks.length = 0;
-			classifiedBookmarks.push(...transformApiResponseToItems(data.result));
-			console.log('ClassifiedBookmarks:', classifiedBookmarks);
-		} else {
-			console.error('Failed to fetch ClassifiedBookmarks:', data.message);
-		}
-	} catch (error) {
-		console.error('Error fetching ClassifiedBookmarks:', error);
-	}
-}
-fetchClassifiedBookmarks();
-
 //모든 북마크
 const allBookmarks: ListItem[] = [];
 
@@ -112,4 +84,5 @@ async function fetchAllBookmarks() {
 }
 fetchAllBookmarks();
 
-export { classifiedBookmarks, unclassifiedBookmarks, allBookmarks };
+export { transformApiResponseToItems, unclassifiedBookmarks, allBookmarks };
+export type { ListItem };
