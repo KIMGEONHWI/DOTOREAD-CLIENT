@@ -1,8 +1,13 @@
 import LineBetweenBookmark from '@/assets/LineBetweenBookmark.svg?react';
+import { fetchAllBookmarks, fetchUnclassifiedBookmarks } from '@/constants/ListItems';
+import { fetchClassifiedBookmarks } from '@/pages/BookMark/BookMarkPage';
 import Default from '@/pages/BookMark/Default';
 import ListItem from '@/pages/BookMark/ListItem';
+import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface Bookmark {
 	id: string;
@@ -10,16 +15,42 @@ interface Bookmark {
 	url: string;
 	date: string;
 	img: string | null;
+	folderId: string;
 }
 
 interface BookMarkListProps {
 	bookmarks: Bookmark[];
 	isSelectable: boolean;
 	isAllSelected: boolean;
+
 	setHasSelectedItems: (hasSelected: boolean) => void;
 }
 
 function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedItems }: BookMarkListProps) {
+	const handleDeleteBookMark = async (bookmark: Bookmark) => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+
+			await axios.delete(`${BASE_URL}/api/v1/bookmarks/${bookmark.id}`, {
+				headers: {
+					access: `${accessToken}`,
+				},
+			});
+			console.log('bookmark deleted:', bookmark.id);
+			// 세개 다 호출
+			await fetchUnclassifiedBookmarks();
+			await fetchAllBookmarks();
+			await fetchClassifiedBookmarks(bookmark.folderId);
+
+			// 다 업데이트 되면 모달 창 닫히게 하기
+		} catch (error) {
+			console.error('Error deleting bookmark', error);
+		}
+	};
 	return (
 		<BookMarkListWrapper>
 			{bookmarks.length > 0 ? (
@@ -30,9 +61,11 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 							img={bookmark.img}
 							url={bookmark.url}
 							date={bookmark.date}
+							folderId={bookmark.folderId}
 							isSelectable={isSelectable}
 							isAllSelected={isAllSelected}
 							setHasSelectedItems={setHasSelectedItems}
+							onDelete={() => handleDeleteBookMark(bookmark)}
 						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>

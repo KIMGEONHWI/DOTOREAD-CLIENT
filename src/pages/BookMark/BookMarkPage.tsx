@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+
 interface TitleProps {
 	text: string;
 	Icon: React.ElementType;
@@ -24,48 +25,47 @@ function Title({ text, Icon }: TitleProps) {
 		</TitleWrapper>
 	);
 }
+const classifiedBookmarks: ListItem[] = [];
 
+export const fetchClassifiedBookmarks = async (category: string) => {
+	const accessToken = localStorage.getItem('access-token');
+	if (!accessToken) {
+		console.error('Access token not found in LocalStorage');
+		return;
+	}
+	try {
+		const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/bookmarks/all/${category}?sortType=DESC`, {
+			method: 'GET',
+			headers: {
+				access: `${accessToken}`,
+			},
+		});
+		const data = await response.json();
+		if (data.isSuccess) {
+			classifiedBookmarks.length = 0;
+			classifiedBookmarks.push(...transformApiResponseToItems(data.result));
+			console.log('ClassifiedBookmarks:', classifiedBookmarks);
+			console.log('result', data.result);
+			return classifiedBookmarks;
+		} else {
+			console.error('Failed to fetch ClassifiedBookmarks:', data.message);
+			return [];
+		}
+	} catch (error) {
+		console.error('Error fetching ClassifiedBookmarks:', error);
+		return [];
+	}
+};
 function BookMarkPage() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
-
-	const [filteredBookmarks, setFilteredBookmarks] = useState<ListItem[]>([]);
-
-	const classifiedBookmarks: ListItem[] = [];
-
+	const [filteredBookmarks, setFilteredBookmarks] = useState<ListItem[]>([]);	
 	// {folderId} 를 포함해서 요청 보내야해서 ListItem.ts 가 아닌 BookMarkPage.tsx에 연결함
-	const fetchClassifiedBookmarks = async (category: string) => {
-		const accessToken = localStorage.getItem('access-token');
-		if (!accessToken) {
-			console.error('Access token not found in LocalStorage');
-			return;
-		}
-		try {
-			const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/bookmarks/all/${category}?sortType=DESC`, {
-				method: 'GET',
-				headers: {
-					access: `${accessToken}`,
-				},
-			});
-			const data = await response.json();
-			if (data.isSuccess) {
-				classifiedBookmarks.length = 0;
-				classifiedBookmarks.push(...transformApiResponseToItems(data.result));
-				console.log('ClassifiedBookmarks:', classifiedBookmarks);
-				console.log('result', data.result);
-				return classifiedBookmarks;
-			} else {
-				console.error('Failed to fetch ClassifiedBookmarks:', data.message);
-				return [];
-			}
-		} catch (error) {
-			console.error('Error fetching ClassifiedBookmarks:', error);
-			return [];
-		}
-	};
+	
 
+	
 	useEffect(() => {
 		if (category === '모든 북마크') {
 			setFilteredBookmarks(allBookmarks);

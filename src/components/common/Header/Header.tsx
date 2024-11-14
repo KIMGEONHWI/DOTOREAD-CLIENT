@@ -5,7 +5,7 @@ import HelpIcon from '@/assets/Help.svg?react';
 import InformationIcon from '@/assets/Information.svg?react';
 import LogoIcon from '@/assets/Logo.svg?react';
 import PlusFileIcon from '@/assets/PlusFile.svg?react';
-import { fetchUnclassifiedBookmarks } from '@/constants/ListItems';
+import { fetchAllBookmarks, fetchUnclassifiedBookmarks } from '@/constants/ListItems';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
 import { useState } from 'react';
@@ -36,6 +36,7 @@ function Header() {
 				},
 			});
 			await fetchUnclassifiedBookmarks();
+			await fetchAllBookmarks();
 			console.log('bookmark created:', response.data);
 			// returnBookMarkPage('모든 북마크', 'everyBookmark', '모든 북마크');
 			closeModal();
