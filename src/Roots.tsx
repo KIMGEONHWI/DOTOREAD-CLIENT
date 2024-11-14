@@ -1,5 +1,6 @@
 import Header from './components/common/Header/Header';
 import SideBar from './components/common/SideBar/SideBar';
+import { BookmarkProvider } from './contexts/BookmarkProvider';
 import { Outlet, useLocation } from 'react-router-dom';
 
 function Roots() {
@@ -11,12 +12,13 @@ function Roots() {
 	// 스타트 페이지일때도
 
 	const isOnBoardingStartPage = location.pathname === '/start';
+
 	return (
-		<>
+		<BookmarkProvider>
 			{!isOnBoardingPage && !isOnBoardingStartPage && <SideBar />}
 			{!isOnBoardingPage && !isOnBoardingStartPage && <Header />}
 			<Outlet />
-		</>
+		</BookmarkProvider>
 	);
 }
 
