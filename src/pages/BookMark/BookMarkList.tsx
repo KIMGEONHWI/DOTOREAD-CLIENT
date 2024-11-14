@@ -6,10 +6,10 @@ import styled from 'styled-components';
 
 interface Bookmark {
 	id: string;
-	name: string;
-	hashtag: string;
+	title: string;
 	url: string;
 	date: string;
+	img: string | null;
 }
 
 interface BookMarkListProps {
@@ -26,8 +26,8 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 				bookmarks.map((bookmark, index) => (
 					<React.Fragment key={bookmark.id}>
 						<ListItem
-							name={bookmark.name}
-							hashtag={bookmark.hashtag}
+							title={bookmark.title}
+							img={bookmark.img}
 							url={bookmark.url}
 							date={bookmark.date}
 							isSelectable={isSelectable}
