@@ -39,6 +39,8 @@ function ListItem({
 			const newClickedState = !isClicked;
 			setIsClicked(newClickedState);
 			setHasSelectedItems(newClickedState || isAllSelected);
+		} else {
+			window.open(url, '_blank', 'noopener,noreferrer');
 		}
 	};
 	const handleIconClick = (event: React.MouseEvent) => {
@@ -64,7 +66,7 @@ function ListItem({
 	return (
 		<ListItemWrapper onClick={handleClick} isClicked={isClicked}>
 			<Thumnail style={{ backgroundImage: `url(${img})` }}></Thumnail>
-			<Name>[{title}]</Name>
+			<Name>{title}</Name>
 			<Url>{url}</Url>
 			<Date>{date}</Date>
 			<Icon>
@@ -116,6 +118,10 @@ const Name = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
 	position: absolute;
 	left: 14.7rem;
+	max-width: 36rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const Url = styled.div`
@@ -123,6 +129,10 @@ const Url = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
 	position: absolute;
 	left: 50.9rem;
+	max-width: 58rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 `;
 
 const Date = styled.div`
