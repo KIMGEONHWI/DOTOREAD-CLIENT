@@ -1,6 +1,4 @@
 import LineBetweenBookmark from '@/assets/LineBetweenBookmark.svg?react';
-import { fetchAllBookmarks, fetchUnclassifiedBookmarks } from '@/constants/ListItems';
-import { fetchClassifiedBookmarks } from '@/pages/BookMark/BookMarkPage';
 import Default from '@/pages/BookMark/Default';
 import ListItem from '@/pages/BookMark/ListItem';
 import axios from 'axios';
@@ -15,7 +13,7 @@ interface Bookmark {
 	url: string;
 	date: string;
 	img: string | null;
-	folderId: string;
+	folderId: number;
 }
 
 interface BookMarkListProps {
@@ -42,9 +40,6 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 			});
 			console.log('bookmark deleted:', bookmark.id);
 			// 세개 다 호출
-			await fetchUnclassifiedBookmarks();
-			await fetchAllBookmarks();
-			await fetchClassifiedBookmarks(bookmark.folderId);
 		} catch (error) {
 			console.error('Error deleting bookmark', error);
 		}
@@ -63,7 +58,7 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 							isSelectable={isSelectable}
 							isAllSelected={isAllSelected}
 							setHasSelectedItems={setHasSelectedItems}
-							onDelete={ ()=>handleDeleteBookMark(bookmark) }
+							onDelete={() => handleDeleteBookMark(bookmark)}
 						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>

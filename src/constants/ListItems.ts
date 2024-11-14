@@ -8,6 +8,7 @@ export interface ListItem {
 	date: string;
 	iconType: string;
 	category: string;
+	folderId: number;
 }
 
 interface ApiResponseItem {
@@ -17,6 +18,7 @@ interface ApiResponseItem {
 	img?: string | null;
 	createdAt: string;
 	folder?: {
+		id: number;
 		name: string;
 	};
 }
@@ -30,5 +32,6 @@ export function transformApiResponseToItems(responseData: ApiResponseItem[]): Li
 		date: item.createdAt,
 		iconType: 'unclassified',
 		category: item.folder ? item.folder.name : '미분류',
+		folderId: item.folder ? item.folder.id : 0,
 	}));
 }

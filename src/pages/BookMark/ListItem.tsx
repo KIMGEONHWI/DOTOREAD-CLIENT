@@ -8,7 +8,7 @@ interface ListItemProps {
 	title: string;
 	url: string;
 	img: string | null;
-	folderId: string;
+	folderId: number;
 	date: string;
 	isSelectable: boolean;
 	isAllSelected: boolean;
@@ -172,8 +172,4 @@ const DropdownItem = styled.div`
 		background-color: ${({ theme }) => theme.colors.gray3};
 	}
 	${({ theme }) => theme.fonts.Pretendard_Semibold_13px};
-`;
-const Title = styled.h2`
-	${({ theme }) => theme.fonts.Pretendard_Semibold_30px};
-	color: ${({ theme }) => theme.colors.white1};
 `;
