@@ -86,7 +86,7 @@ function BookMarkPage() {
 					console.log(error);
 				});
 		}
-	}, [category]);
+	}, [category, allBookmarks, unclassifiedBookmarks, classifiedBookmarks]);
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
