@@ -1,11 +1,8 @@
 import Lucide from '@/assets/Lucide.svg?react';
 import LucideGray from '@/assets/LucideGray.svg?react';
 import LucideOrange from '@/assets/LucideOrange.svg?react';
-import Modal from '@/components/common/Modal/Modal';
-import useModal from '@/hooks/useModal';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
 
 interface ListItemProps {
 	title: string;
@@ -15,7 +12,7 @@ interface ListItemProps {
 	date: string;
 	isSelectable: boolean;
 	isAllSelected: boolean;
-	onDelete?: () => void;
+	onDelete: () => void;
 	setHasSelectedItems: (hasSelected: boolean) => void;
 }
 
@@ -26,15 +23,15 @@ function ListItem({
 	img,
 	isSelectable,
 	isAllSelected,
-	onDelete,
 	setHasSelectedItems,
+	onDelete,
 }: ListItemProps) {
 	const [isClicked, setIsClicked] = useState(isAllSelected);
 	const IconComponent = isClicked ? LucideOrange : isSelectable ? LucideGray : Lucide;
 	const [showDropdown, setShowDropdown] = useState(false);
-	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 
-	const handleClick = () => {
+	const handleClick = (event: React.MouseEvent) => {
+		event.stopPropagation();
 		if (isSelectable) {
 			const newClickedState = !isClicked;
 			setIsClicked(newClickedState);
@@ -43,22 +40,18 @@ function ListItem({
 			window.open(url, '_blank', 'noopener,noreferrer');
 		}
 	};
+
 	const handleIconClick = (event: React.MouseEvent) => {
 		event.stopPropagation();
 		setShowDropdown(!showDropdown);
 	};
+
 	const handleDeleteClick = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		openModal();
 		setShowDropdown(false);
+		onDelete();
 	};
 
-	const onConfirmDelete = () => {
-		if (onDelete) {
-			onDelete();
-		}
-		closeModal();
-	};
 	useEffect(() => {
 		setIsClicked(isAllSelected);
 	}, [isAllSelected]);
@@ -77,10 +70,6 @@ function ListItem({
 					</DropdownMenu>
 				)}
 			</Icon>
-
-			<Modal id="delete" isOpen={isModalOpen} onClose={closeModal} onConfirm={onConfirmDelete}>
-				<Title>"북마크를 삭제하시겠습니까?</Title>
-			</Modal>
 		</ListItemWrapper>
 	);
 }

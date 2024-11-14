@@ -45,8 +45,6 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 			await fetchUnclassifiedBookmarks();
 			await fetchAllBookmarks();
 			await fetchClassifiedBookmarks(bookmark.folderId);
-
-			// 다 업데이트 되면 모달 창 닫히게 하기
 		} catch (error) {
 			console.error('Error deleting bookmark', error);
 		}
@@ -65,7 +63,7 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 							isSelectable={isSelectable}
 							isAllSelected={isAllSelected}
 							setHasSelectedItems={setHasSelectedItems}
-							onDelete={() => handleDeleteBookMark(bookmark)}
+							onDelete={ ()=>handleDeleteBookMark(bookmark) }
 						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>
