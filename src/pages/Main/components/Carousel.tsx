@@ -71,6 +71,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 								date={article.created_at}
 								forcarousel={true}
 								imageUrl={article.imageUrl}
+								url={article.url}
 							/>
 						</Slide>
 					))}
@@ -100,8 +101,7 @@ const Container = styled.div`
 `;
 
 const Slide = styled.div`
-	flex: 0 0 20% 
-
+	flex: 0 0 20%;
 	position: relative;
 	transition:
 		transform 0.5s,
