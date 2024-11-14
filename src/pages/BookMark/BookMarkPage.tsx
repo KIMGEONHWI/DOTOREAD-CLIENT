@@ -33,9 +33,6 @@ function BookMarkPage() {
 
 	const [filteredBookmarks, setFilteredBookmarks] = useState<ListItem[]>([]);
 
-	const classifiedBookmarks: ListItem[] = [];
-
-	// {folderId} 를 포함해서 요청 보내야해서 ListItem.ts 가 아닌 BookMarkPage.tsx에 연결함
 	const fetchClassifiedBookmarks = async (category: string) => {
 		const accessToken = localStorage.getItem('access-token');
 		if (!accessToken) {
@@ -51,42 +48,26 @@ function BookMarkPage() {
 			});
 			const data = await response.json();
 			if (data.isSuccess) {
-				classifiedBookmarks.length = 0;
-				classifiedBookmarks.push(...transformApiResponseToItems(data.result));
+				const classifiedBookmarks = transformApiResponseToItems(data.result);
 				console.log('ClassifiedBookmarks:', classifiedBookmarks);
-				console.log('result', data.result);
-				return classifiedBookmarks;
+				setFilteredBookmarks(classifiedBookmarks);
 			} else {
 				console.error('Failed to fetch ClassifiedBookmarks:', data.message);
-				return [];
 			}
 		} catch (error) {
 			console.error('Error fetching ClassifiedBookmarks:', error);
-			return [];
 		}
 	};
 
 	useEffect(() => {
 		if (category === '모든 북마크') {
 			setFilteredBookmarks(allBookmarks);
-			console.log('모든 북마크', filteredBookmarks);
 		} else if (category === '미분류') {
 			setFilteredBookmarks(unclassifiedBookmarks);
-			console.log('미분류', filteredBookmarks);
-		} else if (iconType == 'classified') {
-			console.log(category);
-			fetchClassifiedBookmarks(category)
-				.then((classifiedBookmarks) => {
-					if (classifiedBookmarks !== undefined) {
-						setFilteredBookmarks(classifiedBookmarks);
-					}
-					console.log('분류된 북마크', filteredBookmarks);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
+		} else if (iconType === 'classified') {
+			fetchClassifiedBookmarks(category);
 		}
-	}, [category, allBookmarks, unclassifiedBookmarks, classifiedBookmarks]);
+	}, [category, iconType]);
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
@@ -104,7 +85,6 @@ function BookMarkPage() {
 		setHasSelectedItems(newSelectionState);
 	};
 
-	// 선택된 항목이 있을 때 Enter 키를 눌러 /ai 경로로 이동하는 로직
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === 'Enter' && hasSelectedItems) {
@@ -121,7 +101,6 @@ function BookMarkPage() {
 		};
 	}, [isAiClassifyActive, hasSelectedItems, navigate]);
 
-	// 컴포넌트가 언마운트되거나 경로가 변경될 때 상태 초기화
 	useEffect(() => {
 		return () => {
 			setAiClassifyActive(false);

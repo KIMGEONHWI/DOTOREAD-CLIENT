@@ -58,7 +58,7 @@ fetchUnclassifiedBookmarks();
 //모든 북마크
 const allBookmarks: ListItem[] = [];
 
-async function fetchAllBookmarks() {
+export async function fetchAllBookmarks() {
 	const accessToken = localStorage.getItem('access-token');
 	if (!accessToken) {
 		console.error('Access token not found in LocalStorage');
