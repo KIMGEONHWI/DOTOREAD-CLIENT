@@ -34,7 +34,6 @@ export const BookmarkProvider = ({ children }: { children: ReactNode }) => {
 				},
 			);
 
-			// 북마크 추가 후 fetchBookmarks 호출하여 최신 북마크 목록을 가져옵니다.
 			await fetchBookmarks('/api/v1/bookmarks/all?sortType=DESC');
 		} catch (error) {
 			console.error('북마크 추가 중 오류 발생:', error);

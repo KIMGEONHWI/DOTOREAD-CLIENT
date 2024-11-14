@@ -38,7 +38,7 @@ function BookMarkPage() {
 			} else if (category === '미분류') {
 				await fetchBookmarks('/api/v1/bookmarks/uncategorized?sortType=DESC');
 			} else if (iconType === 'classified') {
-				await fetchBookmarks('/api/v1/bookmarks/all/${category}?sortType=DESC');
+				await fetchBookmarks(`/api/v1/bookmarks/all/${category}?sortType=DESC`);
 			}
 		};
 
@@ -145,14 +145,14 @@ const BtnWrapperForAiClassify = styled.div`
 	top: 3.7rem;
 	left: 97.3rem;
 	z-index: 10000;
-;`
+`;
 
 const BtnWrapperForChooseAll = styled.div`
 	position: absolute;
 	top: 3.7rem;
 	left: 76.3rem;
 	z-index: 10000;
-;`
+`;
 
 const SortBtnWrapper = styled.div`
 	position: absolute;
