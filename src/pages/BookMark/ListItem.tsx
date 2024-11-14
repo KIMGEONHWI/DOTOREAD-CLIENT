@@ -23,6 +23,8 @@ function ListItem({ title, url, date, img, isSelectable, isAllSelected, setHasSe
 			const newClickedState = !isClicked;
 			setIsClicked(newClickedState);
 			setHasSelectedItems(newClickedState || isAllSelected);
+		} else {
+			window.open(url, '_blank', 'noopener,noreferrer');
 		}
 	};
 

@@ -10,6 +10,7 @@ interface ClassificationArticleProps {
 	showDeleteIcon?: boolean;
 	forcarousel?: boolean;
 	imageUrl?: string | null;
+	url: string;
 }
 
 const ClassificationArticle = ({
@@ -19,9 +20,13 @@ const ClassificationArticle = ({
 	showDeleteIcon = false,
 	forcarousel = false,
 	imageUrl,
+	url,
 }: ClassificationArticleProps) => {
+	const handleArticleClick = () => {
+		window.open(url, '_blank', 'noopener,noreferrer');
+	};
 	return (
-		<ArticleWrapper $forcarousel={forcarousel} $imageUrl={imageUrl}>
+		<ArticleWrapper onClick={handleArticleClick} $forcarousel={forcarousel} $imageUrl={imageUrl}>
 			<StyledAiDeleteIcon $show={showDeleteIcon} />
 			<ArticleMini $forcarousel={forcarousel}>
 				<ArticleMiniTop>
