@@ -34,7 +34,7 @@ export const BookmarkProvider = ({ children }: { children: ReactNode }) => {
 				},
 			);
 
-			await fetchBookmarks('/api/v1/bookmarks/all?sortType=DESC');
+			await fetchBookmarks('/api/v1/bookmarks/uncategorized?sortType=DESC');
 		} catch (error) {
 			console.error('북마크 추가 중 오류 발생:', error);
 		}

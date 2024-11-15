@@ -93,7 +93,7 @@ const BookMarkSlideWrapper = styled.div<{ $show: boolean }>`
 	left: ${({ $show }) => ($show ? '12rem' : '-30rem')};
 	top: 17.3rem;
 	width: 28.2rem;
-	height: 90.7rem;
+	height: 100vw;
 	background-color: ${({ theme }) => theme.colors.background_box};
 	transition: left 0.4s ease-in-out;
 	z-index: 1;
