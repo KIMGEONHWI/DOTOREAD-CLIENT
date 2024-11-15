@@ -4,6 +4,7 @@ import LucideOrange from '@/assets/LucideOrange.svg?react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+
 interface ListItemProps {
 	title: string;
 	url: string;
@@ -14,9 +15,9 @@ interface ListItemProps {
 	isAllSelected: boolean;
 	onDelete: () => void;
 	setHasSelectedItems: (hasSelected: boolean) => void;
-	selectedBookmarks: string[]; 
+	selectedBookmarks: string[];
 	setSelectedBookmarks: (selected: string[]) => void;
-	bookmarkId: string; 
+	bookmarkId: string;
 }
 
 function ListItem({
@@ -72,7 +73,7 @@ function ListItem({
 
 	return (
 		<ListItemWrapper onClick={handleClick} isClicked={isClicked}>
-			<Thumnail style={{ backgroundImage: `url(${img})` }}></Thumnail>
+			<Thumnail img={img}></Thumnail>
 			<Name>{title}</Name>
 			<Url>{url}</Url>
 			<Date>{date}</Date>
@@ -109,11 +110,12 @@ const ListItemWrapper = styled.div.withConfig({
 	position: relative;
 `;
 
-const Thumnail = styled.div`
+const Thumnail = styled.div<{ img: string | null }>`
 	width: 9.5rem;
 	height: 6.2rem;
 	border-radius: 10px;
-	background: ${({ theme }) => theme.colors.thumnail};
+	background: ${({ theme, img }) =>
+		img && img !== 'null' ? `url(${img}) center/contain no-repeat` : theme.colors.thumnail};
 	position: absolute;
 	left: 0.8rem;
 `;
