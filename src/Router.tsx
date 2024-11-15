@@ -1,11 +1,11 @@
-import AiClassificationPage from './components/AiClassification/AiClassificationPage';
-import BookMarkPage from './pages/BookMark/BookMarkPage';
-import MissionPage from './pages/Mission/MissionPage';
-import OnBoardingPage from './pages/OnBoarding/OnBoardingPage';
-import OnBoardingStartPage from './pages/OnBoarding/OnBoardingStartPage';
-import SharePage from './pages/Share/SharePage';
 import Roots from '@/Roots';
+import AiClassificationPage from '@/components/AiClassification/AiClassificationPage';
+import BookMarkPage from '@/pages/BookMark/BookMarkPage';
 import MainPage from '@/pages/Main/MainPage';
+import MissionPage from '@/pages/Mission/MissionPage';
+import OnBoardingPage from '@/pages/OnBoarding/OnBoardingPage';
+import OnBoardingStartPage from '@/pages/OnBoarding/OnBoardingStartPage';
+import SharePage from '@/pages/Share/SharePage';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
