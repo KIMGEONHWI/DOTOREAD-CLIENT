@@ -13,7 +13,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-
 const AiClassificationPage = () => {
 	const [clickedFolders, setClickedFolders] = useState<Record<string, boolean>>({});
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
@@ -21,6 +20,10 @@ const AiClassificationPage = () => {
 	const { classifiedData } = useAiClassificationContext();
 	const navigate = useNavigate();
 	const { fetchFolders } = useFolders();
+
+	const handleNavigate = (text: string, iconType: string, category: string) => {
+		navigate('/bookmark', { state: { text, iconType, category } });
+	};
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
@@ -32,7 +35,7 @@ const AiClassificationPage = () => {
 
 	const handleConfirm = async () => {
 		await fetchFolders();
-		navigate('/bookmark');
+		handleNavigate('모든 북마크', 'everyBookmark', '모든 북마크');
 	};
 
 	const handleCancle = async () => {
