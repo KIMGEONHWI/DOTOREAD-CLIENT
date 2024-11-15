@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+
 const AiClassificationPage = () => {
 	const [clickedFolders, setClickedFolders] = useState<Record<string, boolean>>({});
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
@@ -26,6 +27,7 @@ const AiClassificationPage = () => {
 			...prev,
 			[folder]: !prev[folder],
 		}));
+		console.log(clickedFolders);
 	};
 
 	const handleConfirm = async () => {

@@ -10,8 +10,16 @@ function SideBar() {
 	const navigate = useNavigate();
 
 	const hanleIconClick = (iconId: string) => {
-		if (iconId != 'bookmark') {
-			navigate('/main');
+		switch (iconId) {
+			case 'share':
+				navigate('/share');
+				break;
+			case 'mission':
+				navigate('/mission');
+				break;
+			default:
+				navigate('/main');
+				break;
 		}
 		setClicked(iconId);
 	};

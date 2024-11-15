@@ -1,5 +1,6 @@
 import Button from './components/OnBoardingStartPage/Button';
 import LogoIcon from '@/assets/LogoOnBoarding.svg?react';
+import OnBoardingStart from '@/assets/OnBoardingStart.svg?react';
 import styled from 'styled-components';
 
 function OnBoardingStartPage() {
@@ -17,6 +18,9 @@ function OnBoardingStartPage() {
 				</SubDescription>
 				<Button />
 			</ContentWrapper>
+			<OnBoardingStartWrapper>
+				<OnBoardingStart />
+			</OnBoardingStartWrapper>
 		</OnBoardingStartPageWrapper>
 	);
 }
@@ -45,7 +49,10 @@ const ContentWrapper = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 `;
-
+const OnBoardingStartWrapper = styled.div`
+	position: absolute;
+	right: 0;
+`;
 const TextTitle = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_45px};
 	color: ${({ theme }) => theme.colors.orange1};
