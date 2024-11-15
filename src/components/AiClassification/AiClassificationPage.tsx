@@ -30,7 +30,6 @@ const AiClassificationPage = () => {
 			...prev,
 			[folder]: !prev[folder],
 		}));
-		console.log(clickedFolders);
 	};
 
 	const handleConfirm = async () => {
