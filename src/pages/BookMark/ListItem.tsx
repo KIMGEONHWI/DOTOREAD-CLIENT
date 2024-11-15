@@ -90,7 +90,9 @@ function ListItem({
 
 export default ListItem;
 
-const ListItemWrapper = styled.div<{ isClicked: boolean }>`
+const ListItemWrapper = styled.div.withConfig({
+	shouldForwardProp: (prop) => prop !== 'isClicked', // isClicked가 DOM에 전달되지 않도록 설정
+})<{ isClicked: boolean }>`
 	width: 128.2rem;
 	height: 7.8rem;
 	border-radius: 10px;

@@ -31,9 +31,8 @@ const AiClassificationPage = () => {
 	};
 
 	const handleCancle = async () => {
-		const BASE_URL = import.meta.env.VITE_BASE_URL; // Replace with your actual base URL
+		const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-		// Collect all bookmarkIds from the articles in the clicked folders
 		const bookmarkIds = classifiedData.map((article) => Number(article.bookmarkId));
 
 		console.log(bookmarkIds);
