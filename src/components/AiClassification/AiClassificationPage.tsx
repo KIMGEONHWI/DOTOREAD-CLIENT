@@ -7,21 +7,64 @@ import AiDefault from '@/assets/AiDefault.png';
 import { Buttons } from '@/constants/ButtonList';
 import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
 import useModal from '@/hooks/useModal';
+import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const AiClassificationPage = () => {
 	const [clickedFolders, setClickedFolders] = useState<Record<string, boolean>>({});
-
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	const [modalContent, setModalContent] = useState<string>('');
 	const { classifiedData } = useAiClassificationContext();
+	const navigate = useNavigate();
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
 			...prev,
 			[folder]: !prev[folder],
 		}));
+	};
+
+	const handleConfirm = () => {
+		navigate('/bookmark');
+	};
+
+	const handleCancle = async () => {
+		const BASE_URL = import.meta.env.VITE_BASE_URL; // Replace with your actual base URL
+
+		// Collect all bookmarkIds from the articles in the clicked folders
+		const bookmarkIds = classifiedData.map((article) => Number(article.bookmarkId));
+
+		console.log(bookmarkIds);
+
+		if (bookmarkIds.length === 0) {
+			console.warn('No bookmarks selected for cancellation');
+			return;
+		}
+
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+			const response = await axios.patch(
+				`${BASE_URL}/api/v1/classify/cancel`,
+				{
+					bookmarkIds,
+				},
+				{
+					headers: {
+						access: `${accessToken}`,
+					},
+				},
+			);
+			console.log('Cancellation successful:', response.data);
+			closeModal();
+		} catch (error) {
+			console.error('Error cancelling classification:', error);
+		}
 	};
 
 	const handleFinishClassify = () => {
@@ -107,7 +150,12 @@ const AiClassificationPage = () => {
 				</ClassificationBoxWrapper>
 			</AiClassificationPageContent>
 			{/* Modal 컴포넌트 */}
-			<Modal isOpen={isModalOpen} onClose={closeModal} id="ok">
+			<Modal
+				isOpen={isModalOpen}
+				onClose={closeModal}
+				id="ok"
+				onConfirm={modalContent === 'AI 분류 완료하기' ? handleConfirm : handleCancle}
+			>
 				<ModalContent>
 					<ModalTitle>{modalContent}</ModalTitle>
 					<ModalText>

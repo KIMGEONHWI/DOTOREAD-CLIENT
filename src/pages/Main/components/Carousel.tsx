@@ -70,7 +70,7 @@ const Carousel = ({ listType }: CarouselProps) => {
 								folder={article.folder}
 								date={article.created_at}
 								forcarousel={true}
-								imageUrl={article.imageUrl}
+								img={article.imageUrl}
 								url={article.url}
 							/>
 						</Slide>

@@ -14,7 +14,7 @@ interface ClassificationArticleProps {
 	forcarousel?: boolean;
 	img?: string | null;
 	url: string;
-	bookmarkId: number;
+	bookmarkId?: number;
 }
 
 const ClassificationArticle = ({
