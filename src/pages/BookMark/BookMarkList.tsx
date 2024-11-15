@@ -20,11 +20,19 @@ interface BookMarkListProps {
 	bookmarks: Bookmark[];
 	isSelectable: boolean;
 	isAllSelected: boolean;
-
 	setHasSelectedItems: (hasSelected: boolean) => void;
+	selectedBookmarks: string[];
+	setSelectedBookmarks: (selected: string[]) => void;
 }
 
-function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedItems }: BookMarkListProps) {
+function BookMarkList({
+	bookmarks,
+	isSelectable,
+	isAllSelected,
+	setHasSelectedItems,
+	selectedBookmarks,
+	setSelectedBookmarks,
+}: BookMarkListProps) {
 	const handleDeleteBookMark = async (bookmark: Bookmark) => {
 		try {
 			const accessToken = localStorage.getItem('access-token');
@@ -39,7 +47,6 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 				},
 			});
 			console.log('bookmark deleted:', bookmark.id);
-			// 세개 다 호출
 		} catch (error) {
 			console.error('Error deleting bookmark', error);
 		}
@@ -59,6 +66,9 @@ function BookMarkList({ bookmarks, isSelectable, isAllSelected, setHasSelectedIt
 							isAllSelected={isAllSelected}
 							setHasSelectedItems={setHasSelectedItems}
 							onDelete={() => handleDeleteBookMark(bookmark)}
+							selectedBookmarks={selectedBookmarks}
+							setSelectedBookmarks={setSelectedBookmarks}
+							bookmarkId={bookmark.id}
 						/>
 						{index < bookmarks.length - 1 && (
 							<LineWrapper>

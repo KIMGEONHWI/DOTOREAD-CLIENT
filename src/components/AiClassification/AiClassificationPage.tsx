@@ -3,16 +3,19 @@ import Btn from '../common/Button/Btn';
 import Modal from '../common/Modal/Modal';
 import ClassificationArticle from './ClassificationArticle';
 import AiIcon from '@/assets/Ai.svg?react';
-import { AiClassifiedList } from '@/constants/AiClassificationList';
+import AiDefault from '@/assets/AiDefault.png';
 import { Buttons } from '@/constants/ButtonList';
+import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
 import useModal from '@/hooks/useModal';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 const AiClassificationPage = () => {
 	const [clickedFolders, setClickedFolders] = useState<Record<string, boolean>>({});
+
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
-	const [modalContent, setModalContent] = useState<string>(''); 
+	const [modalContent, setModalContent] = useState<string>('');
+	const { classifiedData } = useAiClassificationContext();
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
@@ -22,24 +25,25 @@ const AiClassificationPage = () => {
 	};
 
 	const handleFinishClassify = () => {
-		setModalContent('AI 분류 완료하기'); 
+		setModalContent('AI 분류 완료하기');
 		openModal();
 	};
 
 	const handleCancelClassify = () => {
-		setModalContent('AI 분류 취소하기'); 
+		setModalContent('AI 분류 취소하기');
 		openModal();
 	};
 
-	const groupedByFolder = AiClassifiedList.reduce(
+	const groupedByFolder = classifiedData.reduce(
 		(acc, article) => {
-			if (!acc[article.folder]) {
-				acc[article.folder] = [];
+			const folderName = article.folder.name;
+			if (!acc[folderName]) {
+				acc[folderName] = [];
 			}
-			acc[article.folder].push(article);
+			acc[folderName].push(article);
 			return acc;
 		},
-		{} as Record<string, typeof AiClassifiedList>,
+		{} as Record<string, (typeof classifiedData)[0][]>,
 	);
 
 	return (
@@ -85,14 +89,16 @@ const AiClassificationPage = () => {
 						>
 							<ClassificationBoxTitle>{folder}</ClassificationBoxTitle>
 							<ClassificationArticleBox>
-								{articles.map((article) => (
+								{(articles as (typeof classifiedData)[0][]).map((article) => (
 									<ClassificationArticle
-										key={article.id}
+										key={article.bookmarkId}
+										img={article.img ?? AiDefault}
 										title={article.title}
-										hashtag={article.hashtag}
-										folder={article.folder}
-										date={article.date}
+										folder={article.folder.name}
+										date={article.createdAt}
+										url={article.url}
 										showDeleteIcon={true}
+										bookmarkId={article.bookmarkId}
 									/>
 								))}
 							</ClassificationArticleBox>

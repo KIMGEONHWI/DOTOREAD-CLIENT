@@ -3,12 +3,16 @@ import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
 import Btn from '@/components/common/Button/Btn';
 import SortBtn from '@/components/common/Button/SortBtn';
+import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
 import { useBookmarkContext } from '@/contexts/BookmarkContext';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
 import Navbar from '@/pages/BookMark/Navbar';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface TitleProps {
 	text: string;
@@ -48,6 +52,8 @@ function BookMarkPage() {
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
 	const [hasSelectedItems, setHasSelectedItems] = useState(false);
+	const [selectedBookmarks, setSelectedBookmarks] = useState<string[]>([]);
+	const { setClassifiedData } = useAiClassificationContext();
 
 	const handleAiClassifyBtn = () => {
 		setAiClassifyActive(!isAiClassifyActive);
@@ -59,12 +65,52 @@ function BookMarkPage() {
 		const newSelectionState = !isAllSelected;
 		setAllSelected(newSelectionState);
 		setHasSelectedItems(newSelectionState);
+		if (newSelectionState) {
+			setSelectedBookmarks(bookmarks.map((bookmark) => bookmark.id));
+		} else {
+			setSelectedBookmarks([]);
+		}
+	};
+
+	const handleAiClassify = async () => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+
+			const userId = parseInt(accessToken);
+			if (selectedBookmarks.length === 0) {
+				console.warn('No bookmarks selected for classification');
+				return;
+			}
+
+			const response = await axios.post(
+				`${BASE_URL}/api/v1/classify/ai`,
+				{
+					bookmarkIds: selectedBookmarks,
+					userId,
+				},
+				{
+					headers: {
+						access: `${accessToken}`,
+					},
+				},
+			);
+
+			console.log('AI classification response:', response.data);
+			setClassifiedData(response.data.result);
+			navigate('/ai');
+		} catch (error) {
+			console.error('Error classifying bookmarks with AI', error);
+		}
 	};
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === 'Enter' && hasSelectedItems) {
-				navigate('/ai');
+				handleAiClassify();
 			}
 		};
 
@@ -75,7 +121,7 @@ function BookMarkPage() {
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
 		};
-	}, [isAiClassifyActive, hasSelectedItems, navigate]);
+	}, [isAiClassifyActive, hasSelectedItems, selectedBookmarks]);
 
 	useEffect(() => {
 		return () => {
@@ -108,6 +154,8 @@ function BookMarkPage() {
 					isSelectable={isAiClassifyActive}
 					isAllSelected={isAllSelected}
 					setHasSelectedItems={setHasSelectedItems}
+					selectedBookmarks={selectedBookmarks}
+					setSelectedBookmarks={setSelectedBookmarks}
 				/>
 			</BackgroundBox>
 		</BookMarkPageWrapper>
