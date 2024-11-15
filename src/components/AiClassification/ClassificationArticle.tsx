@@ -1,16 +1,20 @@
+import AiDefault from '@/assets/AiDefault.png';
 import AiDeleteIcon from '@/assets/Ai_Delete.svg?react';
 import ArticleFolderIcon from '@/assets/Article_Folder.svg?react';
+import axios from 'axios';
 import styled from 'styled-components';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface ClassificationArticleProps {
 	title: string;
-	hashtag?: string;
 	folder: string;
 	date: string;
 	showDeleteIcon?: boolean;
 	forcarousel?: boolean;
-	imageUrl?: string | null;
+	img?: string | null;
 	url: string;
+	bookmarkId?: number;
 }
 
 const ClassificationArticle = ({
@@ -19,15 +23,39 @@ const ClassificationArticle = ({
 	date,
 	showDeleteIcon = false,
 	forcarousel = false,
-	imageUrl,
+	img,
 	url,
+	bookmarkId,
 }: ClassificationArticleProps) => {
 	const handleArticleClick = () => {
 		window.open(url, '_blank', 'noopener,noreferrer');
 	};
+
+	const handleDeleteClick = async (e: React.MouseEvent) => {
+		e.stopPropagation();
+
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+
+			await axios.patch(`${BASE_URL}/api/v1/classify/delete/${bookmarkId}`, null, {
+				headers: {
+					access: `${accessToken}`,
+				},
+			});
+
+			console.log('Bookmark deleted successfully');
+		} catch (error) {
+			console.error('Failed to delete the bookmark', error);
+		}
+	};
+
 	return (
-		<ArticleWrapper onClick={handleArticleClick} $forcarousel={forcarousel} $imageUrl={imageUrl}>
-			<StyledAiDeleteIcon $show={showDeleteIcon} />
+		<ArticleWrapper onClick={handleArticleClick} $forcarousel={forcarousel} $img={img ?? AiDefault}>
+			<StyledAiDeleteIcon $show={showDeleteIcon} onClick={handleDeleteClick} />
 			<ArticleMini $forcarousel={forcarousel}>
 				<ArticleMiniTop>
 					<ArticleMiniTitle $forcarousel={forcarousel}>{title}</ArticleMiniTitle>
@@ -46,7 +74,7 @@ const ClassificationArticle = ({
 
 export default ClassificationArticle;
 
-const ArticleWrapper = styled.div<{ $forcarousel?: boolean; $imageUrl?: string | null }>`
+const ArticleWrapper = styled.div<{ $forcarousel?: boolean; $img?: string | null }>`
 	flex: 0 0 auto;
 	display: flex;
 	flex-direction: column;
@@ -56,8 +84,8 @@ const ArticleWrapper = styled.div<{ $forcarousel?: boolean; $imageUrl?: string |
 	gap: ${({ $forcarousel }) => ($forcarousel ? '11.723rem' : '7.723rem')};
 	width: ${({ $forcarousel }) => ($forcarousel ? '40rem' : '33.4118rem')};
 	height: ${({ $forcarousel }) => ($forcarousel ? '25.5rem' : '21.3rem')};
-	background: ${({ theme, $imageUrl }) =>
-		$imageUrl ? `url(${$imageUrl}) center / cover no-repeat` : theme.colors.white1};
+	background: ${({ $img }) =>
+		$img && $img !== 'null' ? `url(${$img}) center / cover no-repeat` : `url(${AiDefault}) center / cover no-repeat`};
 	border-radius: ${({ $forcarousel }) => ($forcarousel ? '30px' : '20px')};
 `;
 

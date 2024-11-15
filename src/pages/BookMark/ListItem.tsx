@@ -14,6 +14,9 @@ interface ListItemProps {
 	isAllSelected: boolean;
 	onDelete: () => void;
 	setHasSelectedItems: (hasSelected: boolean) => void;
+	selectedBookmarks: string[]; // 선택된 북마크 ID들
+	setSelectedBookmarks: (selected: string[]) => void; // 선택된 북마크 상태를 업데이트하는 함수
+	bookmarkId: string; // 북마크 ID
 }
 
 function ListItem({
@@ -25,6 +28,9 @@ function ListItem({
 	isAllSelected,
 	setHasSelectedItems,
 	onDelete,
+	selectedBookmarks,
+	setSelectedBookmarks,
+	bookmarkId,
 }: ListItemProps) {
 	const [isClicked, setIsClicked] = useState(isAllSelected);
 	const IconComponent = isClicked ? LucideOrange : isSelectable ? LucideGray : Lucide;
@@ -35,11 +41,19 @@ function ListItem({
 		if (isSelectable) {
 			const newClickedState = !isClicked;
 			setIsClicked(newClickedState);
+
+			if (newClickedState) {
+				setSelectedBookmarks([...selectedBookmarks, bookmarkId]);
+			} else {
+				setSelectedBookmarks(selectedBookmarks.filter((id) => id !== bookmarkId));
+			}
 			setHasSelectedItems(newClickedState || isAllSelected);
 		} else {
 			window.open(url, '_blank', 'noopener,noreferrer');
 		}
 	};
+
+	console.log(selectedBookmarks);
 
 	const handleIconClick = (event: React.MouseEvent) => {
 		event.stopPropagation();

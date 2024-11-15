@@ -3,16 +3,21 @@ import Btn from '../common/Button/Btn';
 import Modal from '../common/Modal/Modal';
 import ClassificationArticle from './ClassificationArticle';
 import AiIcon from '@/assets/Ai.svg?react';
-import { AiClassifiedList } from '@/constants/AiClassificationList';
+import AiDefault from '@/assets/AiDefault.png';
 import { Buttons } from '@/constants/ButtonList';
+import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
 import useModal from '@/hooks/useModal';
+import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const AiClassificationPage = () => {
 	const [clickedFolders, setClickedFolders] = useState<Record<string, boolean>>({});
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
-	const [modalContent, setModalContent] = useState<string>(''); 
+	const [modalContent, setModalContent] = useState<string>('');
+	const { classifiedData } = useAiClassificationContext();
+	const navigate = useNavigate();
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
@@ -21,25 +26,67 @@ const AiClassificationPage = () => {
 		}));
 	};
 
+	const handleConfirm = () => {
+		navigate('/bookmark');
+	};
+
+	const handleCancle = async () => {
+		const BASE_URL = import.meta.env.VITE_BASE_URL; // Replace with your actual base URL
+
+		// Collect all bookmarkIds from the articles in the clicked folders
+		const bookmarkIds = classifiedData.map((article) => Number(article.bookmarkId));
+
+		console.log(bookmarkIds);
+
+		if (bookmarkIds.length === 0) {
+			console.warn('No bookmarks selected for cancellation');
+			return;
+		}
+
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+			const response = await axios.patch(
+				`${BASE_URL}/api/v1/classify/cancel`,
+				{
+					bookmarkIds,
+				},
+				{
+					headers: {
+						access: `${accessToken}`,
+					},
+				},
+			);
+			console.log('Cancellation successful:', response.data);
+			closeModal();
+		} catch (error) {
+			console.error('Error cancelling classification:', error);
+		}
+	};
+
 	const handleFinishClassify = () => {
-		setModalContent('AI 분류 완료하기'); 
+		setModalContent('AI 분류 완료하기');
 		openModal();
 	};
 
 	const handleCancelClassify = () => {
-		setModalContent('AI 분류 취소하기'); 
+		setModalContent('AI 분류 취소하기');
 		openModal();
 	};
 
-	const groupedByFolder = AiClassifiedList.reduce(
+	const groupedByFolder = classifiedData.reduce(
 		(acc, article) => {
-			if (!acc[article.folder]) {
-				acc[article.folder] = [];
+			const folderName = article.folder.name;
+			if (!acc[folderName]) {
+				acc[folderName] = [];
 			}
-			acc[article.folder].push(article);
+			acc[folderName].push(article);
 			return acc;
 		},
-		{} as Record<string, typeof AiClassifiedList>,
+		{} as Record<string, (typeof classifiedData)[0][]>,
 	);
 
 	return (
@@ -85,14 +132,16 @@ const AiClassificationPage = () => {
 						>
 							<ClassificationBoxTitle>{folder}</ClassificationBoxTitle>
 							<ClassificationArticleBox>
-								{articles.map((article) => (
+								{(articles as (typeof classifiedData)[0][]).map((article) => (
 									<ClassificationArticle
-										key={article.id}
+										key={article.bookmarkId}
+										img={article.img ?? AiDefault}
 										title={article.title}
-										hashtag={article.hashtag}
-										folder={article.folder}
-										date={article.date}
+										folder={article.folder.name}
+										date={article.createdAt}
+										url={article.url}
 										showDeleteIcon={true}
+										bookmarkId={article.bookmarkId}
 									/>
 								))}
 							</ClassificationArticleBox>
@@ -101,7 +150,12 @@ const AiClassificationPage = () => {
 				</ClassificationBoxWrapper>
 			</AiClassificationPageContent>
 			{/* Modal 컴포넌트 */}
-			<Modal isOpen={isModalOpen} onClose={closeModal} id="ok">
+			<Modal
+				isOpen={isModalOpen}
+				onClose={closeModal}
+				id="ok"
+				onConfirm={modalContent === 'AI 분류 완료하기' ? handleConfirm : handleCancle}
+			>
 				<ModalContent>
 					<ModalTitle>{modalContent}</ModalTitle>
 					<ModalText>
