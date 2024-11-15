@@ -1,3 +1,4 @@
+import OnBoarding3center from '@/assets/OnBoarding3.svg?react';
 import styled from 'styled-components';
 
 const OnBoarding3 = () => {
@@ -10,6 +11,7 @@ const OnBoarding3 = () => {
 					<br />
 					읽지 않은 북마크를 확인하고 미션을 통해 도토리를 얻으세요.
 				</SubDescription>
+				<OnBoarding3center />
 			</Description>
 		</OnBoarding3Wrapper>
 	);
@@ -31,16 +33,17 @@ const Description = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 3.9rem;
 `;
 const TextTitle = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_45px};
 	color: ${({ theme }) => theme.colors.orange1};
 	text-align: center;
+	margin-bottom: 3.9rem;
 `;
 
 const SubDescription = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_25px};
 	color: ${({ theme }) => theme.colors.white1};
 	text-align: center;
+	margin-bottom: 7.9rem;
 `;

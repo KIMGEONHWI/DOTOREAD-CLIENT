@@ -1,3 +1,5 @@
+import OnBoarding4center from '@/assets/OnBoarding4center.svg?react';
+import OnBoarding4footer from '@/assets/OnBoarding4footer.svg?react';
 import styled from 'styled-components';
 
 const OnBoarding4 = () => {
@@ -12,6 +14,10 @@ const OnBoarding4 = () => {
 					<br />
 					활동을 통해 모은 도토리는 동물 보호 단체에 기부할 수 있습니다.
 				</SubDescription>
+				<OnBoarding4center />
+				<Wrapper>
+					<OnBoarding4footer />
+				</Wrapper>
 			</Description>
 		</OnBoarding4Wrapper>
 	);
@@ -33,16 +39,21 @@ const Description = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	gap: 3.9rem;
 `;
 const TextTitle = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_45px};
 	color: ${({ theme }) => theme.colors.orange1};
 	text-align: center;
+	margin-bottom: 3.9rem;
 `;
 
 const SubDescription = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_25px};
 	color: ${({ theme }) => theme.colors.white1};
 	text-align: center;
+	margin-bottom: 6.8rem;
+`;
+
+const Wrapper = styled.div`
+	margin-top: 6.603rem;
 `;

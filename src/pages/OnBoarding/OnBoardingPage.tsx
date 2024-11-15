@@ -38,7 +38,6 @@ export default OnBoardingPage;
 
 const OnBoardingPageWrapper = styled.div`
 	position: relative;
-	width: 100%;
-
+	width: 100vw;
 	background-color: ${({ theme }) => theme.colors.background};
 `;

@@ -9,7 +9,6 @@ interface HeaderScrollProps {
 const Header = ({ isScrolled }: HeaderScrollProps) => {
 	const navigate = useNavigate();
 	const handleStartClick = () => {
-		console.log('누름');
 		navigate('/start');
 	};
 	return (
@@ -34,7 +33,7 @@ const HeaderWrapper = styled.header.withConfig({
 	flex-shrink: 0;
 	position: fixed;
 	top: 0;
-	background: ${({ isScrolled }) => (isScrolled ? 'rgba(118, 118, 118, 0.75)' : 'rgba(118, 118, 118, 0)')};
-	transition: background 0.3s ease;
+	background: ${({ isScrolled }) => (isScrolled ? 'rgba(118, 118, 118, 0.20)' : 'rgba(118, 118, 118, 0)')};
+	transition: background 0.7s ease;
 	z-index: 1;
 `;
