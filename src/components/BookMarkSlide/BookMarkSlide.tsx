@@ -6,17 +6,11 @@ import LeeterIcon from '@/assets/Letter.svg?react';
 import LineIcon from '@/assets/Line.svg?react';
 import LucidIcon from '@/assets/Lucide.svg?react';
 import PlusIcon from '@/assets/Plus.svg?react';
+import { useFolders } from '@/contexts/FetchFoldersContext';
 import useModal from '@/hooks/useModal';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-interface Folder {
-	id: string;
-	name: string;
-}
 
 interface BookMarkSlideProps {
 	show: boolean;
@@ -24,84 +18,30 @@ interface BookMarkSlideProps {
 
 function BookMarkSlide({ show }: BookMarkSlideProps) {
 	const navigate = useNavigate();
+	const { folders, addFolder, deleteFolder, fetchFolders } = useFolders();
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	const [folderName, setFolderName] = useState('');
-	const [folders, setFolders] = useState<Folder[]>([]);
-	const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-	const fetchFolders = useCallback(async () => {
-		try {
-			const accessToken = localStorage.getItem('access-token');
-			if (!accessToken) {
-				console.error('Access token not found');
-				return;
-			}
-
-			const response = await axios.get(`${BASE_URL}/api/v1/folders`, {
-				headers: {
-					access: `${accessToken}`,
-				},
-			});
-			setFolders(response.data.result || []);
-			console.log('Folders fetched:', response.data);
-		} catch (error) {
-			console.error('Error fetching folders:', error);
-		}
-	}, [BASE_URL]);
 
 	useEffect(() => {
-		if (show) {
-			fetchFolders();
-		}
-	}, [show, fetchFolders]);
-
-	const handleNavigate = (text: string, iconType: string, category: string) => {
-		navigate('/bookmark', { state: { text, iconType, category } });
-	};
+		fetchFolders();
+	}, [fetchFolders]);
 
 	const handleAddFolder = async () => {
-		try {
-			const accessToken = localStorage.getItem('access-token');
-			if (!accessToken) {
-				console.error('Access token not found');
-				return;
-			}
-
-			const data = { name: folderName };
-			const response = await axios.post(`${BASE_URL}/api/v1/folders`, data, {
-				headers: {
-					access: `${accessToken}`,
-				},
-			});
-			console.log('Folder created:', response.data);
-
-			closeModal();
-			setFolderName('');
-			await fetchFolders();
-		} catch (error) {
-			console.error('Error creating folder:', error);
+		if (!folderName.trim()) {
+			console.error('Folder name is empty');
+			return;
 		}
+		await addFolder(folderName);
+		await fetchFolders();
+		setFolderName('');
 	};
 
 	const handleDeleteFolder = async (folderId: string) => {
-		try {
-			const accessToken = localStorage.getItem('access-token');
-			if (!accessToken) {
-				console.error('Access token not found');
-				return;
-			}
+		await deleteFolder(folderId);
+	};
 
-			await axios.delete(`${BASE_URL}/api/v1/folders/${folderId}`, {
-				headers: {
-					access: `${accessToken}`,
-				},
-			});
-			console.log('Folder deleted:', folderId);
-
-			await fetchFolders();
-		} catch (error) {
-			console.error('Error deleting folder:', error);
-		}
+	const handleNavigate = (text: string, iconType: string, category: string) => {
+		navigate('/bookmark', { state: { text, iconType, category } });
 	};
 
 	return (
@@ -125,16 +65,17 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 					Folders
 					<PlusIcon onClick={openModal} style={{ cursor: 'pointer' }} />
 				</FoldersTitle>
-				{folders.map((folder) => (
-					<BookMarkListBtn
-						key={folder.id}
-						text={folder.name}
-						leftIcon={<FolderIcon />}
-						rightIcon={<LucidIcon />}
-						onClick={() => handleNavigate(folder.name, 'classified', folder.id)}
-						onDelete={() => handleDeleteFolder(folder.id)}
-					/>
-				))}
+				{folders?.length > 0 &&
+					folders.map((folder) => (
+						<BookMarkListBtn
+							key={folder?.id || Math.random()}
+							text={folder?.name || 'Unnamed Folder'}
+							leftIcon={<FolderIcon />}
+							rightIcon={<LucidIcon />}
+							onClick={() => handleNavigate(folder?.name || '', 'classified', folder?.id || '')}
+							onDelete={() => folder?.id && handleDeleteFolder(folder.id)}
+						/>
+					))}
 			</FoldersContent>
 
 			<Modal id="create" isOpen={isModalOpen} onClose={closeModal} onConfirm={handleAddFolder}>

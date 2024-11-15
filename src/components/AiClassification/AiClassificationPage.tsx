@@ -6,6 +6,7 @@ import AiIcon from '@/assets/Ai.svg?react';
 import AiDefault from '@/assets/AiDefault.png';
 import { Buttons } from '@/constants/ButtonList';
 import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
+import { useFolders } from '@/contexts/FetchFoldersContext';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ const AiClassificationPage = () => {
 	const [modalContent, setModalContent] = useState<string>('');
 	const { classifiedData } = useAiClassificationContext();
 	const navigate = useNavigate();
+	const { fetchFolders } = useFolders();
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
@@ -26,7 +28,8 @@ const AiClassificationPage = () => {
 		}));
 	};
 
-	const handleConfirm = () => {
+	const handleConfirm = async () => {
+		await fetchFolders();
 		navigate('/bookmark');
 	};
 

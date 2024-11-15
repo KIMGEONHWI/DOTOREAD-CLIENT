@@ -14,9 +14,9 @@ interface ListItemProps {
 	isAllSelected: boolean;
 	onDelete: () => void;
 	setHasSelectedItems: (hasSelected: boolean) => void;
-	selectedBookmarks: string[]; // 선택된 북마크 ID들
-	setSelectedBookmarks: (selected: string[]) => void; // 선택된 북마크 상태를 업데이트하는 함수
-	bookmarkId: string; // 북마크 ID
+	selectedBookmarks: string[]; 
+	setSelectedBookmarks: (selected: string[]) => void;
+	bookmarkId: string; 
 }
 
 function ListItem({
@@ -91,7 +91,7 @@ function ListItem({
 export default ListItem;
 
 const ListItemWrapper = styled.div.withConfig({
-	shouldForwardProp: (prop) => prop !== 'isClicked', // isClicked가 DOM에 전달되지 않도록 설정
+	shouldForwardProp: (prop) => prop !== 'isClicked',
 })<{ isClicked: boolean }>`
 	width: 128.2rem;
 	height: 7.8rem;

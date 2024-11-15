@@ -17,6 +17,7 @@ function Header() {
 
 	const handleAddBookmark = async () => {
 		await addBookmark(url);
+
 		setUrl('');
 		closeModal();
 	};
