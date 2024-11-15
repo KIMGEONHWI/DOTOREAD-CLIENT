@@ -33,11 +33,11 @@ export const router = createBrowserRouter([
 				element: <AiClassificationPage />,
 			},
 			{
-				path: 'share',
+				path: '/share',
 				element: <SharePage />,
 			},
 			{
-				path: 'mission',
+				path: '/mission',
 				element: <MissionPage />,
 			},
 		],
