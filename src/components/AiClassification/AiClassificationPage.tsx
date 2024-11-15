@@ -6,6 +6,7 @@ import AiIcon from '@/assets/Ai.svg?react';
 import AiDefault from '@/assets/AiDefault.png';
 import { Buttons } from '@/constants/ButtonList';
 import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
+import { useFolders } from '@/contexts/FetchFoldersContext';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
 import { useState } from 'react';
@@ -18,6 +19,7 @@ const AiClassificationPage = () => {
 	const [modalContent, setModalContent] = useState<string>('');
 	const { classifiedData } = useAiClassificationContext();
 	const navigate = useNavigate();
+	const { fetchFolders } = useFolders();
 
 	const handleBoxClick = (folder: string) => {
 		setClickedFolders((prev) => ({
@@ -26,14 +28,14 @@ const AiClassificationPage = () => {
 		}));
 	};
 
-	const handleConfirm = () => {
+	const handleConfirm = async () => {
+		await fetchFolders();
 		navigate('/bookmark');
 	};
 
 	const handleCancle = async () => {
-		const BASE_URL = import.meta.env.VITE_BASE_URL; // Replace with your actual base URL
+		const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-		// Collect all bookmarkIds from the articles in the clicked folders
 		const bookmarkIds = classifiedData.map((article) => Number(article.bookmarkId));
 
 		console.log(bookmarkIds);

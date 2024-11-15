@@ -150,6 +150,8 @@ function BookMarkPage() {
 				</SortBtnWrapper>
 				{!isAiClassifyActive && <Navbar />}
 				<BookMarkList
+					iconType={iconType}
+					category={category}
 					bookmarks={bookmarks}
 					isSelectable={isAiClassifyActive}
 					isAllSelected={isAllSelected}

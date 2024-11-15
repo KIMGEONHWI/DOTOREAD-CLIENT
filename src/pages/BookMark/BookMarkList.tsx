@@ -1,4 +1,5 @@
 import LineBetweenBookmark from '@/assets/LineBetweenBookmark.svg?react';
+import { useBookmarkContext } from '@/contexts/BookmarkContext';
 import Default from '@/pages/BookMark/Default';
 import ListItem from '@/pages/BookMark/ListItem';
 import axios from 'axios';
@@ -23,6 +24,8 @@ interface BookMarkListProps {
 	setHasSelectedItems: (hasSelected: boolean) => void;
 	selectedBookmarks: string[];
 	setSelectedBookmarks: (selected: string[]) => void;
+	category: string;
+	iconType: string;
 }
 
 function BookMarkList({
@@ -32,7 +35,10 @@ function BookMarkList({
 	setHasSelectedItems,
 	selectedBookmarks,
 	setSelectedBookmarks,
+	category,
+	iconType,
 }: BookMarkListProps) {
+	const { fetchBookmarks } = useBookmarkContext();
 	const handleDeleteBookMark = async (bookmark: Bookmark) => {
 		try {
 			const accessToken = localStorage.getItem('access-token');
@@ -47,6 +53,14 @@ function BookMarkList({
 				},
 			});
 			console.log('bookmark deleted:', bookmark.id);
+
+			if (category === '모든 북마크') {
+				await fetchBookmarks('/api/v1/bookmarks/all?sortType=DESC');
+			} else if (category === '미분류') {
+				await fetchBookmarks('/api/v1/bookmarks/uncategorized?sortType=DESC');
+			} else if (iconType === 'classified') {
+				await fetchBookmarks(`/api/v1/bookmarks/all/${category}?sortType=DESC`);
+			}
 		} catch (error) {
 			console.error('Error deleting bookmark', error);
 		}
