@@ -37,7 +37,7 @@ function Btn({ id, onClick }: BtnProps) {
 			$bordercolor={bordercolor}
 			$backgroundcolor={clicked ? 'orange1' : backgroundcolor}
 		>
-			<BtnName color={clicked ? 'white' : color}>{text}</BtnName>
+			<BtnName color={clicked ? 'white1' : color}>{text}</BtnName>
 		</BtnWrapper>
 	);
 }

@@ -1,7 +1,10 @@
+import ArticleContent from './ArticleContent';
 import CollectionContent from './CollectionContent';
 import SearchBar from './SearchBar';
 import Btn from '@/components/common/Button/Btn';
+import NewArcticleModal from '@/components/common/Modal/NewArticleModal';
 import { collectionPreviewDTOList } from '@/constants/CollectionList';
+import useModal from '@/hooks/useModal';
 import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -35,17 +38,24 @@ const SharePage = () => {
 	};
 	// fetchCollections();
 
+	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	return (
 		<SharePageWrapper>
 			<SearchBar />
 			<BtnWrapper>
-				<Btn id="newArticle" />
+				<Btn id="newArticle" onClick={openModal} />
 			</BtnWrapper>
 			<CollectionWrapper>
 				{collectionPreviewDTOList.map((collection) => (
 					<CollectionContent key={collection.collectionId} collection={collection} />
 				))}
 			</CollectionWrapper>
+			<NewArcticleModal isOpen={isModalOpen} onClose={closeModal}>
+				<ArticleContent />
+				<BtnSubmitWrapper>
+					<Btn id="submit" onClick={closeModal} />
+				</BtnSubmitWrapper>
+			</NewArcticleModal>
 		</SharePageWrapper>
 	);
 };
@@ -73,4 +83,8 @@ const CollectionWrapper = styled.div`
 	flex-wrap: wrap;
 	gap: 3.3rem;
 	display: flex;
+`;
+const BtnSubmitWrapper = styled.div`
+	position: absolute;
+	top: 51.2rem;
 `;

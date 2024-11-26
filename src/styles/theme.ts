@@ -1,10 +1,12 @@
 import { css } from 'styled-components';
 
+
 const colors = {
 	orange1: '#F15A25',
 	orange2: 'rgba(209, 68, 7, 0.24)',
 	orange3: '#FFE5D9',
 	orange4: '#AA4623',
+	orange5: '#CC5724',
 
 	white1: '#FFFFFF',
 	white2: '#DEDEDE',
@@ -53,6 +55,7 @@ const fonts = {
 		font-size: 20px;
 		font-weight: 700;
 	`,
+
 	Pretendard_Semibold_49px: css`
 		${baseFontStyle}
 		font-size: 49.976px;

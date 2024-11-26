@@ -41,7 +41,7 @@ const ItemContainer = styled.div<{ formodal: boolean }>`
 	border: 3px solid #3b3b3b;
 	padding: 0.2rem 2.9rem;
 	display: flex;
-	gap: 1.5rem;
+	gap: 0rem;
 	align-items: center;
 	background: ${({ theme }) => theme.colors.bookmark_hover};
 `;
@@ -70,7 +70,7 @@ const Url = styled.div`
 `;
 const StyledMoveToMyBookMark = styled(MoveToMyBookMark)`
 	position: absolute;
-	top: -2.5rem;
-	right: -0rem;
+	top: -2.4rem;
+	right: 0rem;
 	z-index: 10;
 `;
