@@ -60,7 +60,7 @@ const ModalContent = ({ collection }: ModalContentProps) => {
 					<Memo>{collection.memo}</Memo>
 					<ListItemWrapper>
 						{collection.bookmarkSummaryDTOList.map((bookmark) => (
-							<ListItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} formodal={true}/>
+							<ListItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} formodal={true} />
 						))}
 					</ListItemWrapper>
 				</Content>
