@@ -22,4 +22,5 @@ export const Buttons: ButtonProps[] = [
 	{ id: 'create', text: '생성하기', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange2' },
 	{ id: 'cancel', text: '취소하기', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange2' },
 	{ id: 'plus', text: '추가하기', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange2' },
+	{ id: 'newArticle', text: '+ 새 글 작성', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange1' },
 ];
