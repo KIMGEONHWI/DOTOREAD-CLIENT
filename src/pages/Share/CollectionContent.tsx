@@ -1,5 +1,8 @@
 import ListItem from './ListItem';
+import ModalContent from './ModalContent';
 import NicknameProfile from '@/assets/NicknameProfile.svg?react';
+import CollectionModal from '@/components/common/Modal/CollectionModal';
+import useModal from '@/hooks/useModal';
 import styled from 'styled-components';
 
 interface Collection {
@@ -27,6 +30,7 @@ function formatDate(dateStr: string) {
 }
 
 const CollectionContent = ({ collection }: CollectionContentProps) => {
+	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	return (
 		<Container>
 			<Header>
@@ -40,12 +44,15 @@ const CollectionContent = ({ collection }: CollectionContentProps) => {
 					<Memo>{collection.memo}</Memo>
 					<ListItemWrapper>
 						{collection.bookmarkSummaryDTOList.map((bookmark) => (
-							<ListItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} />
+							<ListItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} formodal={false} />
 						))}
 					</ListItemWrapper>
 				</Content>
-				<SeeMore>북마크 더보기</SeeMore>
+				<SeeMore onClick={openModal}>북마크 더보기</SeeMore>
 			</ContentWrapper>
+			<CollectionModal isOpen={isModalOpen} onClose={closeModal}>
+				<ModalContent collection={collection} />
+			</CollectionModal>
 		</Container>
 	);
 };
@@ -129,7 +136,7 @@ const Memo = styled.div`
 	height: 4.8rem;
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
 	color: ${({ theme }) => theme.colors.white1};
-
+	margin-left: 1.2rem;
 	padding-right: 4.3rem;
 `;
 const SeeMore = styled.div`
@@ -140,4 +147,5 @@ const SeeMore = styled.div`
 	text-decoration-style: solid;
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
 	color: ${({ theme }) => theme.colors.white2};
+	cursor: pointer;
 `;

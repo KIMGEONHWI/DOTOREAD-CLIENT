@@ -1,21 +1,25 @@
+import ToMyBookMark from '@/assets/TomyBookmark.svg?react';
 import styled from 'styled-components';
 
 interface ListItemProps {
 	title: string;
 	url: string;
+	formodal?: boolean;
 }
-const ListItem = ({ title, url }: ListItemProps) => {
+const ListItem = ({ title, url, formodal = false }: ListItemProps) => {
 	return (
-		<ItemContainer>
+		<ItemContainer formodal={formodal}>
 			<Title>{title}</Title>
 			<Url>{url}</Url>
+			{formodal && <ToMyBookMark />}
 		</ItemContainer>
 	);
 };
 
 export default ListItem;
 
-const ItemContainer = styled.div`
+const ItemContainer = styled.div<{ formodal: boolean }>`
+	width: ${({ formodal }) => (formodal ? '69.1rem' : '65rem')};
 	width: 65rem;
 	height: 8.6rem;
 	border-radius: 10px;
