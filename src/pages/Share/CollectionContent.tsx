@@ -44,6 +44,7 @@ const CollectionContent = ({ collection }: CollectionContentProps) => {
 						))}
 					</ListItemWrapper>
 				</Content>
+				<SeeMore>북마크 더보기</SeeMore>
 			</ContentWrapper>
 		</Container>
 	);
@@ -86,31 +87,31 @@ const ContentWrapper = styled.div`
 
 const Content = styled.div`
 	max-height: 36.8rem;
-	background: green;
+	width: 66.5rem;
 	overflow-y: auto;
+	position: absolute;
+	top: 15rem;
+	left: 3.1rem;
+	&::-webkit-scrollbar {
+		width: 0.7rem;
+		height: 36.8rem;
+	}
 
-	// &::-webkit-scrollbar {
-	// 	width: 0.7rem;
-	// 	height: 70rem;
-	// }
+	&::-webkit-scrollbar-track {
+		background: none;
+	}
 
-	// &::-webkit-scrollbar-track {
-	// 	background: none;
-	// }
-
-	// &::-webkit-scrollbar-thumb {
-	// 	border-radius: 15px;
-	// 	cursor: pointer;
-	// 	height: 19.6rem;
-	// 	width: 0.7rem;
-	// 	background: ${({ theme }) => theme.colors.white2};
-	// }
+	&::-webkit-scrollbar-thumb {
+		border-radius: 15px;
+		cursor: pointer;
+		height: 19.6rem;
+		width: 0.7rem;
+		background: ${({ theme }) => theme.colors.white2};
+	}
 `;
 
 const ListItemWrapper = styled.div`
-	position: absolute;
-	top: 22.3rem;
-	left: 3.1rem;
+	margin-top: 2.5rem;
 	display: flex;
 	flex-direction: column;
 	gap: 1.4rem;
@@ -125,10 +126,18 @@ const Title = styled.div`
 	margin-top: 2.9rem;
 `;
 const Memo = styled.div`
-	position: absolute;
+	height: 4.8rem;
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
 	color: ${({ theme }) => theme.colors.white1};
-	left: 4.3rem;
+
 	padding-right: 4.3rem;
-	top: 15rem;
+`;
+const SeeMore = styled.div`
+	position: absolute;
+	top: 54rem;
+	right: 3.3rem;
+	text-decoration-line: underline;
+	text-decoration-style: solid;
+	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
+	color: ${({ theme }) => theme.colors.white2};
 `;
