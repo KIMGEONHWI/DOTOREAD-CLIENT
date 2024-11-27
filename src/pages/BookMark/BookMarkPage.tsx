@@ -47,7 +47,7 @@ function BookMarkPage() {
 		};
 
 		fetchData();
-	}, [category, iconType]);
+	}, [category, iconType, bookmarks]);
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);

@@ -23,7 +23,7 @@ export const BookmarkProvider = ({ children }: { children: ReactNode }) => {
 		}
 	};
 
-	const addBookmark = async (url: string) => {
+	const addBookmark = async (url: string, currentCategory: string) => {
 		try {
 			const accessToken = localStorage.getItem('access-token');
 			await axios.post(
@@ -33,8 +33,13 @@ export const BookmarkProvider = ({ children }: { children: ReactNode }) => {
 					headers: { access: `${accessToken}` },
 				},
 			);
-
-			await fetchBookmarks('/api/v1/bookmarks/uncategorized?sortType=DESC');
+			if (currentCategory === '모든 북마크') {
+				await fetchBookmarks('/api/v1/bookmarks/all?sortType=DESC');
+			} else if (currentCategory === '미분류') {
+				await fetchBookmarks('/api/v1/bookmarks/uncategorized?sortType=DESC');
+			} else {
+				await fetchBookmarks(`/api/v1/bookmarks/all/${currentCategory}?sortType=DESC`);
+			}
 		} catch (error) {
 			console.error('북마크 추가 중 오류 발생:', error);
 		}
