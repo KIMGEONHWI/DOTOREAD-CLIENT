@@ -53,11 +53,13 @@ function ListItem({
 		}
 	};
 
-	console.log(selectedBookmarks);
-
 	const handleIconClick = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		setShowDropdown(!showDropdown);
+		if (IconComponent === Lucide) {
+			setShowDropdown(!showDropdown);
+		} else {
+			setIsClicked((prevState) => !prevState);
+		}
 	};
 
 	const handleDeleteClick = (event: React.MouseEvent) => {
