@@ -4,7 +4,6 @@ import LucideOrange from '@/assets/LucideOrange.svg?react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-
 interface ListItemProps {
 	title: string;
 	url: string;

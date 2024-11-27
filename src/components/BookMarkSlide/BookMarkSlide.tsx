@@ -130,6 +130,7 @@ const FoldersContent = styled.div`
 	padding-left: 2rem;
 	padding-right: 2rem;
 	gap: 2.1rem;
+	overflow: auto;
 `;
 
 const FoldersTitle = styled.p`

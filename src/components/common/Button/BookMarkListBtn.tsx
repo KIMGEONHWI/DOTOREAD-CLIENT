@@ -58,6 +58,7 @@ const BookMarkListBtnWrapper = styled.button`
 	align-items: center;
 	width: 24.2rem;
 	height: 5.4rem;
+	min-height: 5.4rem;
 	border-radius: 15px;
 	color: ${({ theme }) => theme.colors.white1};
 	${({ theme }) => theme.fonts.Pretendard_Semibold_22px};
