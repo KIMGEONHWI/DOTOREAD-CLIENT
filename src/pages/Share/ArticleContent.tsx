@@ -68,7 +68,7 @@ const Content = styled.div`
 	top: 2rem;
 	left: 2.2rem;
 `;
-const InputTitle = styled.input`
+const InputTitle = styled.textarea`
 	color: ${({ theme }) => theme.colors.gray3};
 	position: absolute;
 	top: 0.7rem;
