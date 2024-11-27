@@ -25,6 +25,7 @@ function SideBar() {
 	};
 
 	const location = useLocation();
+	
 	useEffect(() => {
 		if (location.pathname === '/bookmark' || location.pathname === '/ai') {
 			setClicked('bookmark');
