@@ -17,7 +17,7 @@ const ArticleContent = () => {
 			<ScrollWrapper>
 				<InputTitleContainer>
 					<Title>제목 입력하기</Title>
-					<InputTitle  placeholder="ex) 취업정보 관련 사이트" />
+					<InputTitle placeholder="ex) 취업정보 관련 사이트" />
 				</InputTitleContainer>
 				<InputContentContainer>
 					<Content>내용 입력하기</Content>
@@ -31,7 +31,7 @@ const ArticleContent = () => {
 					))}
 				</ArticleWrapper>
 				<Plus>
-					<PlusIcon style={{ cursor: 'pointer' }}/>
+					<PlusIcon style={{ cursor: 'pointer' }} />
 				</Plus>
 			</ScrollWrapper>
 		</ModalContainer>

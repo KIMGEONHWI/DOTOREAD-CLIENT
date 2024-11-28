@@ -9,34 +9,8 @@ import useModal from '@/hooks/useModal';
 // import { useState } from 'react';
 import styled from 'styled-components';
 
-// const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-// interface CollectionContent {
-// 	collectionId: number;
-// 	title: string;
-// 	memo: string;
-// 	createdAt: string;
-// 	nickname: string | null;
-// }
-
-// interface CollectionsResponse {
-// 	result: {
-// 		collectionPreviewDTOList: CollectionContent[];
-// 	};
-// }
 
 const SharePage = () => {
-	// const [collections, setCollections] = useState<Collection[]>([]);
-
-	// const fetchCollections = async () => {
-	// 	try {
-	// 		const response = await axios.get<CollectionsResponse>(`${BASE_URL}/api/v1/collections?page=1`);
-	// 		setCollections(response.data.result.collectionPreviewDTOList);
-	// 	} catch (error) {
-	// 		console.error('collection fetch error', error);
-	// 	}
-	// };
-	// fetchCollections();
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	return (
 		<SharePageWrapper>
