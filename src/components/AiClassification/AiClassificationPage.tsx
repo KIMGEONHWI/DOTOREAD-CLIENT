@@ -9,7 +9,7 @@ import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
 import { useFolders } from '@/contexts/FetchFoldersContext';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -94,6 +94,14 @@ const AiClassificationPage = () => {
 		},
 		{} as Record<string, (typeof classifiedData)[0][]>,
 	);
+
+	useEffect(() => {
+		document.body.style.overflow = 'hidden';
+
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, []);
 
 	return (
 		<AiClassificationPageWrapper>

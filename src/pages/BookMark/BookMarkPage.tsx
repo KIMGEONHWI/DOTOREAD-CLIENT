@@ -47,7 +47,7 @@ function BookMarkPage() {
 		};
 
 		fetchData();
-	}, [category, iconType]);
+	}, [category, iconType, bookmarks]);
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
@@ -131,6 +131,14 @@ function BookMarkPage() {
 		};
 	}, [location]);
 
+	useEffect(() => {
+		document.body.style.overflow = 'hidden';
+
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, []);
+
 	return (
 		<BookMarkPageWrapper>
 			<BackgroundBox>
@@ -179,6 +187,7 @@ const BackgroundBox = styled.div`
 	background: ${({ theme }) => theme.colors.background_box};
 	position: fixed;
 	left: 44.2rem;
+	overflow: auto;
 `;
 
 const TitleWrapper = styled.div`

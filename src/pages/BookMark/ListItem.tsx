@@ -4,7 +4,6 @@ import LucideOrange from '@/assets/LucideOrange.svg?react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-
 interface ListItemProps {
 	title: string;
 	url: string;
@@ -54,11 +53,13 @@ function ListItem({
 		}
 	};
 
-	console.log(selectedBookmarks);
-
 	const handleIconClick = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		setShowDropdown(!showDropdown);
+		if (IconComponent === Lucide) {
+			setShowDropdown(!showDropdown);
+		} else {
+			setIsClicked((prevState) => !prevState);
+		}
 	};
 
 	const handleDeleteClick = (event: React.MouseEvent) => {

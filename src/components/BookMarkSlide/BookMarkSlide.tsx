@@ -125,11 +125,12 @@ const FoldersContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 28.2rem;
-	height: 40.35rem;
+	height: 30%;
 	padding-top: 4.1rem;
 	padding-left: 2rem;
 	padding-right: 2rem;
 	gap: 2.1rem;
+	overflow: auto;
 `;
 
 const FoldersTitle = styled.p`
