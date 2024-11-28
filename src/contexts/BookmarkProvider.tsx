@@ -23,7 +23,7 @@ export const BookmarkProvider = ({ children }: { children: ReactNode }) => {
 		}
 	};
 
-	const addBookmark = async (url: string, currentCategory: string) => {
+	const addBookmark = async (url: string, currentCategory?: string) => {
 		try {
 			const accessToken = localStorage.getItem('access-token');
 			await axios.post(

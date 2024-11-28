@@ -25,7 +25,7 @@ interface Bookmark {
 }
 
 function formatDate(dateStr: string) {
-	const [year, month, day] = dateStr.split('-');
+	const [month, day] = dateStr.split('-');
 	return `${parseInt(month)}월 ${parseInt(day)}일`;
 }
 
