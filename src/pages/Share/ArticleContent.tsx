@@ -1,5 +1,10 @@
 import PlusIcon from '@/assets/PlusIcon.svg?react';
 import styled from 'styled-components';
+import { addBookMarkList } from '@/constants/AddBookMarkList';
+import ArticleItem from './ArticleItem';
+import useModal from '@/hooks/useModal';
+
+const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 
 const ArticleContent = () => {
 	const currentDate = new Date();
@@ -12,21 +17,26 @@ const ArticleContent = () => {
 				<NewArticle>새 글 작성</NewArticle>
 				<CreatedAt>{formattedDate}</CreatedAt>
 			</Header>
-			<InputTitleContainer>
-				<Title>제목 입력하기</Title>
-				<InputTitle placeholder="ex) 취업정보 관련 사이트" />
-			</InputTitleContainer>
-			<InputContentContainer>
-				<Content>내용 입력하기</Content>
-				<InputContent
-					type="text"
-					placeholder="ex) 국내 IT기업 개발직군의 채용일정이 매일 업데이트 됩니다. 
-(외국지사가 있는 경우에도 국내 채용만 업데이트 합니다.)"
-				/>
-			</InputContentContainer>
-			<Plus>
-				<PlusIcon style={{ cursor: 'pointer' }} />
-			</Plus>
+			<ScrollWrapper>
+				<InputTitleContainer>
+					<Title>제목 입력하기</Title>
+					<InputTitle placeholder="ex) 취업정보 관련 사이트" />
+				</InputTitleContainer>
+				<InputContentContainer>
+					<Content>내용 입력하기</Content>
+					<InputContent
+						placeholder="ex) 국내 IT기업 개발직군의 채용일정이 매일 업데이트 됩니다."
+					/>
+				</InputContentContainer>
+				<ArticleWrapper>
+					{addBookMarkList.map((bookmark) => (
+						<ArticleItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url}  />
+					))}
+				</ArticleWrapper>
+				<Plus>
+					<PlusIcon style={{ cursor: 'pointer' }} onClick={openModal}/>
+				</Plus>
+			</ScrollWrapper>
 		</ModalContainer>
 	);
 };
@@ -34,7 +44,7 @@ const ArticleContent = () => {
 export default ArticleContent;
 const ModalContainer = styled.div`
 	width: 70.5rem;
-	height: auto;
+	height: 100%;
 	position: relative;
 `;
 const Header = styled.div`
@@ -58,7 +68,7 @@ const Title = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
 	color: ${({ theme }) => theme.colors.white1};
 	position: absolute;
-	top: 0.7rem;
+	top: 1.3rem;
 	left: 2.2rem;
 `;
 const Content = styled.div`
@@ -70,12 +80,12 @@ const Content = styled.div`
 `;
 const InputTitle = styled.textarea`
 	color: ${({ theme }) => theme.colors.gray3};
-	position: absolute;
-	top: 0.7rem;
-	left: 14.5rem;
+	margin-left: 14rem;
+	margin-top: 1.3rem;
 	border: none;
 	width: 49rem;
 	background: transparent;
+	resize: none;
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
 	line-height: normal;
 	&:focus {
@@ -83,15 +93,15 @@ const InputTitle = styled.textarea`
 	}
 `;
 
-const InputContent = styled.input`
+const InputContent = styled.textarea`
 	color: ${({ theme }) => theme.colors.gray3};
-	position: absolute;
-	top: 2rem;
-	left: 14.5rem;
+	margin-left: 14rem;
+	margin-top: 2rem;
 	border: none;
 	width: 49rem;
 	height: 11.3rem;
 	background: transparent;
+	resize: none;
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
 	line-height: normal;
 	&:focus {
@@ -100,17 +110,14 @@ const InputContent = styled.input`
 `;
 
 const InputTitleContainer = styled.div`
-	position: absolute;
 	width: 69.1rem;
 	height: 5.1rem;
 	border-radius: 15px;
 	border: 3px solid #3b3b3b;
 	backdrop-filter: blur(1.3951762914657593px);
-	top: 11.3rem;
+	margin-bottom: 0.6rem;
 `;
 const InputContentContainer = styled.div`
-	position: absolute;
-	top: 17rem;
 	width: 69.1rem;
 	height: 15.3rem;
 	border-radius: 15px;
@@ -118,7 +125,38 @@ const InputContentContainer = styled.div`
 	backdrop-filter: blur(1.3951762914657593px);
 `;
 const Plus = styled.div`
-	position: absolute;
-	top: 35.3rem;
-	left: 32rem;
+	margin-top: 1.5rem;
+`;
+
+const ArticleWrapper=styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	margin-top: 1.8rem;
+	`
+const ScrollWrapper = styled.div`
+	width: 100%;
+	max-height: 36.5rem;
+	overflow-y: auto;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 11.3rem;
+	&::-webkit-scrollbar {
+		width: 0.7rem;
+		height: 36.5rem;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: none;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 15px;
+		cursor: pointer;
+		height: 19.6rem;
+		width: 0.7rem;
+		background: ${({ theme }) => theme.colors.white2};
+	}
 `;

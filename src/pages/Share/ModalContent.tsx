@@ -115,6 +115,7 @@ const Like = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_22px};
 	position: absolute;
 	right: 1.8rem;
+	align-items: center;
 `;
 const Content = styled.div`
 	max-height: 36.5rem;
@@ -122,7 +123,7 @@ const Content = styled.div`
 	position: relative;
 	&::-webkit-scrollbar {
 		width: 0.7rem;
-		height: 36.8rem;
+		height: 36.5rem;
 	}
 
 	&::-webkit-scrollbar-track {

@@ -29,7 +29,7 @@ function formatDate(dateStr: string) {
 	return `${parseInt(month)}월 ${parseInt(day)}일`;
 }
 
-const CollectionContent = ({ collection }: CollectionContentProps) => {
+const Collection = ({ collection }: CollectionContentProps) => {
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	return (
 		<Container>
@@ -57,7 +57,7 @@ const CollectionContent = ({ collection }: CollectionContentProps) => {
 	);
 };
 
-export default CollectionContent;
+export default Collection;
 
 const Container = styled.div`
 	width: 71.4rem;

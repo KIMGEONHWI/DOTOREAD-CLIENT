@@ -1,5 +1,5 @@
 import ArticleContent from './ArticleContent';
-import CollectionContent from './CollectionContent';
+import Collection from './Collection';
 import SearchBar from './SearchBar';
 import Btn from '@/components/common/Button/Btn';
 import NewArcticleModal from '@/components/common/Modal/NewArticleModal';
@@ -10,6 +10,7 @@ import useModal from '@/hooks/useModal';
 import styled from 'styled-components';
 
 //const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 // interface Collection {
 // 	collectionId: number;
@@ -47,7 +48,7 @@ const SharePage = () => {
 			</BtnWrapper>
 			<CollectionWrapper>
 				{collectionPreviewDTOList.map((collection) => (
-					<CollectionContent key={collection.collectionId} collection={collection} />
+					<Collection key={collection.collectionId} collection={collection} />
 				))}
 			</CollectionWrapper>
 			<NewArcticleModal isOpen={isModalOpen} onClose={closeModal}>
