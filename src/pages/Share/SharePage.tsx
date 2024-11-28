@@ -8,11 +8,9 @@ import useModal from '@/hooks/useModal';
 // import axios from 'axios';
 // import { useState } from 'react';
 import styled from 'styled-components';
+// const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-//const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-
-// interface Collection {
+// interface CollectionContent {
 // 	collectionId: number;
 // 	title: string;
 // 	memo: string;
@@ -22,7 +20,7 @@ import styled from 'styled-components';
 
 // interface CollectionsResponse {
 // 	result: {
-// 		collectionPreviewDTOList: Collection[];
+// 		collectionPreviewDTOList: CollectionContent[];
 // 	};
 // }
 

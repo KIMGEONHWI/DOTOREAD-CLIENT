@@ -2,9 +2,6 @@ import PlusIcon from '@/assets/PlusIcon.svg?react';
 import styled from 'styled-components';
 import { addBookMarkList } from '@/constants/AddBookMarkList';
 import ArticleItem from './ArticleItem';
-import useModal from '@/hooks/useModal';
-
-const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 
 const ArticleContent = () => {
 	const currentDate = new Date();
@@ -34,7 +31,7 @@ const ArticleContent = () => {
 					))}
 				</ArticleWrapper>
 				<Plus>
-					<PlusIcon style={{ cursor: 'pointer' }} onClick={openModal}/>
+					<PlusIcon style={{ cursor: 'pointer' }} />
 				</Plus>
 			</ScrollWrapper>
 		</ModalContainer>
