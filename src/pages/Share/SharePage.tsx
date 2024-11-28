@@ -5,8 +5,6 @@ import Btn from '@/components/common/Button/Btn';
 import NewArcticleModal from '@/components/common/Modal/NewArticleModal';
 import { collectionPreviewDTOList } from '@/constants/CollectionList';
 import useModal from '@/hooks/useModal';
-// import axios from 'axios';
-// import { useState } from 'react';
 import styled from 'styled-components';
 
 

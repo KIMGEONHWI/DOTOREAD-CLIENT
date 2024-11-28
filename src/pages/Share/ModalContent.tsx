@@ -25,8 +25,9 @@ interface Bookmark {
 }
 
 function formatDate(dateStr: string) {
-	const [month, day] = dateStr.split('-');
+	const [year,month, day] = dateStr.split('-');
 	return `${parseInt(month)}월 ${parseInt(day)}일`;
+	console.log(year);
 }
 
 const ModalContent = ({ collection }: ModalContentProps) => {
