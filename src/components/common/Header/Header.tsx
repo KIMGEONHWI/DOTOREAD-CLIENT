@@ -10,13 +10,13 @@ import useModal from '@/hooks/useModal';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-function Header({ category }: { category: string }) {
+function Header() {
 	const { addBookmark } = useBookmarkContext();
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	const [url, setUrl] = useState('');
 
 	const handleAddBookmark = async () => {
-		await addBookmark(url, category);
+		await addBookmark(url);
 
 		setUrl('');
 		closeModal();

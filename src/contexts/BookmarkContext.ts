@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react';
 export interface BookmarkContextType {
 	bookmarks: ListItem[];
 	fetchBookmarks: (endpoint: string) => Promise<void>;
-	addBookmark: (url: string, currentCategory: string) => Promise<void>;
+	addBookmark: (url: string, currentCategory?: string) => Promise<void>;
 }
 
 export const BookmarkContext = createContext<BookmarkContextType | undefined>(undefined);

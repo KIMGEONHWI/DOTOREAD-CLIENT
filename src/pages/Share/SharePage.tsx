@@ -5,37 +5,37 @@ import Btn from '@/components/common/Button/Btn';
 import NewArcticleModal from '@/components/common/Modal/NewArticleModal';
 import { collectionPreviewDTOList } from '@/constants/CollectionList';
 import useModal from '@/hooks/useModal';
-import axios from 'axios';
-import { useState } from 'react';
+// import axios from 'axios';
+// import { useState } from 'react';
 import styled from 'styled-components';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+//const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-interface Collection {
-	collectionId: number;
-	title: string;
-	memo: string;
-	createdAt: string;
-	nickname: string | null;
-}
+// interface Collection {
+// 	collectionId: number;
+// 	title: string;
+// 	memo: string;
+// 	createdAt: string;
+// 	nickname: string | null;
+// }
 
-interface CollectionsResponse {
-	result: {
-		collectionPreviewDTOList: Collection[];
-	};
-}
+// interface CollectionsResponse {
+// 	result: {
+// 		collectionPreviewDTOList: Collection[];
+// 	};
+// }
 
 const SharePage = () => {
-	const [collections, setCollections] = useState<Collection[]>([]);
+	// const [collections, setCollections] = useState<Collection[]>([]);
 
-	const fetchCollections = async () => {
-		try {
-			const response = await axios.get<CollectionsResponse>(`${BASE_URL}/api/v1/collections?page=1`);
-			setCollections(response.data.result.collectionPreviewDTOList);
-		} catch (error) {
-			console.error('collection fetch error', error);
-		}
-	};
+	// const fetchCollections = async () => {
+	// 	try {
+	// 		const response = await axios.get<CollectionsResponse>(`${BASE_URL}/api/v1/collections?page=1`);
+	// 		setCollections(response.data.result.collectionPreviewDTOList);
+	// 	} catch (error) {
+	// 		console.error('collection fetch error', error);
+	// 	}
+	// };
 	// fetchCollections();
 
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
