@@ -25,8 +25,9 @@ interface Bookmark {
 }
 
 function formatDate(dateStr: string) {
-	const [month, day] = dateStr.split('-');
+	const [year,month, day] = dateStr.split('-');
 	return `${parseInt(month)}월 ${parseInt(day)}일`;
+	console.log(year);
 }
 
 const ModalContent = ({ collection }: ModalContentProps) => {
@@ -115,6 +116,7 @@ const Like = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_22px};
 	position: absolute;
 	right: 1.8rem;
+	align-items: center;
 `;
 const Content = styled.div`
 	max-height: 36.5rem;
@@ -122,7 +124,7 @@ const Content = styled.div`
 	position: relative;
 	&::-webkit-scrollbar {
 		width: 0.7rem;
-		height: 36.8rem;
+		height: 36.5rem;
 	}
 
 	&::-webkit-scrollbar-track {
