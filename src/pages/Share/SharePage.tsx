@@ -8,6 +8,7 @@ import useModal from '@/hooks/useModal';
 // import axios from 'axios';
 // import { useState } from 'react';
 import styled from 'styled-components';
+
 // const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // interface CollectionContent {
@@ -36,7 +37,6 @@ const SharePage = () => {
 	// 	}
 	// };
 	// fetchCollections();
-
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	return (
 		<SharePageWrapper>
