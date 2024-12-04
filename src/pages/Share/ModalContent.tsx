@@ -2,7 +2,7 @@ import ListItem from './ListItem';
 import FillHeart from '@/assets/FillHeart.svg?react';
 import NicknameProfile from '@/assets/NicknameProfile.svg?react';
 import NonfillHeart from '@/assets/NonfillHeart.svg?react';
-import { useState ,useEffect} from 'react';
+import { useState} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -37,7 +37,7 @@ const ModalContent = ({ collection }: ModalContentProps) => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [likeCount, setLikeCount] = useState(0);
 	const [loading, setLoading] = useState(false);
-	
+
 	const toggleLike = async () => {
 		if (loading) return;
 	  
