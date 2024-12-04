@@ -107,7 +107,7 @@ const ModalContent = ({ collection }: ModalContentProps) => {
 					<Memo>{collection.memo}</Memo>
 					<ListItemWrapper>
 						{collection.bookmarkSummaryDTOList.map((bookmark) => (
-							<ListItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} formodal={true} />
+							<ListItem key={bookmark.bookmarkId} bookmarkId={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} formodal={true} />
 						))}
 					</ListItemWrapper>
 				</Content>
@@ -126,7 +126,7 @@ const ModalContainer = styled.div`
 const Header = styled.div`
 	display: flex;
 	align-items: center;
-	margin-bottom: 1rem;
+	margin-bottom: 2.151rem;
 	margin-top: 5.3rem;
 `;
 
