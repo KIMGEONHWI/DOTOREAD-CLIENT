@@ -2,7 +2,7 @@ import ListItem from './ListItem';
 import FillHeart from '@/assets/FillHeart.svg?react';
 import NicknameProfile from '@/assets/NicknameProfile.svg?react';
 import NonfillHeart from '@/assets/NonfillHeart.svg?react';
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -37,37 +37,57 @@ const ModalContent = ({ collection }: ModalContentProps) => {
 	const [isLiked, setIsLiked] = useState(false);
 	const [likeCount, setLikeCount] = useState(0);
 	const [loading, setLoading] = useState(false);
-
+	
 	const toggleLike = async () => {
 		if (loading) return;
-	
+	  
 		setLoading(true);
+	  
 		try {
 		  const accessToken = localStorage.getItem('access-token');
-		  console.log(accessToken);
-		  console.log("여기",collection.collectionId);
-		  const response = await axios.post(
-			`${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
-			{},
-			{
-				headers: { access: accessToken },
+		  if (!accessToken) {
+			throw new Error('Access token이 없습니다.');
+		  }
+	  
+		  if (isLiked) {
+			// 좋아요 취소 API 호출
+			const response = await axios.delete(
+			  `${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
+			  {
+				headers: { access: accessToken }
+			  }
+			);
+	  
+			if (response.data.isSuccess) {
+			  setIsLiked(false);
+			  setLikeCount((prev) => prev - 1);
+			} else {
+			  throw new Error('좋아요 취소 실패');
 			}
-		  );
-		  console.log(response.data);
-		  console.log("여기",collection.collectionId);
-		  if (response.data.isSuccess) {
-			setIsLiked(!isLiked); 
-			setLikeCount(isLiked ? likeCount  : likeCount + 1); 
 		  } else {
-			console.log("여기",collection.collectionId);
-			console.error('Failed to toggle like', response.data.message);
+			// 좋아요 추가 API 호출
+			const response = await axios.post(
+			  `${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
+			  {},
+			  {
+				headers: { access: accessToken }
+			  }
+			);
+	  
+			if (response.data.isSuccess) {
+			  setIsLiked(true);
+			  setLikeCount((prev) => prev + 1);
+			} else {
+			  throw new Error('좋아요 추가 실패');
+			}
 		  }
 		} catch (error) {
-		  console.error('Error liking collection:', error);
+		  console.error('좋아요 상태 변경 중 에러:', error);
 		} finally {
 		  setLoading(false);
 		}
 	  };
+	  
 	return (
 		<ModalContainer>
 			<Header>
