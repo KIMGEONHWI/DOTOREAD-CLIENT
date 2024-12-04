@@ -3,13 +3,57 @@ import Collection from './Collection';
 import SearchBar from './SearchBar';
 import Btn from '@/components/common/Button/Btn';
 import NewArcticleModal from '@/components/common/Modal/NewArticleModal';
-import { collectionPreviewDTOList } from '@/constants/CollectionList';
 import useModal from '@/hooks/useModal';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+interface Bookmark {
+	bookmarkId: number;
+	title: string;
+	url: string;
+}
+
+interface Collections {
+	collectionId: number;
+	title: string;
+	memo: string;
+	createdAt: string;
+	nickname: string | null;
+	bookmarkSummaryDTOList: Bookmark[];
+}
 
 const SharePage = () => {
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
+	const [searchParams] = useSearchParams();
+	const [collections, setCollections] = useState<Collections[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	const page = searchParams.get('page') || 1;
+
+	useEffect(() => {
+		const fetchCollections = async () => {
+			setIsLoading(true);
+			try {
+				const accessToken = localStorage.getItem('access-token');
+				const response = await axios.get(`${BASE_URL}/api/v1/collections`, {
+					params: { page },
+					headers: { access: accessToken },
+				});
+				setCollections(response.data.result.collectionPreviewDTOList);
+			} catch (error) {
+				console.error('Error fetching collections:', error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchCollections();
+	}, [page]);
+
 	return (
 		<SharePageWrapper>
 			<SearchBar />
@@ -17,9 +61,13 @@ const SharePage = () => {
 				<Btn id="newArticle" onClick={openModal} />
 			</BtnWrapper>
 			<CollectionWrapper>
-				{collectionPreviewDTOList.map((collection) => (
-					<Collection key={collection.collectionId} collection={collection} />
-				))}
+				{isLoading ? (
+					<p>Loading...</p>
+				) : collections.length > 0 ? (
+					collections.map((collection) => <Collection key={collection.collectionId} collection={collection} />)
+				) : (
+					<p>No collections available.</p>
+				)}
 			</CollectionWrapper>
 			<NewArcticleModal isOpen={isModalOpen} onClose={closeModal}>
 				<ArticleContent />
@@ -30,6 +78,7 @@ const SharePage = () => {
 		</SharePageWrapper>
 	);
 };
+
 export default SharePage;
 
 const SharePageWrapper = styled.div`
@@ -39,7 +88,6 @@ const SharePageWrapper = styled.div`
 	position: relative;
 	z-index: 0;
 	display: flex;
-	position: relative;
 `;
 
 const BtnWrapper = styled.div`
@@ -47,6 +95,7 @@ const BtnWrapper = styled.div`
 	top: 3.1rem;
 	right: 16.2rem;
 `;
+
 const CollectionWrapper = styled.div`
 	position: absolute;
 	top: 14.9rem;
@@ -55,6 +104,7 @@ const CollectionWrapper = styled.div`
 	gap: 3.3rem;
 	display: flex;
 `;
+
 const BtnSubmitWrapper = styled.div`
 	position: absolute;
 	top: 51.2rem;

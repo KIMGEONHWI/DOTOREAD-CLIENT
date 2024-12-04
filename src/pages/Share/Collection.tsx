@@ -5,7 +5,7 @@ import CollectionModal from '@/components/common/Modal/CollectionModal';
 import useModal from '@/hooks/useModal';
 import styled from 'styled-components';
 
-interface Collection {
+interface Collections {
 	collectionId: number;
 	title: string;
 	memo: string;
@@ -15,7 +15,7 @@ interface Collection {
 }
 
 interface CollectionContentProps {
-	collection: Collection;
+	collection: Collections;
 }
 
 interface Bookmark {
@@ -25,7 +25,8 @@ interface Bookmark {
 }
 
 function formatDate(dateStr: string) {
-	const [month, day] = dateStr.split('-');
+	const [year, month, day] = dateStr.split('-');
+	console.log(year);
 	return `${parseInt(month)}월 ${parseInt(day)}일`;
 }
 
