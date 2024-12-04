@@ -7,7 +7,7 @@ import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface ListItemProps {
-	bookmarkId: number; 
+	bookmarkId?: number; 
 	title: string;
 	url: string;
 	formodal?: boolean;
