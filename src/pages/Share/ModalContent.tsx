@@ -2,11 +2,17 @@ import ListItem from './ListItem';
 import FillHeart from '@/assets/FillHeart.svg?react';
 import NicknameProfile from '@/assets/NicknameProfile.svg?react';
 import NonfillHeart from '@/assets/NonfillHeart.svg?react';
-import { useState} from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+interface Bookmark {
+	bookmarkId: number;
+	title: string;
+	url: string;
+}
 
 interface Collection {
 	collectionId: number;
@@ -15,79 +21,77 @@ interface Collection {
 	createdAt: string;
 	nickname: string | null;
 	bookmarkSummaryDTOList: Bookmark[];
+	likeCount: number;
+	isLiked: boolean;
 }
 
 interface ModalContentProps {
 	collection: Collection;
 }
 
-interface Bookmark {
-	bookmarkId: number;
-	title: string;
-	url: string;
-}
-
 function formatDate(dateStr: string) {
-	const [year,month, day] = dateStr.split('-');
-	return `${parseInt(month)}월 ${parseInt(day)}일`;
+	const [year, month, day] = dateStr.split('-');
 	console.log(year);
+	return `${parseInt(month)}월 ${parseInt(day)}일`;
 }
 
 const ModalContent = ({ collection }: ModalContentProps) => {
-	const [isLiked, setIsLiked] = useState(false);
-	const [likeCount, setLikeCount] = useState(0);
+	const [isLiked, setIsLiked] = useState(collection.isLiked || false);
+	const [likeCount, setLikeCount] = useState(collection.likeCount);
 	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		setIsLiked(collection.isLiked || false);
+		setLikeCount(collection.likeCount);
+	}, [collection]);
 
 	const toggleLike = async () => {
 		if (loading) return;
-	  
+
 		setLoading(true);
-	  
+
 		try {
-		  const accessToken = localStorage.getItem('access-token');
-		  if (!accessToken) {
-			throw new Error('Access token이 없습니다.');
-		  }
-	  
-		  if (isLiked) {
-			// 좋아요 취소 API 호출
-			const response = await axios.delete(
-			  `${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
-			  {
-				headers: { access: accessToken }
-			  }
-			);
-	  
-			if (response.data.isSuccess) {
-			  setIsLiked(false);
-			  setLikeCount((prev) => prev - 1);
-			} else {
-			  throw new Error('좋아요 취소 실패');
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				throw new Error('Access token이 없습니다.');
 			}
-		  } else {
-			// 좋아요 추가 API 호출
-			const response = await axios.post(
-			  `${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
-			  {},
-			  {
-				headers: { access: accessToken }
-			  }
-			);
-	  
-			if (response.data.isSuccess) {
-			  setIsLiked(true);
-			  setLikeCount((prev) => prev + 1);
+
+			if (isLiked) {
+				// 좋아요 취소 API 호출
+				const response = await axios.delete(`${BASE_URL}/api/v1/collections/like/${collection.collectionId}`, {
+					headers: { access: accessToken },
+				});
+
+				if (response.data.isSuccess) {
+					setIsLiked(false);
+					setLikeCount((prev) => prev - 1);
+				} else {
+					throw new Error('좋아요 취소 실패');
+				}
 			} else {
-			  throw new Error('좋아요 추가 실패');
+				// 좋아요 추가 API 호출
+				const response = await axios.post(
+					`${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
+					{},
+					{
+						headers: { access: accessToken },
+					},
+				);
+
+				if (response.data.isSuccess) {
+					setIsLiked(true);
+					setLikeCount((prev) => prev + 1);
+				} else {
+					throw new Error('좋아요 추가 실패');
+				}
 			}
-		  }
 		} catch (error) {
-		  console.error('좋아요 상태 변경 중 에러:', error);
+			console.error('좋아요 상태 변경 중 에러:', error);
 		} finally {
-		  setLoading(false);
+			setLoading(false);
 		}
-	  };
-	  
+	};
+
 	return (
 		<ModalContainer>
 			<Header>
@@ -107,7 +111,13 @@ const ModalContent = ({ collection }: ModalContentProps) => {
 					<Memo>{collection.memo}</Memo>
 					<ListItemWrapper>
 						{collection.bookmarkSummaryDTOList.map((bookmark) => (
-							<ListItem key={bookmark.bookmarkId} bookmarkId={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} formodal={true} />
+							<ListItem
+								key={bookmark.bookmarkId}
+								bookmarkId={bookmark.bookmarkId}
+								title={bookmark.title}
+								url={bookmark.url}
+								formodal={true}
+							/>
 						))}
 					</ListItemWrapper>
 				</Content>
