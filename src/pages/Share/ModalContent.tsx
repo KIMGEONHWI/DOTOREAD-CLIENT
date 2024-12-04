@@ -2,8 +2,11 @@ import ListItem from './ListItem';
 import FillHeart from '@/assets/FillHeart.svg?react';
 import NicknameProfile from '@/assets/NicknameProfile.svg?react';
 import NonfillHeart from '@/assets/NonfillHeart.svg?react';
-import { useState } from 'react';
+import { useState} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface Collection {
 	collectionId: number;
@@ -32,16 +35,59 @@ function formatDate(dateStr: string) {
 
 const ModalContent = ({ collection }: ModalContentProps) => {
 	const [isLiked, setIsLiked] = useState(false);
-	const [likeCount, setLikeCount] = useState(25);
+	const [likeCount, setLikeCount] = useState(0);
+	const [loading, setLoading] = useState(false);
 
-	const toggleLike = () => {
-		if (isLiked) {
-			setLikeCount(likeCount - 1);
-		} else {
-			setLikeCount(likeCount + 1);
+	const toggleLike = async () => {
+		if (loading) return;
+	  
+		setLoading(true);
+	  
+		try {
+		  const accessToken = localStorage.getItem('access-token');
+		  if (!accessToken) {
+			throw new Error('Access token이 없습니다.');
+		  }
+	  
+		  if (isLiked) {
+			// 좋아요 취소 API 호출
+			const response = await axios.delete(
+			  `${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
+			  {
+				headers: { access: accessToken }
+			  }
+			);
+	  
+			if (response.data.isSuccess) {
+			  setIsLiked(false);
+			  setLikeCount((prev) => prev - 1);
+			} else {
+			  throw new Error('좋아요 취소 실패');
+			}
+		  } else {
+			// 좋아요 추가 API 호출
+			const response = await axios.post(
+			  `${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
+			  {},
+			  {
+				headers: { access: accessToken }
+			  }
+			);
+	  
+			if (response.data.isSuccess) {
+			  setIsLiked(true);
+			  setLikeCount((prev) => prev + 1);
+			} else {
+			  throw new Error('좋아요 추가 실패');
+			}
+		  }
+		} catch (error) {
+		  console.error('좋아요 상태 변경 중 에러:', error);
+		} finally {
+		  setLoading(false);
 		}
-		setIsLiked(!isLiked);
-	};
+	  };
+	  
 	return (
 		<ModalContainer>
 			<Header>
