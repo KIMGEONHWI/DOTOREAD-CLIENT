@@ -4,6 +4,9 @@ import NicknameProfile from '@/assets/NicknameProfile.svg?react';
 import NonfillHeart from '@/assets/NonfillHeart.svg?react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface Collection {
 	collectionId: number;
@@ -32,16 +35,39 @@ function formatDate(dateStr: string) {
 
 const ModalContent = ({ collection }: ModalContentProps) => {
 	const [isLiked, setIsLiked] = useState(false);
-	const [likeCount, setLikeCount] = useState(25);
+	const [likeCount, setLikeCount] = useState(0);
+	const [loading, setLoading] = useState(false);
 
-	const toggleLike = () => {
-		if (isLiked) {
-			setLikeCount(likeCount - 1);
-		} else {
-			setLikeCount(likeCount + 1);
+	const toggleLike = async () => {
+		if (loading) return;
+	
+		setLoading(true);
+		try {
+		  const accessToken = localStorage.getItem('access-token');
+		  console.log(accessToken);
+		  console.log("여기",collection.collectionId);
+		  const response = await axios.post(
+			`${BASE_URL}/api/v1/collections/like/${collection.collectionId}`,
+			{},
+			{
+				headers: { access: accessToken },
+			}
+		  );
+		  console.log(response.data);
+		  console.log("여기",collection.collectionId);
+		  if (response.data.isSuccess) {
+			setIsLiked(!isLiked); 
+			setLikeCount(isLiked ? likeCount  : likeCount + 1); 
+		  } else {
+			console.log("여기",collection.collectionId);
+			console.error('Failed to toggle like', response.data.message);
+		  }
+		} catch (error) {
+		  console.error('Error liking collection:', error);
+		} finally {
+		  setLoading(false);
 		}
-		setIsLiked(!isLiked);
-	};
+	  };
 	return (
 		<ModalContainer>
 			<Header>
