@@ -1,16 +1,26 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-function SearchBar() {
-	const [query, setQuery] = useState<string>('');
+interface SearchBarProps {
+	onSearch: (query: string) => void;
+  }
 
+  function SearchBar({ onSearch }: SearchBarProps) {
+	const [query, setQuery] = useState<string>('');
+  
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setQuery(e.target.value);
+	  setQuery(e.target.value);
+	};
+  
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+	  if (e.key === 'Enter') {
+		onSearch(query);
+	  }
 	};
 
 	return (
 		<SearchBarContainer>
-			<SearchInput type="text" placeholder="검색하기" value={query} onChange={handleSearchChange} />
+			<SearchInput type="text" placeholder="검색하기" value={query} onChange={handleSearchChange}  onKeyDown={handleKeyDown}/>
 		</SearchBarContainer>
 	);
 }
