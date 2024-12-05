@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import AddBookMark from './AddBookMark';
-import Vector from '@/assets/Vector.svg?react'
+import Vector from '@/assets/Vector.svg?react';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -39,20 +39,18 @@ const SharePage = () => {
 	const [searchQuery, setSearchQuery] = useState<string>('');
 
 	const page = searchParams.get('page') || 1;
-  // 첫 번째 모달에서 플러스 버튼 클릭 시 두 번째 모달로 전환
-  const handleOpenAddBookmarkModal = () => {
-    closeArticleModal(); // 첫 번째 모달 닫기
-    setAddBookmarkModalOpen(true); // 두 번째 모달 열기
-  };
 
-  // 두 번째 모달에서 추가하기 버튼 클릭 시 첫 번째 모달로 돌아옴
-  const handleAddBookmarks = () => {
-    setAddBookmarkModalOpen(false); // 두 번째 모달 닫기
-    openArticleModal(); // 첫 번째 모달 다시 열기
-  };
+	// 첫 번째 모달에서 플러스 버튼 클릭 시 두 번째 모달로 전환
+	const handleOpenAddBookmarkModal = () => {
+		closeArticleModal(); // 첫 번째 모달 닫기
+		setAddBookmarkModalOpen(true); // 두 번째 모달 열기
+	};
 
-  
-	const page = searchParams.get('page') || 1;
+	// 두 번째 모달에서 추가하기 버튼 클릭 시 첫 번째 모달로 돌아옴
+	const handleAddBookmarks = () => {
+		setAddBookmarkModalOpen(false); // 두 번째 모달 닫기
+		openArticleModal(); // 첫 번째 모달 다시 열기
+	};
 
 	// 컬렉션 데이터를 가져오는 함수 (전체/검색)
 	const fetchCollections = async () => {
@@ -82,62 +80,57 @@ const SharePage = () => {
 		} finally {
 			setIsLoading(false);
 		}
-  
-		setCollections(response.data.result.collectionPreviewDTOList || []);
-	  } catch (error) {
-		console.error('Error fetching collections:', error);
-	  } finally {
-		setIsLoading(false);
-	  }
 	};
 
 	// 검색어가 변경되거나 페이지가 변경될 때 API 호출
 	useEffect(() => {
 		fetchCollections();
 	}, [searchQuery, page]);
-  // 검색어 입력어 처리
+
+	// 검색어 입력 처리
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 	};
 
 	return (
-	  <SharePageWrapper>
-		<SearchBar onSearch={handleSearch} />
-		<BtnWrapper>
-		  <Btn id="newArticle" onClick={openArticleModal} />
-		</BtnWrapper>
-		<CollectionWrapper>
-		  {isLoading ? (
-			<p>Loading...</p>
-		  ) : collections.length > 0 ? (
-			collections.map((collection) => <Collection key={collection.collectionId} collection={collection} />)
-		  ) : (
-			<p>No collections available.</p>
-		  )}
-		</CollectionWrapper>
-  
-		 {/* 첫 번째 모달 */}
-		<NewArticleModal isOpen={isArticleModalOpen} onClose={closeArticleModal}>
-        <ArticleContent onPlusClick={handleOpenAddBookmarkModal} />
-        <BtnSubmitWrapper>
-          <Btn id="submit" onClick={closeArticleModal} />
-        </BtnSubmitWrapper>
-      1 </NewArticleModal>
+		<SharePageWrapper>
+			<SearchBar onSearch={handleSearch} />
+			<BtnWrapper>
+				<Btn id="newArticle" onClick={openArticleModal} />
+			</BtnWrapper>
+			<CollectionWrapper>
+				{isLoading ? (
+					<p>Loading...</p>
+				) : collections.length > 0 ? (
+					collections.map((collection) => (
+						<Collection key={collection.collectionId} collection={collection} />
+					))
+				) : (
+					<p>No collections available.</p>
+				)}
+			</CollectionWrapper>
 
-      {/* 두 번째 모달 */}
-      <NewArticleModal isOpen={isAddBookmarkModalOpen} onClose={() => setAddBookmarkModalOpen(false)}>
-	  	<Wrapper>
-			<Vector onClick={handleAddBookmarks} style={{cursor:'pointer'}}/>
-			<Title>북마크 가져오기</Title>
-        </Wrapper>
-		<Btns>
-			<Button>모든 북마크</Button>
-			<Btn id="plus" onClick={handleAddBookmarks}/> 
-		</Btns>
-        <AddBookMark/>
-      </NewArticleModal>
+			{/* 첫 번째 모달 */}
+			<NewArticleModal isOpen={isArticleModalOpen} onClose={closeArticleModal}>
+				<ArticleContent onPlusClick={handleOpenAddBookmarkModal} />
+				<BtnSubmitWrapper>
+					<Btn id="submit" onClick={closeArticleModal} />
+				</BtnSubmitWrapper>
+			</NewArticleModal>
 
-	  </SharePageWrapper>
+			{/* 두 번째 모달 */}
+			<NewArticleModal isOpen={isAddBookmarkModalOpen} onClose={() => setAddBookmarkModalOpen(false)}>
+				<Wrapper>
+					<Vector onClick={handleAddBookmarks} style={{ cursor: 'pointer' }} />
+					<Title>북마크 가져오기</Title>
+				</Wrapper>
+				<Btns>
+					<Button>모든 북마크</Button>
+					<Btn id="plus" onClick={handleAddBookmarks} />
+				</Btns>
+				<AddBookMark />
+			</NewArticleModal>
+		</SharePageWrapper>
 	);
 };
 
@@ -171,20 +164,22 @@ const CollectionWrapper = styled.div`
 const BtnSubmitWrapper = styled.div`
 	position: absolute;
 	top: 51.2rem;
-  `
-const Wrapper=styled.div`
+`;
+
+const Wrapper = styled.div`
 	position: absolute;
 	top: 6.3rem;
 	left: 3rem;
-    display: flex;
-    gap: 0.6rem;
-`
-	const Title=styled.div`
-		${({ theme }) => theme.fonts.Pretendard_Semibold_22px};
-		color: ${({ theme }) => theme.colors.white1};
-	`
-	const Button = styled.button`
-	
+	display: flex;
+	gap: 0.6rem;
+`;
+
+const Title = styled.div`
+	${({ theme }) => theme.fonts.Pretendard_Semibold_22px};
+	color: ${({ theme }) => theme.colors.white1};
+`;
+
+const Button = styled.button`
 	box-sizing: border-box;
 	align-items: center;
 	width: 12.7rem;
@@ -192,14 +187,14 @@ const Wrapper=styled.div`
 	border-radius: 1.5rem;
 	border: 0.3rem solid ${({ theme }) => theme.colors.gray2};
 	background-color: ${({ theme }) => theme.colors.gray1};
-    ${({ theme }) => theme.fonts.Pretendard_Medium_18px};
+	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
 	color: ${({ theme }) => theme.colors.white1};
 `;
 
-const Btns=styled.div`
-    display: flex;
+const Btns = styled.div`
+	display: flex;
 	gap: 36.2rem;
 	position: absolute;
 	top: 11.3rem;
 	left: 3rem;
-`
+`;
