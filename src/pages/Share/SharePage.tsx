@@ -8,6 +8,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import AddBookMark from './AddBookMark';
+import Vector from '@/assets/Vector.svg?react'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -31,7 +33,6 @@ const SharePage = () => {
   
 	const { isOpen: isArticleModalOpen, openModal: openArticleModal, closeModal: closeArticleModal } = useModal();
 	const [isAddBookmarkModalOpen, setAddBookmarkModalOpen] = useState(false); // 두 번째 모달 상태
-	// const [addedBookmarks, setAddedBookmarks] = useState<Bookmark[]>([]); // 첫 번째 모달에 추가된 북마크 상태
 	const [searchParams] = useSearchParams();
 	const [collections, setCollections] = useState<Collections[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -106,18 +107,26 @@ const SharePage = () => {
 		</CollectionWrapper>
   
 		 {/* 첫 번째 모달 */}
-		 <NewArticleModal isOpen={isArticleModalOpen} onClose={closeArticleModal}>
+		<NewArticleModal isOpen={isArticleModalOpen} onClose={closeArticleModal}>
         <ArticleContent onPlusClick={handleOpenAddBookmarkModal} />
         <BtnSubmitWrapper>
           <Btn id="submit" onClick={closeArticleModal} />
         </BtnSubmitWrapper>
-      </NewArticleModal>
+      1 </NewArticleModal>
 
       {/* 두 번째 모달 */}
       <NewArticleModal isOpen={isAddBookmarkModalOpen} onClose={() => setAddBookmarkModalOpen(false)}>
-          <p>두 번째 모달 내용</p>
-          <Btn id="plus" onClick={handleAddBookmarks}/>
+	  	<Wrapper>
+			<Vector onClick={handleAddBookmarks} style={{cursor:'pointer'}}/>
+			<Title>북마크 가져오기</Title>
+        </Wrapper>
+		<Btns>
+			<Button>모든 북마크</Button>
+			<Btn id="plus" onClick={handleAddBookmarks}/> 
+		</Btns>
+        <AddBookMark/>
       </NewArticleModal>
+
 	  </SharePageWrapper>
 	);
   };
@@ -153,4 +162,35 @@ const SharePage = () => {
 	position: absolute;
 	top: 51.2rem;
   `;
-  
+
+  const Wrapper=styled.div`
+	position: absolute;
+	top: 6.3rem;
+	left: 3rem;
+    display: flex;
+    gap: 0.6rem;
+`
+	const Title=styled.div`
+		${({ theme }) => theme.fonts.Pretendard_Semibold_22px};
+		color: ${({ theme }) => theme.colors.white1};
+	`
+	const Button = styled.button`
+	
+	box-sizing: border-box;
+	align-items: center;
+	width: 12.7rem;
+	height: 4.8rem;
+	border-radius: 1.5rem;
+	border: 0.3rem solid ${({ theme }) => theme.colors.gray2};
+	background-color: ${({ theme }) => theme.colors.gray1};
+    ${({ theme }) => theme.fonts.Pretendard_Medium_18px};
+	color: ${({ theme }) => theme.colors.white1};
+`;
+
+const Btns=styled.div`
+    display: flex;
+	gap: 36.2rem;
+	position: absolute;
+	top: 11.3rem;
+	left: 3rem;
+`

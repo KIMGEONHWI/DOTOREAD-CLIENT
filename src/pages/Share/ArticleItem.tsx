@@ -4,6 +4,7 @@ interface ArticleItemProps {
 	title: string;
 	url: string;
 }
+
 const ArticleItem = ({ title, url }: ArticleItemProps) => {
 	return (
 		<Display>
