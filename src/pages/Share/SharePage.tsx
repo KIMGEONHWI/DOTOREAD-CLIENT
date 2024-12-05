@@ -126,7 +126,6 @@ const SharePage = () => {
 				</Wrapper>
 				<Btns>
 					<Button>모든 북마크</Button>
-					<Btn id="plus" onClick={handleAddBookmarks} />
 				</Btns>
 				<AddBookMark />
 			</NewArticleModal>
