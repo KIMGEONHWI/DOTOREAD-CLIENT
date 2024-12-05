@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import { addBookMarkList } from '@/constants/AddBookMarkList';
 import ArticleItem from './ArticleItem';
 
-const ArticleContent = () => {
+interface ArticleContentProps {
+	onPlusClick: () => void; 
+  }
+  
+const ArticleContent = ({ onPlusClick }: ArticleContentProps) => {
 	const currentDate = new Date();
 	const month = currentDate.getMonth() + 1;
 	const day = currentDate.getDate();
@@ -26,11 +30,12 @@ const ArticleContent = () => {
 					/>
 				</InputContentContainer>
 				<ArticleWrapper>
+					{/* 추가한 북마크 보여주는 api 연동할 부분 */}
 					{addBookMarkList.map((bookmark) => (
 						<ArticleItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url}  />
 					))}
 				</ArticleWrapper>
-				<Plus>
+				<Plus onClick={onPlusClick}>
 					<PlusIcon style={{ cursor: 'pointer' }} />
 				</Plus>
 			</ScrollWrapper>
@@ -65,7 +70,6 @@ const Title = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
 	color: ${({ theme }) => theme.colors.white1};
 	position: absolute;
-	top: 1.3rem;
 	left: 2.2rem;
 `;
 const Content = styled.div`
@@ -78,7 +82,7 @@ const Content = styled.div`
 const InputTitle = styled.textarea`
 	color: ${({ theme }) => theme.colors.gray3};
 	margin-left: 14rem;
-	margin-top: 1.3rem;
+	margin-top: 2.4rem;
 	border: none;
 	width: 49rem;
 	background: transparent;
@@ -93,7 +97,7 @@ const InputTitle = styled.textarea`
 const InputContent = styled.textarea`
 	color: ${({ theme }) => theme.colors.gray3};
 	margin-left: 14rem;
-	margin-top: 2rem;
+	margin-top: 1.8rem;
 	border: none;
 	width: 49rem;
 	height: 11.3rem;
@@ -113,6 +117,8 @@ const InputTitleContainer = styled.div`
 	border: 3px solid #3b3b3b;
 	backdrop-filter: blur(1.3951762914657593px);
 	margin-bottom: 0.6rem;
+	display: flex;
+	align-items: center;
 `;
 const InputContentContainer = styled.div`
 	width: 69.1rem;

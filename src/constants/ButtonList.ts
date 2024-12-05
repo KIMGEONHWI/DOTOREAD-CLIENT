@@ -24,4 +24,5 @@ export const Buttons: ButtonProps[] = [
 	{ id: 'plus', text: '추가하기', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange2' },
 	{ id: 'newArticle', text: '+ 새 글 작성', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange5' },
 	{ id: 'submit', text: '작성 완료', color: 'white1', bordercolor: 'orange1', backgroundcolor: 'orange5' },
+	
 ];
