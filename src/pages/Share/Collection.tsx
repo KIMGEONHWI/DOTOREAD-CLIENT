@@ -3,7 +3,17 @@ import ModalContent from './ModalContent';
 import NicknameProfile from '@/assets/NicknameProfile.svg?react';
 import CollectionModal from '@/components/common/Modal/CollectionModal';
 import useModal from '@/hooks/useModal';
+import axios from 'axios';
+import { useState } from 'react';
 import styled from 'styled-components';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+interface Bookmark {
+	bookmarkId: number;
+	title: string;
+	url: string;
+}
 
 interface Collections {
 	collectionId: number;
@@ -12,16 +22,12 @@ interface Collections {
 	createdAt: string;
 	nickname: string | null;
 	bookmarkSummaryDTOList: Bookmark[];
+	likeCount: number;
+	isLiked: boolean;
 }
 
 interface CollectionContentProps {
 	collection: Collections;
-}
-
-interface Bookmark {
-	bookmarkId: number;
-	title: string;
-	url: string;
 }
 
 function formatDate(dateStr: string) {
@@ -32,6 +38,27 @@ function formatDate(dateStr: string) {
 
 const Collection = ({ collection }: CollectionContentProps) => {
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
+	const [modalData, setModalData] = useState<Collections | null>(null);
+	const [isFetching, setIsFetching] = useState(false);
+
+	const handleSeeMoreClick = async () => {
+		setIsFetching(true);
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			const response = await axios.get(`${BASE_URL}/api/v1/collections/${collection.collectionId}`, {
+				headers: { access: accessToken },
+			});
+			setModalData(response.data.result);
+			openModal();
+		} catch (error) {
+			console.error('Error fetching collection details:', error);
+		} finally {
+			setIsFetching(false);
+		}
+	};
+
+	console.log(modalData);
+
 	return (
 		<Container>
 			<Header>
@@ -49,10 +76,10 @@ const Collection = ({ collection }: CollectionContentProps) => {
 						))}
 					</ListItemWrapper>
 				</Content>
-				<SeeMore onClick={openModal}>북마크 더보기</SeeMore>
+				<SeeMore onClick={handleSeeMoreClick}>{isFetching ? 'Loading...' : '북마크 더보기'}</SeeMore>
 			</ContentWrapper>
 			<CollectionModal isOpen={isModalOpen} onClose={closeModal}>
-				<ModalContent collection={collection} />
+				{modalData ? <ModalContent collection={modalData} /> : <p>Loading content...</p>}
 			</CollectionModal>
 		</Container>
 	);
