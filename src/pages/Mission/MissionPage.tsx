@@ -3,10 +3,32 @@ import MissionIcon from '@/assets/dotorymission.svg?react';
 import DonateArticle from '@/components/Mission/DonateArticle';
 import MissionBox from '@/components/Mission/MissionBox';
 import { DONATE_CONTENT } from '@/constants/DonateContents';
-import { MISSION_CONTENTS } from '@/constants/MissonContents';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const MissionPage = () => {
+	const [missions, setMissions] = useState([]);
+
+	useEffect(() => {
+		const fetchMissions = async () => {
+			try {
+				const accessToken = localStorage.getItem('access-token');
+				const response = await axios.get(`${BASE_URL}/api/v1/missions`, {
+					headers: { access: accessToken },
+				});
+
+				setMissions(response.data.result);
+			} catch (error) {
+				console.error('Error fetching missions:', error);
+			}
+		};
+
+		fetchMissions();
+	}, []);
+
 	return (
 		<MissionPageWrapper>
 			<MissionPageTopContainer>
@@ -28,7 +50,7 @@ const MissionPage = () => {
 				</DonateTitleContainer>
 
 				<MissionBoxContainer>
-					{MISSION_CONTENTS.map(({ content, goal, current }, index) => (
+					{missions.map(({ content, goal, current }, index) => (
 						<MissionBox key={index} content={content} goal={goal} current={current} />
 					))}
 				</MissionBoxContainer>
