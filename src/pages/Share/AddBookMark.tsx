@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BookMarkItem from './ListItem';
+import BookMarkItem from './BookMarkItem';
 import { useState , useEffect} from 'react';
 import axios from 'axios';
 
@@ -9,7 +9,7 @@ interface Bookmark {
     bookmarkId: number;
     title: string;
     url: string;
-    img?: string | null;
+    img: string | null;
     createdAt: string;
 }
 
@@ -50,24 +50,22 @@ const AddBookMark =()=>{
     return(
     <AddBookMarkWrapper>
        <Content>
-			<ListItemWrapper>
-            {isLoading ? (
-        <p>Loading...</p>
-      ) : bookmarks.length > 0 ? (
-        bookmarks.map((bookmark) => (
+		<AddBookListWrapper>
+            {isLoading ? ( <p>Loading...</p>) : bookmarks.length > 0 ? (
+            bookmarks.map((bookmark) => (
           <BookMarkItem
             key={bookmark.bookmarkId}
             bookmarkId={bookmark.bookmarkId}
             title={bookmark.title}
             url={bookmark.url}
-            // img={bookmark.img}
-            // date={bookmark.createdAt}
+            img={bookmark.img}
+            date={bookmark.createdAt}
           />
         ))
       ) : (
         <p>No bookmarks available.</p>
       )}
-			</ListItemWrapper>
+		</AddBookListWrapper>
 		</Content>
     </AddBookMarkWrapper>
     );
@@ -78,6 +76,8 @@ export default AddBookMark;
 const AddBookMarkWrapper=styled.div`
 `
 const Content = styled.div`
+    position: absolute;
+    top:17.9rem;
 	max-height: 36.5rem;
 	overflow-y: auto;
 	position: relative;
@@ -99,7 +99,7 @@ const Content = styled.div`
 	}
 `;
 
-const ListItemWrapper = styled.div`
+const AddBookListWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;

@@ -29,8 +29,6 @@ interface Collections {
 }
 
 const SharePage = () => {
-	
-  
 	const { isOpen: isArticleModalOpen, openModal: openArticleModal, closeModal: closeArticleModal } = useModal();
 	const [isAddBookmarkModalOpen, setAddBookmarkModalOpen] = useState(false); // 두 번째 모달 상태
 	const [searchParams] = useSearchParams();

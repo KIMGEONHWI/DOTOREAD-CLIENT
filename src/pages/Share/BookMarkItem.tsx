@@ -7,13 +7,13 @@ interface BookMarkItemProps {
 	bookmarkId: number; 
 	title: string;
 	url: string;
-    img?: string | null;
+    img: string | null;
     date: string;
 }
 
 //bookmarkId 도 넘겨주고 새글에 북마크 추가 api 연결할때 쓰기
 
-const BookMarkItem = ({ bookmarkId,title, url, img,date}: BookMarkItemProps) => {
+const BookMarkItem = ({title, url, img,date}: BookMarkItemProps) => {
     // 아이콘 상태 관리
 	const [isSelected, setIsSelected] = useState(false);
 	// 아이콘 클릭 핸들러
@@ -22,8 +22,7 @@ const BookMarkItem = ({ bookmarkId,title, url, img,date}: BookMarkItemProps) => 
 	};
 
 	return (
-		<Display>
-			<ItemContainer>
+			<BookMarkContainer>
                 <Thumnail img={img}></Thumnail>
 				<Wrapper>
 					<Title>{title}</Title>
@@ -33,23 +32,19 @@ const BookMarkItem = ({ bookmarkId,title, url, img,date}: BookMarkItemProps) => 
                 <SelectIcon onClick={handleIconClick}>
                 	{isSelected ? <LucideOrange /> : <LucideGray />}
             	</SelectIcon>
-			</ItemContainer>
-		</Display>
+			</BookMarkContainer>
 	);
 };
 
 export default BookMarkItem;
 
-const Display = styled.div`
-	position: relative;
-`;
-
-const ItemContainer = styled.div`
+const BookMarkContainer = styled.div`
+    position: relative;
 	width: 69.1rem;
 	height: 8.6rem;
 	border-radius: 10px;
 	border: 3px solid #3b3b3b;
-	padding: 0.2rem 2.9rem;
+	padding: 0.2rem;
 	display: flex;
 	gap: 0rem;
 	align-items: center;
@@ -60,6 +55,8 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1.429rem;
+    position: absolute;
+    left: 13.2rem;
 `;
 
 const Title = styled.div`
@@ -68,7 +65,7 @@ const Title = styled.div`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: 58.6rem;
+	width: 50rem;
 `;
 const Url = styled.div`
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
@@ -76,7 +73,7 @@ const Url = styled.div`
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: 58.6rem;
+	width: 41rem;
 `;
 const Thumnail = styled.div<{ img: string | null }>`
 	width: 9.5rem;
@@ -91,6 +88,9 @@ const Date = styled.div`
 	color: ${({ theme }) => theme.colors.white1};
 	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
 	position: absolute;
-	left: 109.5rem;
+	left: 42.6rem;
+    bottom: 0rem;
 `;
-const SelectIcon=styled.div``
+const SelectIcon=styled.div`
+    position: absolute;
+    right: 1.3rem;`
