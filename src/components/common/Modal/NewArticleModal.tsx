@@ -34,7 +34,7 @@ const Overlay = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	z-index: 1;
+	z-index: 2;
 `;
 
 const ModalContainer = styled.div`
