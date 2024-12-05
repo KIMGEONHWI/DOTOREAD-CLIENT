@@ -1,6 +1,9 @@
 import DonateIcon from '@/assets/donate.svg?react';
+import MissionIcon from '@/assets/dotorymission.svg?react';
 import DonateArticle from '@/components/Mission/DonateArticle';
-import { DONATE_CONTENT } from '@/constants/\bDonateContents';
+import MissionBox from '@/components/Mission/MissionBox';
+import { DONATE_CONTENT } from '@/constants/DonateContents';
+import { MISSION_CONTENTS } from '@/constants/MissonContents';
 import styled from 'styled-components';
 
 const MissionPage = () => {
@@ -18,6 +21,18 @@ const MissionPage = () => {
 					))}
 				</DonateArticleContiner>
 			</MissionPageTopContainer>
+			<MissionPageBottomContainer>
+				<DonateTitleContainer>
+					<MissionIcon />
+					<DonateTitle>DOTORY MISSION</DonateTitle>
+				</DonateTitleContainer>
+
+				<MissionBoxContainer>
+					{MISSION_CONTENTS.map(({ content, goal, current }, index) => (
+						<MissionBox key={index} content={content} goal={goal} current={current} />
+					))}
+				</MissionBoxContainer>
+			</MissionPageBottomContainer>
 		</MissionPageWrapper>
 	);
 };
@@ -30,6 +45,7 @@ const MissionPageWrapper = styled.div`
 	flex-direction: column;
 	min-height: 100vh;
 	padding: 10.1rem 29.8rem;
+	gap: 7.9rem;
 `;
 
 const MissionPageTopContainer = styled.div`
@@ -51,4 +67,15 @@ const DonateTitle = styled.h1`
 const DonateArticleContiner = styled.div`
 	display: flex;
 	gap: 3.3rem;
+`;
+
+const MissionPageBottomContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1.7rem;
+`;
+
+const MissionBoxContainer = styled.div`
+	display: flex;
+	gap: 3.1rem;
 `;
