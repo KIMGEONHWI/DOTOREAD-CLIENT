@@ -10,13 +10,19 @@ interface Bookmark {
     title: string;
     url: string;
     img: string | null;
-    createdAt: string;
+    createdAt: string; 
 }
 
-const AddBookMark =()=>{
+// 부모 컴포 sharepage 에 collectionid 보내기 위함
+interface AddBookMarkProps {
+  onCollectionCreate: (collectionId: number) => void; // 부모로 전달할 콜백 함수
+}
+
+const AddBookMark =({ onCollectionCreate }: AddBookMarkProps)=>{
     const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [selectedIds, setSelectedIds] = useState<number[]>([]); // 선택된 북마크 ID 저장
+
     const fetchBookmarks = async () => {
       setIsLoading(true);
       try {
@@ -71,6 +77,9 @@ const AddBookMark =()=>{
 
 			if (response.data.isSuccess) {
 				console.log('북마크 추가 성공:', response.data.message,selectedIds);
+        console.log('컬렉션 Id', response.data.result);
+        const newCollectionId = response.data.result; // 생성된 collectionId
+        onCollectionCreate(newCollectionId); // 부모로 collectionId 전달
 			} else {
 				console.error('북마크 추가 실패:', response.data.message);
 			}
@@ -86,8 +95,8 @@ const AddBookMark =()=>{
         </BtnWrapper>
        <Content>
 		<AddBookListWrapper>
-            {isLoading ? ( <p>Loading...</p>) : bookmarks.length > 0 ? (
-            bookmarks.map((bookmark) => (
+          {isLoading ? ( <p>Loading...</p>) : bookmarks.length > 0 ? (
+          bookmarks.map((bookmark) => (
           <BookMarkItem
             key={bookmark.bookmarkId}
             bookmarkId={bookmark.bookmarkId}

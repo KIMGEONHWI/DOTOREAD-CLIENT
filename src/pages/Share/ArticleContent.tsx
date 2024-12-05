@@ -1,17 +1,66 @@
 import PlusIcon from '@/assets/PlusIcon.svg?react';
 import styled from 'styled-components';
-import { addBookMarkList } from '@/constants/AddBookMarkList';
 import ArticleItem from './ArticleItem';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface ArticleContentProps {
 	onPlusClick: () => void; 
+	collectionId:number|null;
   }
   
-const ArticleContent = ({ onPlusClick }: ArticleContentProps) => {
+interface Bookmark {
+	bookmarkId: number;
+	title: string;
+	url: string;
+}
+const ArticleContent = ({ collectionId,onPlusClick }: ArticleContentProps) => {
 	const currentDate = new Date();
 	const month = currentDate.getMonth() + 1;
 	const day = currentDate.getDate();
 	const formattedDate = `${month}월 ${day}일`;
+
+	const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	// API 호출하여 북마크 목록 가져오기
+	const fetchBookmarks = async () => {
+		if (!collectionId) {
+			console.log("collectionID 없음")
+			return; // collectionId가 없으면 실행하지 않음
+		}
+		setIsLoading(true);
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			const response = await axios.get(
+				`${BASE_URL}/api/v1/collections/bookmarks/${collectionId}`, // API 엔드포인트
+				{
+					params: { page: 1 }, 
+					headers: {
+						access: accessToken,
+					},
+				}
+			);
+
+			if (response.data.isSuccess) {
+				setBookmarks(response.data.result.bookmarkSummaryDTOList || []);
+			} else {
+				console.error('북마크 데이터 로드 실패:', response.data.message);
+			}
+		} catch (error) {
+			console.error('API 호출 중 오류:', error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	// collectionId가 변경되거나 초기 렌더링 시 API 호출
+	useEffect(() => {
+		fetchBookmarks();
+	}, [collectionId]);
+
 	return (
 		<ModalContainer>
 			<Header>
@@ -30,10 +79,20 @@ const ArticleContent = ({ onPlusClick }: ArticleContentProps) => {
 					/>
 				</InputContentContainer>
 				<ArticleWrapper>
-					{/* 추가한 북마크 보여주는 api 연동할 부분 */}
-					{addBookMarkList.map((bookmark) => (
-						<ArticleItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url}  />
-					))}
+				{isLoading ? (
+						<p>Loading...</p>
+					) : bookmarks.length > 0 ? (
+						bookmarks.map((bookmark) => (
+							<ArticleItem
+								key={bookmark.bookmarkId}
+								title={bookmark.title}
+								url={bookmark.url}
+							/>
+						))
+					) : (
+						<p>No bookmarks available.</p>
+					)}
+
 				</ArticleWrapper>
 				<Plus onClick={onPlusClick}>
 					<PlusIcon style={{ cursor: 'pointer' }} />

@@ -37,6 +37,7 @@ const SharePage = () => {
 	const [collections, setCollections] = useState<Collections[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchQuery, setSearchQuery] = useState<string>('');
+	const [collectionId, setCollectionId] = useState<number | null>(null);
 
 	const page = searchParams.get('page') || 1;
 
@@ -46,11 +47,11 @@ const SharePage = () => {
 		setAddBookmarkModalOpen(true); // 두 번째 모달 열기
 	};
 
-	// 두 번째 모달에서 추가하기 버튼 클릭 시 첫 번째 모달로 돌아옴
-	const handleAddBookmarks = () => {
-		setAddBookmarkModalOpen(false); // 두 번째 모달 닫기
-		openArticleModal(); // 첫 번째 모달 다시 열기
-	};
+	const handleCollectionCreate = (newCollectionId: number) => {
+        setCollectionId(newCollectionId); // 저장된 collectionId 업데이트
+        setAddBookmarkModalOpen(false);
+        openArticleModal(); // 첫 번째 모달 다시 열기
+    };
 
 	// 컬렉션 데이터를 가져오는 함수 (전체/검색)
 	const fetchCollections = async () => {
@@ -110,25 +111,24 @@ const SharePage = () => {
 				)}
 			</CollectionWrapper>
 
-			{/* 첫 번째 모달 */}
 			<NewArticleModal isOpen={isArticleModalOpen} onClose={closeArticleModal}>
-				<ArticleContent onPlusClick={handleOpenAddBookmarkModal} />
-				<BtnSubmitWrapper>
-					<Btn id="submit" onClick={closeArticleModal} />
-				</BtnSubmitWrapper>
-			</NewArticleModal>
+                <ArticleContent collectionId={collectionId} onPlusClick={handleOpenAddBookmarkModal} />
+                <BtnSubmitWrapper>
+                    <Btn id="submit" onClick={closeArticleModal} />
+                </BtnSubmitWrapper>
+            </NewArticleModal>
 
-			{/* 두 번째 모달 */}
-			<NewArticleModal isOpen={isAddBookmarkModalOpen} onClose={() => setAddBookmarkModalOpen(false)}>
+            {/* 두 번째 모달 */}
+            <NewArticleModal isOpen={isAddBookmarkModalOpen} onClose={() => setAddBookmarkModalOpen(false)}>
 				<Wrapper>
-					<Vector onClick={handleAddBookmarks} style={{ cursor: 'pointer' }} />
-					<Title>북마크 가져오기</Title>
+				<Vector onClick ={()=>{openArticleModal()}}style={{ cursor: 'pointer' }} />
+				<Title>북마크 가져오기</Title>
 				</Wrapper>
 				<Btns>
 					<Button>모든 북마크</Button>
 				</Btns>
-				<AddBookMark />
-			</NewArticleModal>
+                <AddBookMark onCollectionCreate={handleCollectionCreate} />
+            </NewArticleModal>
 		</SharePageWrapper>
 	);
 };
