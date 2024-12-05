@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import BookMarkItem from './BookMarkItem';
 import { useState , useEffect} from 'react';
 import axios from 'axios';
-
+import Btn from '@/components/common/Button/Btn';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface Bookmark {
@@ -16,7 +16,7 @@ interface Bookmark {
 const AddBookMark =()=>{
     const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-  
+    const [selectedIds, setSelectedIds] = useState<number[]>([]); // 선택된 북마크 ID 저장
     const fetchBookmarks = async () => {
       setIsLoading(true);
       try {
@@ -47,8 +47,43 @@ const AddBookMark =()=>{
       fetchBookmarks();
     }, []);
     
+    const handleSelect = (bookmarkId: number) => {
+		setSelectedIds((prev) =>
+			prev.includes(bookmarkId) ? prev.filter((id) => id !== bookmarkId) : [...prev, bookmarkId]
+		);
+	};
+
+    const handleAddBookmarks = async () => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			const response = await axios.post(
+				`${BASE_URL}/api/v1/collections`,
+				{
+					bookmarkIds: selectedIds, // 선택된 북마크 ID 배열
+				},
+				{
+					headers: {
+						access: accessToken,
+						'Content-Type': 'application/json',
+					},
+				}
+			);
+
+			if (response.data.isSuccess) {
+				console.log('북마크 추가 성공:', response.data.message,selectedIds);
+			} else {
+				console.error('북마크 추가 실패:', response.data.message);
+			}
+		} catch (error) {
+			console.error('북마크 추가 요청 중 에러 발생:', error);
+		}
+	};
+
     return(
     <AddBookMarkWrapper>
+        <BtnWrapper>
+        <Btn id="plus" onClick={handleAddBookmarks} />
+        </BtnWrapper>
        <Content>
 		<AddBookListWrapper>
             {isLoading ? ( <p>Loading...</p>) : bookmarks.length > 0 ? (
@@ -60,6 +95,8 @@ const AddBookMark =()=>{
             url={bookmark.url}
             img={bookmark.img}
             date={bookmark.createdAt}
+            onSelect={handleSelect} 
+			isSelected={selectedIds.includes(bookmark.bookmarkId)} 
           />
         ))
       ) : (
@@ -75,6 +112,10 @@ export default AddBookMark;
 
 const AddBookMarkWrapper=styled.div`
 `
+const BtnWrapper=styled.div`
+    position:absolute;
+    left: 51.9rem;
+    top:11.3rem;`
 const Content = styled.div`
     position: absolute;
     top:17.9rem;

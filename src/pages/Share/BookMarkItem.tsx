@@ -1,24 +1,20 @@
 import styled from 'styled-components';
 import LucideGray from '@/assets/LucideGray.svg?react';
 import LucideOrange from '@/assets/LucideOrange.svg?react';
-import { useState } from 'react';
-
 interface BookMarkItemProps {
 	bookmarkId: number; 
 	title: string;
 	url: string;
     img: string | null;
     date: string;
+	onSelect: (bookmarkId: number) => void;
+	isSelected: boolean; 
 }
 
-//bookmarkId 도 넘겨주고 새글에 북마크 추가 api 연결할때 쓰기
-
-const BookMarkItem = ({title, url, img,date}: BookMarkItemProps) => {
-    // 아이콘 상태 관리
-	const [isSelected, setIsSelected] = useState(false);
-	// 아이콘 클릭 핸들러
+const BookMarkItem = ({bookmarkId,title, url, img,date,onSelect, isSelected}: BookMarkItemProps) => {
 	const handleIconClick = () => {
-		setIsSelected((prev) => !prev);
+		onSelect(bookmarkId); // 부모 컴포넌트로 선택 상태 전달
+		console.log(bookmarkId)
 	};
 
 	return (
