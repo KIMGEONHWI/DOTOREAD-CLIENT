@@ -1,4 +1,4 @@
-import DonateIcon from '@/assets/donate.svg?react';
+import DonateIcon from '@/assets/Donates.svg?react';
 import MissionIcon from '@/assets/dotorymission.svg?react';
 import DonateArticle from '@/components/Mission/DonateArticle';
 import MissionBox from '@/components/Mission/MissionBox';
