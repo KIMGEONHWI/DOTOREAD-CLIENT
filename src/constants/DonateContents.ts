@@ -1,5 +1,5 @@
+import KaraIcon from '@/assets/Karas.svg?react';
 import PandaIcon from '@/assets/Panda.svg?react';
-import KaraIcon from '@/assets/kara.svg?react';
 
 export const DONATE_CONTENT = [
 	{
