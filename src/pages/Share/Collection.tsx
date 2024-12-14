@@ -60,13 +60,13 @@ const Collection = ({ collection }: CollectionContentProps) => {
 	console.log(modalData);
 
 	return (
-		<Container>
+		<Container >
 			<Header>
 				<NicknameProfile />
 				<NickName>{collection.nickname || '닉네임'}</NickName>
 				<CreatedAt> {formatDate(collection.createdAt)}</CreatedAt>
 			</Header>
-			<ContentWrapper>
+			<ContentWrapper onClick={handleSeeMoreClick}>
 				<Title>{collection.title}</Title>
 				<Content>
 					<Memo>{collection.memo}</Memo>
@@ -76,8 +76,10 @@ const Collection = ({ collection }: CollectionContentProps) => {
 						))}
 					</ListItemWrapper>
 				</Content>
-				<SeeMore onClick={handleSeeMoreClick}>{isFetching ? 'Loading...' : '북마크 더보기'}</SeeMore>
-			</ContentWrapper>
+				{collection.bookmarkSummaryDTOList.length >= 4 && (
+					<SeeMore>{isFetching ? 'Loading...' : '북마크 더보기'}</SeeMore>
+				)}
+				</ContentWrapper>
 			<CollectionModal isOpen={isModalOpen} onClose={closeModal}>
 				{modalData ? <ModalContent collection={modalData} /> : <p>Loading content...</p>}
 			</CollectionModal>
