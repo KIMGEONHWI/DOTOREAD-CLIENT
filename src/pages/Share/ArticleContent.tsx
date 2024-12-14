@@ -69,11 +69,11 @@ const ArticleContent = ({ collectionId,onPlusClick }: ArticleContentProps) => {
 			</Header>
 			<ScrollWrapper>
 				<InputTitleContainer>
-					<Title>제목 입력하기</Title>
+					<Title>제목</Title>
 					<InputTitle placeholder="ex) 취업정보 관련 사이트" />
 				</InputTitleContainer>
 				<InputContentContainer>
-					<Content>내용 입력하기</Content>
+					<Content>내용</Content>
 					<InputContent
 						placeholder="ex) 국내 IT기업 개발직군의 채용일정이 매일 업데이트 됩니다."
 					/>
@@ -140,10 +140,10 @@ const Content = styled.div`
 `;
 const InputTitle = styled.textarea`
 	color: ${({ theme }) => theme.colors.gray3};
-	margin-left: 14rem;
+	margin-left: 8rem;
 	margin-top: 2.4rem;
 	border: none;
-	width: 49rem;
+	width: 59rem;
 	background: transparent;
 	resize: none;
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
@@ -155,10 +155,10 @@ const InputTitle = styled.textarea`
 
 const InputContent = styled.textarea`
 	color: ${({ theme }) => theme.colors.gray3};
-	margin-left: 14rem;
+	margin-left: 8rem;
 	margin-top: 1.8rem;
 	border: none;
-	width: 49rem;
+	width: 59rem;
 	height: 11.3rem;
 	background: transparent;
 	resize: none;
