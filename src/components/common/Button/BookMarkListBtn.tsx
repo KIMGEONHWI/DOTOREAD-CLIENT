@@ -14,10 +14,15 @@ interface BookMarkListBtnProps {
 function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookMarkListBtnProps) {
 	const [showDropdown, setShowDropdown] = useState(false);
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
+	
 
-	const handleIconClick = (event: React.MouseEvent) => {
+	const handleIconHover = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		setShowDropdown(!showDropdown);
+		setShowDropdown(true); 
+	};
+
+	const handleIconLeave = () => {
+		setShowDropdown(false); 
 	};
 
 	const handleDeleteClick = (event: React.MouseEvent) => {
@@ -25,19 +30,19 @@ function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookM
 		openModal();
 		setShowDropdown(false);
 	};
+	
 
 	return (
 		<BookMarkListBtnWrapper onClick={onClick}>
 			{leftIcon && <LeftIconWrapper>{leftIcon}</LeftIconWrapper>}
 			<span>{text}</span>
 			{rightIcon && (
-				<RightIconWrapper onClick={handleIconClick}>
+				<RightIconWrapper onMouseEnter={handleIconHover}
+				onMouseLeave={handleIconLeave}>
 					{rightIcon}
 					{showDropdown && (
 						<DropdownMenu>
 							<DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
-							<Divider />
-							<DropdownItem>수정하기</DropdownItem>
 						</DropdownMenu>
 					)}
 				</RightIconWrapper>
@@ -65,7 +70,7 @@ const BookMarkListBtnWrapper = styled.button`
 	padding-left: 1.9rem;
 	padding-right: 4rem;
 	position: relative;
-
+	z-index: 0;
 	&:hover {
 		border: 2px solid ${({ theme }) => theme.colors.orange1};
 		background-color: ${({ theme }) => theme.colors.orange2};
@@ -101,7 +106,7 @@ const DropdownMenu = styled.div`
 	top: 2.5rem;
 	right: 0;
 	width: 8.2473rem;
-	height: 6.9rem;
+	height: 3.5rem;
 	background-color: ${({ theme }) => theme.colors.gray2};
 	border-radius: 10px;
 	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
@@ -110,6 +115,7 @@ const DropdownMenu = styled.div`
 	flex-direction: column;
 	align-items: center;
 	padding: 0.5rem 0;
+
 `;
 
 const DropdownItem = styled.div`
@@ -119,18 +125,12 @@ const DropdownItem = styled.div`
 	border-radius: 8px;
 	text-align: center;
 	cursor: pointer;
-
+	z-index: 101;
+	position: relative;
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.gray3};
 	}
 	${({ theme }) => theme.fonts.Pretendard_Semibold_13px};
-`;
-
-const Divider = styled.div`
-	width: 80%;
-	height: 1px;
-	background-color: ${({ theme }) => theme.colors.gray1};
-	margin: 0.2rem 0;
 `;
 
 const Title = styled.h2`

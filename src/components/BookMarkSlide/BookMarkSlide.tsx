@@ -126,11 +126,27 @@ const FoldersContent = styled.div`
 	flex-direction: column;
 	width: 28.2rem;
 	height: 30%;
-	padding-top: 4.1rem;
+	margin-top: 4.1rem;
 	padding-left: 2rem;
 	padding-right: 2rem;
 	gap: 2.1rem;
 	overflow: auto;
+	&::-webkit-scrollbar {
+		width: 0.7rem;
+		height: 30%;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: none;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		border-radius: 15px;
+		cursor: pointer;
+		height: 19.6rem;
+		width: 0.7rem;
+		background: rgba(255, 255, 255, 0.4);
+	}
 `;
 
 const FoldersTitle = styled.p`
