@@ -136,7 +136,7 @@ const Name = styled.div`
 
 const Url = styled.div`
 	color: ${({ theme }) => theme.colors.white1};
-	${({ theme }) => theme.fonts.Pretendard_Medium_18px};
+	${({ theme }) => theme.fonts.Pretendard_Medium_15px};
 	position: absolute;
 	left: 50.9rem;
 	max-width: 58rem;
