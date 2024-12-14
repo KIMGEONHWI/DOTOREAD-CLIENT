@@ -145,7 +145,7 @@ const FoldersContent = styled.div`
 		cursor: pointer;
 		height: 19.6rem;
 		width: 0.7rem;
-		background: ${({ theme }) => theme.colors.white2};
+		background: rgba(255, 255, 255, 0.4);
 	}
 `;
 

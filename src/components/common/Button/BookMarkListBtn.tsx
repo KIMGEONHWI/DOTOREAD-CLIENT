@@ -14,6 +14,7 @@ interface BookMarkListBtnProps {
 function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookMarkListBtnProps) {
 	const [showDropdown, setShowDropdown] = useState(false);
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
+	
 
 	const handleIconClick = (event: React.MouseEvent) => {
 		event.stopPropagation();
@@ -36,8 +37,6 @@ function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookM
 					{showDropdown && (
 						<DropdownMenu>
 							<DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
-							<Divider />
-							<DropdownItem>수정하기</DropdownItem>
 						</DropdownMenu>
 					)}
 				</RightIconWrapper>
@@ -65,7 +64,7 @@ const BookMarkListBtnWrapper = styled.button`
 	padding-left: 1.9rem;
 	padding-right: 4rem;
 	position: relative;
-
+	z-index: 0;
 	&:hover {
 		border: 2px solid ${({ theme }) => theme.colors.orange1};
 		background-color: ${({ theme }) => theme.colors.orange2};
@@ -101,7 +100,7 @@ const DropdownMenu = styled.div`
 	top: 2.5rem;
 	right: 0;
 	width: 8.2473rem;
-	height: 6.9rem;
+	height: 3.5rem;
 	background-color: ${({ theme }) => theme.colors.gray2};
 	border-radius: 10px;
 	box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
@@ -110,6 +109,7 @@ const DropdownMenu = styled.div`
 	flex-direction: column;
 	align-items: center;
 	padding: 0.5rem 0;
+
 `;
 
 const DropdownItem = styled.div`
@@ -119,7 +119,8 @@ const DropdownItem = styled.div`
 	border-radius: 8px;
 	text-align: center;
 	cursor: pointer;
-
+	z-index: 101;
+	position: relative;
 	&:hover {
 		background-color: ${({ theme }) => theme.colors.gray3};
 	}
