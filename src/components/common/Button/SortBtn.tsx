@@ -6,34 +6,48 @@ import styled from 'styled-components';
 function SortBtn() {
 	const [showOptions, setShowOptions] = useState<boolean>(false);
 	const [option, setOption] = useState<string>('최신순');
-	const handleIconClick = () => {
-		setShowOptions(!showOptions);
+	const handleIconHover = (event: React.MouseEvent) => {
+		event.stopPropagation();
+		setShowOptions(true);
 	};
+
+	const handleIconLeave = () => {
+		setShowOptions(false); 
+	};
+
 	const handleOptionClick = (option: string) => {
 		setOption(option);
 		setShowOptions(false);
 	};
 	return (
+		<Wrapper onMouseEnter={handleIconHover}
+		onMouseLeave={handleIconLeave}>
 		<SortBtnWrapper>
 			<Content>
 				<SortBy>{option}</SortBy>
 				<Icon>
-					<SortIcon onClick={handleIconClick} />
+					<SortIcon  />
 				</Icon>
 			</Content>
 			{showOptions && (
-				<Options>
+				<Options onMouseEnter={handleIconHover}
+				onMouseLeave={handleIconLeave} >
 					<Option onClick={() => handleOptionClick('최신순')}>최신순</Option>
 					<LineIcon />
 					<Option onClick={() => handleOptionClick('오래된순')}>오래된순</Option>
 				</Options>
 			)}
 		</SortBtnWrapper>
+		</Wrapper>
 	);
 }
 
 export default SortBtn;
 
+const Wrapper=styled.div`
+	z-index: 10;
+	height: 6rem;
+`
 const SortBtnWrapper = styled.button`
 	margin-left: 600px;
 	box-sizing: border-box;

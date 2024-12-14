@@ -16,9 +16,13 @@ function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookM
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	
 
-	const handleIconClick = (event: React.MouseEvent) => {
+	const handleIconHover = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		setShowDropdown(!showDropdown);
+		setShowDropdown(true); 
+	};
+
+	const handleIconLeave = () => {
+		setShowDropdown(false); 
 	};
 
 	const handleDeleteClick = (event: React.MouseEvent) => {
@@ -26,13 +30,15 @@ function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookM
 		openModal();
 		setShowDropdown(false);
 	};
+	
 
 	return (
 		<BookMarkListBtnWrapper onClick={onClick}>
 			{leftIcon && <LeftIconWrapper>{leftIcon}</LeftIconWrapper>}
 			<span>{text}</span>
 			{rightIcon && (
-				<RightIconWrapper onClick={handleIconClick}>
+				<RightIconWrapper onMouseEnter={handleIconHover}
+				onMouseLeave={handleIconLeave}>
 					{rightIcon}
 					{showDropdown && (
 						<DropdownMenu>
@@ -125,13 +131,6 @@ const DropdownItem = styled.div`
 		background-color: ${({ theme }) => theme.colors.gray3};
 	}
 	${({ theme }) => theme.fonts.Pretendard_Semibold_13px};
-`;
-
-const Divider = styled.div`
-	width: 80%;
-	height: 1px;
-	background-color: ${({ theme }) => theme.colors.gray1};
-	margin: 0.2rem 0;
 `;
 
 const Title = styled.h2`
