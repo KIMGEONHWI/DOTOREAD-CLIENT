@@ -3,6 +3,8 @@ import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
 import Btn from '@/components/common/Button/Btn';
 import SortBtn from '@/components/common/Button/SortBtn';
+import SortBtnFolder from '@/components/common/Button/SortBtnFolder';
+import SortBtnUnclassified from '@/components/common/Button/SortBtnUnclassified';
 import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
 import { useBookmarkContext } from '@/contexts/BookmarkContext';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
@@ -35,19 +37,22 @@ function BookMarkPage() {
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
 
+	const [sortOption, setSortOption] = useState<string>('최신순'); // 정렬 상태
+
 	useEffect(() => {
 		const fetchData = async () => {
-			if (category === '모든 북마크') {
-				await fetchBookmarks('/api/v1/bookmarks/all?sortType=DESC');
-			} else if (category === '미분류') {
-				await fetchBookmarks('/api/v1/bookmarks/uncategorized?sortType=DESC');
-			} else if (iconType === 'classified') {
-				await fetchBookmarks(`/api/v1/bookmarks/all/${category}?sortType=DESC`);
-			}
+		  const sortType = sortOption === '최신순' ? 'DESC' : 'ASC'; // 정렬 옵션 변환
+		  if (category === '모든 북마크') {
+			await fetchBookmarks(`/api/v1/bookmarks/all?sortType=${sortType}`);
+		  } else if (category === '미분류') {
+			await fetchBookmarks(`/api/v1/bookmarks/uncategorized?sortType=${sortType}`);
+		  } else if (iconType === 'classified') {
+			await fetchBookmarks(`/api/v1/bookmarks/all/${category}?sortType=${sortType}`);
+		  }
 		};
-
+	
 		fetchData();
-	}, [category, iconType, bookmarks]);
+	  }, [category, iconType, sortOption]); 
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
@@ -154,7 +159,8 @@ function BookMarkPage() {
 					</BtnWrapperForChooseAll>
 				)}
 				<SortBtnWrapper>
-					<SortBtn />
+				{category === '미분류' ? (<SortBtnUnclassified  onOptionChange={setSortOption} />): category === '모든 북마크' ? (<SortBtn  onOptionChange={setSortOption} />) : (<SortBtnFolder  onOptionChange={setSortOption} />)}
+
 				</SortBtnWrapper>
 				{!isAiClassifyActive && <Navbar />}
 				<BookMarkList

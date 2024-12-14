@@ -7,14 +7,14 @@ interface SortBtnProps {
     onOptionChange: (option: string) => void;
   }
 
-function SortBtn({ onOptionChange }: SortBtnProps) {
+function SortBtnUnclassified({ onOptionChange }: SortBtnProps) {
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [option, setOption] = useState<string>('최신순');
   
 	useEffect(() => {
 		onOptionChange(option);
 	  }, []); 
-	  
+
     const handleMouseEnter = (event: React.MouseEvent) => {
       event.stopPropagation();
       setShowOptions(true);
@@ -52,7 +52,7 @@ function SortBtn({ onOptionChange }: SortBtnProps) {
 	);
 }
 
-export default SortBtn;
+export default SortBtnUnclassified;
 
 const Wrapper=styled.div`
 	z-index: 10;
