@@ -53,13 +53,13 @@ function ListItem({
 		}
 	};
 
-	const handleIconClick = (event: React.MouseEvent) => {
+	const handleMouseEnter = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		if (IconComponent === Lucide) {
-			setShowDropdown(!showDropdown);
-		} else {
-			setIsClicked((prevState) => !prevState);
-		}
+		setShowDropdown(true);
+	};
+
+	const handleMouseLeave = () => {
+		setShowDropdown(false);
 	};
 
 	const handleDeleteClick = (event: React.MouseEvent) => {
@@ -78,8 +78,10 @@ function ListItem({
 			<Name>{title}</Name>
 			<Url>{url}</Url>
 			<Date>{date}</Date>
-			<Icon>
-				<IconComponent onClick={handleIconClick} />
+			<Icon
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}>
+				<IconComponent />
 				{showDropdown && (
 					<DropdownMenu>
 						<DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
