@@ -2,14 +2,17 @@ import CarouselWrapper from './components/CarouselWrapper';
 import CircleGraph from './components/CircleGraph';
 import MainScore from './components/MainScore';
 import MainTitle from './components/MainTitle';
-import { SCORE } from '@/constants/Score';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const MainPage = () => {
 	const location = useLocation();
+	const [ownAcorn, setOwnAcorn] = useState<number>(0); // Remaining dotori
+	const [donatedAcorn, setDonatedAcorn] = useState<number>(0); // Donated dotori
+
 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search);
 		if (queryParams.get('loggedIn') === 'true') {
@@ -17,6 +20,8 @@ const MainPage = () => {
 		} else {
 			console.log('로그인 파라미터가 false 또는 없음');
 		}
+
+		fetchAcornData();
 	}, [location]);
 
 	const handlePostLogin = async () => {
@@ -33,15 +38,37 @@ const MainPage = () => {
 			console.error('handlePostLogin 중 오류 발생:', error);
 		}
 	};
+
+	const fetchAcornData = async () => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			const response = await fetch(`${BASE_URL}/api/v1/acorns`, {
+				method: 'GET',
+				headers: {
+						access: `${accessToken}`,
+					},
+			});
+			const data = await response.json();
+
+			if (data.isSuccess && data.result) {
+				setOwnAcorn(data.result.ownAcorn);
+				setDonatedAcorn(data.result.donatedAcorn);
+			} else {
+				console.error('API 요청 실패:', data.message);
+			}
+		} catch (error) {
+			console.error('fetchAcornData 중 오류 발생:', error);
+		}
+	};
+
 	return (
 		<MainPageWrapper>
 			<MainPageBanner>
 				<MainTitle />
 				<CircleGraph />
 				<MainScoreBox>
-					{SCORE.map(({ id, score, text }) => (
-						<MainScore key={id} score={score} text={text} />
-					))}
+					<MainScore score={ownAcorn} text="REMAINING DOTORI" />
+					<MainScore score={donatedAcorn} text="DONATED DOTORI" />
 				</MainScoreBox>
 			</MainPageBanner>
 			<ArticleDashboard>
