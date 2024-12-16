@@ -43,7 +43,7 @@ function SideBar() {
 					/>
 				))}
 			</Menus>
-			<Storage current={5} total={20} />
+			<Storage />
 			<BookMarkSlide show={clicked === 'bookmark'} />
 		</SideBarWrapper>
 	);
