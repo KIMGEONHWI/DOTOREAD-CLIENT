@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface CircleProgressBarProps {
-	progress: number;
+	progress: number; // 현재 진행 값 (readBookmark)
+	total: number; // 전체 범위 값 (bookmark)
 	size: number;
 	backgroundStrokeWidth?: number;
 	progressStrokeWidth?: number;
@@ -14,6 +15,7 @@ interface CircleProgressBarProps {
 
 const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
 	progress,
+	total,
 	size,
 	backgroundStrokeWidth = 13,
 	progressStrokeWidth = 40,
@@ -25,10 +27,11 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
 	const radius = (size - Math.max(backgroundStrokeWidth, progressStrokeWidth)) / 2;
 	const circumference = 2 * Math.PI * radius;
 	const angleRange = endAngle - startAngle;
-	const progressLength = (progress / 100) * circumference * (angleRange / 360);
+	const progressPercentage = total === 0 ? 0 : (progress / total) * 100; // 진행률 계산
+	const progressLength = (progressPercentage / 100) * circumference * (angleRange / 360); // 진행 길이
 	const offset = circumference - progressLength;
 
-	const endAnglePosition = polarToCartesian(size / 2, size / 2, radius, startAngle + (progress / 1000) * angleRange);
+	const endAnglePosition = polarToCartesian(size / 2, size / 2, radius, startAngle + (progressPercentage / 100) * angleRange);
 
 	function polarToCartesian(centerX: number, centerY: number, radius: number, angleInDegrees: number) {
 		const angleInRadians = (angleInDegrees - 90) * (Math.PI / 180.0);
@@ -58,7 +61,7 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
 					strokeLinecap="round"
 				/>
 				<path
-					d={describeArc(size / 2, size / 2, radius, startAngle, startAngle + (progress / 1000) * angleRange)}
+					d={describeArc(size / 2, size / 2, radius, startAngle, startAngle + (progressPercentage / 100) * angleRange)}
 					fill="none"
 					stroke={color}
 					strokeWidth={progressStrokeWidth}
@@ -68,7 +71,6 @@ const CircleProgressBar: React.FC<CircleProgressBarProps> = ({
 				/>
 				<circle cx={endAnglePosition.x} cy={endAnglePosition.y} r={progressStrokeWidth / 4} fill="white" />
 			</SvgContainer>
-
 			<TextContainer>
 				<ProgressValue>{progress}</ProgressValue>
 				<Label>Bookmark read</Label>
@@ -90,7 +92,6 @@ const SvgContainer = styled.svg<{ size: number; $startAngle: number }>`
 	height: ${({ size }) => size}px;
 	transform: rotate(${({ $startAngle }) => $startAngle}deg);
 `;
-
 const TextContainer = styled.div`
 	position: absolute;
 	top: 0;
