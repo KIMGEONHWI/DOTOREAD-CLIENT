@@ -10,6 +10,7 @@ import { useBookmarkContext } from '@/contexts/BookmarkContext';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -27,6 +28,7 @@ function Header() {
 	const [url, setUrl] = useState('');
 	const [isBellOpen, setIsBellOpen] = useState(false);
 	const [earn, setEarn] = useState<DotoryHistory[]>([]);
+	const navigate = useNavigate();
 
 	const handleAddBookmark = async () => {
 		await addBookmark(url);
@@ -36,6 +38,10 @@ function Header() {
 	};
 
 	const toggleBellDropdown = () => setIsBellOpen((prev) => !prev);
+
+	const handleLogoClick = () => {
+		navigate('/main');
+	};
 
 	useEffect(() => {
 		const getDotory = async () => {
@@ -58,7 +64,7 @@ function Header() {
 	return (
 		<HeaderWrapper>
 			<HeaderLeftContent>
-				<LogoIcon />
+				<LogoIcon onClick={handleLogoClick} />
 				<SearchBar />
 				<PlusFileIcon onClick={openModal} style={{ cursor: 'pointer' }} />
 			</HeaderLeftContent>
