@@ -1,13 +1,13 @@
 import MoveToMyBookMark from '@/assets/MoveToMyBookMark.svg?react';
 import ToMyBookMark from '@/assets/TomyBookmark.svg?react';
+import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface ListItemProps {
-	bookmarkId?: number; 
+	bookmarkId?: number;
 	title: string;
 	url: string;
 	formodal?: boolean;
@@ -16,24 +16,25 @@ const ListItem = ({ bookmarkId, title, url, formodal = false }: ListItemProps) =
 	const [hover, setHover] = useState(false);
 	const handleToMyBookmarkClick = async () => {
 		try {
-		  const accessToken = localStorage.getItem('access-token');
-		  console.log(accessToken);
-	
-		  const response = await axios.post(
-			`${BASE_URL}/api/v1/collections/clone/${bookmarkId}`,
-			{}, 
-			{
-				headers: { access: accessToken }
-			}
-		  );
+			const accessToken = localStorage.getItem('access-token');
+			console.log(accessToken);
 
-		  if (response.status === 200) {
-			console.log(`북마크(${bookmarkId})가 성공적으로 복사되었습니다.`);
-		  }
+			const response = await axios.post(
+				`${BASE_URL}/api/v1/collections/clone/${bookmarkId}`,
+				{},
+				{
+					headers: { access: accessToken },
+				},
+			);
+
+			if (response.status === 200) {
+				console.log(`북마크(${bookmarkId})가 성공적으로 복사되었습니다.`);
+				alert('내 북마크로 이동하였습니다');
+			}
 		} catch (error: any) {
-		  console.error('북마크 복사 중 에러:', error.response?.data || error.message);
+			console.error('북마크 복사 중 에러:', error.response?.data || error.message);
 		}
-	  };
+	};
 	return (
 		<Display>
 			<ItemContainer formodal={formodal}>
