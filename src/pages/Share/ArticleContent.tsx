@@ -1,22 +1,22 @@
-import PlusIcon from '@/assets/PlusIcon.svg?react';
-import styled from 'styled-components';
 import ArticleItem from './ArticleItem';
-import { useEffect, useState } from 'react';
+import PlusIcon from '@/assets/PlusIcon.svg?react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 interface ArticleContentProps {
-	onPlusClick: () => void; 
-	collectionId:number|null;
-  }
-  
+	onPlusClick: () => void;
+	collectionId: number | null;
+}
+
 interface Bookmark {
 	bookmarkId: number;
 	title: string;
 	url: string;
 }
-const ArticleContent = ({ collectionId,onPlusClick }: ArticleContentProps) => {
+const ArticleContent = ({ collectionId, onPlusClick }: ArticleContentProps) => {
 	const currentDate = new Date();
 	const month = currentDate.getMonth() + 1;
 	const day = currentDate.getDate();
@@ -28,7 +28,7 @@ const ArticleContent = ({ collectionId,onPlusClick }: ArticleContentProps) => {
 	// API 호출하여 북마크 목록 가져오기
 	const fetchBookmarks = async () => {
 		if (!collectionId) {
-			console.log("collectionID 없음")
+			console.log('collectionID 없음');
 			return; // collectionId가 없으면 실행하지 않음
 		}
 		setIsLoading(true);
@@ -37,11 +37,11 @@ const ArticleContent = ({ collectionId,onPlusClick }: ArticleContentProps) => {
 			const response = await axios.get(
 				`${BASE_URL}/api/v1/collections/bookmarks/${collectionId}`, // API 엔드포인트
 				{
-					params: { page: 1 }, 
+					params: { page: 1 },
 					headers: {
 						access: accessToken,
 					},
-				}
+				},
 			);
 
 			if (response.data.isSuccess) {
@@ -74,25 +74,18 @@ const ArticleContent = ({ collectionId,onPlusClick }: ArticleContentProps) => {
 				</InputTitleContainer>
 				<InputContentContainer>
 					<Content>내용</Content>
-					<InputContent
-						placeholder="ex) 국내 IT기업 개발직군의 채용일정이 매일 업데이트 됩니다."
-					/>
+					<InputContent placeholder="ex) 국내 IT기업 개발직군의 채용일정이 매일 업데이트 됩니다." />
 				</InputContentContainer>
 				<ArticleWrapper>
-				{isLoading ? (
+					{isLoading ? (
 						<p>Loading...</p>
 					) : bookmarks.length > 0 ? (
 						bookmarks.map((bookmark) => (
-							<ArticleItem
-								key={bookmark.bookmarkId}
-								title={bookmark.title}
-								url={bookmark.url}
-							/>
+							<ArticleItem key={bookmark.bookmarkId} title={bookmark.title} url={bookmark.url} />
 						))
 					) : (
 						<p>No bookmarks available.</p>
 					)}
-
 				</ArticleWrapper>
 				<Plus onClick={onPlusClick}>
 					<PlusIcon style={{ cursor: 'pointer' }} />
@@ -190,12 +183,12 @@ const Plus = styled.div`
 	margin-top: 1.5rem;
 `;
 
-const ArticleWrapper=styled.div`
+const ArticleWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1.5rem;
 	margin-top: 1.8rem;
-	`
+`;
 const ScrollWrapper = styled.div`
 	width: 100%;
 	max-height: 36.5rem;
