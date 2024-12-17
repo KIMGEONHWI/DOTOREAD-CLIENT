@@ -25,11 +25,11 @@ const SearchBarContainer = styled.div`
 	width: 51.7rem;
 	height: 5.2rem;
 	border-bottom: 2px solid #ff6600;
-	padding-left: 5.25rem;
+	padding-left: 1.4rem;
+	gap: 27rem;
 `;
 
 const SearchInput = styled.input`
-	flex: 1;
 	border: none;
 	background: none;
 	outline: none;
