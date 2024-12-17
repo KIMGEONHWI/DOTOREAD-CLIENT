@@ -1,4 +1,3 @@
-import BookMarkSlide from '@/components/BookMarkSlide/BookMarkSlide';
 import Storage from '@/components/common/SideBar/Storage';
 import Icons from '@/constants/Icons';
 import { useEffect, useState } from 'react';
@@ -17,6 +16,9 @@ function SideBar() {
 			case 'mission':
 				navigate('/mission');
 				break;
+			case 'bookmark':
+				navigate('/bookmark');
+				break;
 			default:
 				navigate('/main');
 				break;
@@ -25,7 +27,7 @@ function SideBar() {
 	};
 
 	const location = useLocation();
-	
+
 	useEffect(() => {
 		if (location.pathname === '/bookmark' || location.pathname === '/ai') {
 			setClicked('bookmark');
@@ -44,7 +46,6 @@ function SideBar() {
 				))}
 			</Menus>
 			<Storage />
-			<BookMarkSlide show={clicked === 'bookmark'} />
 		</SideBarWrapper>
 	);
 }

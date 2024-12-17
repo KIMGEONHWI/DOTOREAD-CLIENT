@@ -1,6 +1,7 @@
 import Modal from '../Modal/Modal';
 import useModal from '@/hooks/useModal';
 import { ReactNode, useState } from 'react';
+import { useDrop } from 'react-dnd';
 import styled from 'styled-components';
 
 interface BookMarkListBtnProps {
@@ -9,20 +10,32 @@ interface BookMarkListBtnProps {
 	rightIcon?: ReactNode;
 	onClick?: () => void;
 	onDelete?: () => void;
+	onDropItem?: (item: any) => void;
 }
 
-function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookMarkListBtnProps) {
+function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete, onDropItem }: BookMarkListBtnProps) {
+	const [{ isOver }, dropRef] = useDrop(() => ({
+		accept: 'LIST_ITEM',
+		drop: (item: any) => {
+			if (onDropItem) {
+				onDropItem(item); // 드롭된 아이템을 전달
+			}
+		},
+		collect: (monitor) => ({
+			isOver: monitor.isOver(),
+		}),
+	}));
+
 	const [showDropdown, setShowDropdown] = useState(false);
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
-	
 
 	const handleIconHover = (event: React.MouseEvent) => {
 		event.stopPropagation();
-		setShowDropdown(true); 
+		setShowDropdown(true);
 	};
 
 	const handleIconLeave = () => {
-		setShowDropdown(false); 
+		setShowDropdown(false);
 	};
 
 	const handleDeleteClick = (event: React.MouseEvent) => {
@@ -30,15 +43,17 @@ function BookMarkListBtn({ text, leftIcon, rightIcon, onClick, onDelete }: BookM
 		openModal();
 		setShowDropdown(false);
 	};
-	
 
 	return (
-		<BookMarkListBtnWrapper onClick={onClick}>
+		<BookMarkListBtnWrapper
+			ref={dropRef}
+			style={{ backgroundColor: isOver ? '#555' : 'transparent' }}
+			onClick={onClick}
+		>
 			{leftIcon && <LeftIconWrapper>{leftIcon}</LeftIconWrapper>}
 			<span>{text}</span>
 			{rightIcon && (
-				<RightIconWrapper onMouseEnter={handleIconHover}
-				onMouseLeave={handleIconLeave}>
+				<RightIconWrapper onMouseEnter={handleIconHover} onMouseLeave={handleIconLeave}>
 					{rightIcon}
 					{showDropdown && (
 						<DropdownMenu>
@@ -115,7 +130,6 @@ const DropdownMenu = styled.div`
 	flex-direction: column;
 	align-items: center;
 	padding: 0.5rem 0;
-
 `;
 
 const DropdownItem = styled.div`
