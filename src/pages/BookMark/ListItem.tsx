@@ -68,6 +68,10 @@ function ListItem({
 		onDelete();
 	};
 
+	const handleIconClick = (event: React.MouseEvent) => {
+		event.stopPropagation();
+	};
+
 	useEffect(() => {
 		setIsClicked(isAllSelected);
 	}, [isAllSelected]);
@@ -78,11 +82,9 @@ function ListItem({
 			<Name>{title}</Name>
 			<Url>{url}</Url>
 			<Date>{date}</Date>
-			<Icon
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}>
+			<Icon onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleIconClick}>
 				<IconComponent />
-				{showDropdown && (
+				{showDropdown && !isSelectable && (
 					<DropdownMenu>
 						<DropdownItem onClick={handleDeleteClick}>삭제하기</DropdownItem>
 					</DropdownMenu>
