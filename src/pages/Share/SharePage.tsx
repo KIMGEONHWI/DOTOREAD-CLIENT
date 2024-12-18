@@ -1,6 +1,8 @@
+import AddBookMark from './AddBookMark';
 import ArticleContent from './ArticleContent';
 import Collection from './Collection';
 import SearchBar from './SearchBar';
+import Vector from '@/assets/Vector.svg?react';
 import Btn from '@/components/common/Button/Btn';
 import NewArticleModal from '@/components/common/Modal/NewArticleModal';
 import useModal from '@/hooks/useModal';
@@ -8,8 +10,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import AddBookMark from './AddBookMark';
-import Vector from '@/assets/Vector.svg?react';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -32,28 +32,55 @@ interface Collections {
 
 const SharePage = () => {
 	const { isOpen: isArticleModalOpen, openModal: openArticleModal, closeModal: closeArticleModal } = useModal();
-	const [isAddBookmarkModalOpen, setAddBookmarkModalOpen] = useState(false); // 두 번째 모달 상태
+	const [isAddBookmarkModalOpen, setAddBookmarkModalOpen] = useState(false);
 	const [searchParams] = useSearchParams();
 	const [collections, setCollections] = useState<Collections[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [collectionId, setCollectionId] = useState<number | null>(null);
+	const [title, setTitle] = useState<string>(''); // Manage title state
+	const [content, setContent] = useState<string>(''); // Manage content state
 
 	const page = searchParams.get('page') || 1;
 
-	// 첫 번째 모달에서 플러스 버튼 클릭 시 두 번째 모달로 전환
+	// Handle form submission
+	const handleSubmit = async () => {
+		if (!collectionId) {
+			console.log('collectionID 없음');
+			return;
+		}
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			const response = await axios.patch(
+				`${BASE_URL}/api/v1/collections/${collectionId}`,
+				{ title, content }, // Request body
+				{
+					headers: { access: accessToken },
+				},
+			);
+
+			if (response.data.isSuccess) {
+				console.log('데이터가 성공적으로 저장되었습니다:', response.data);
+				closeArticleModal(); // Close modal after successful submission
+			} else {
+				console.error('데이터 저장 실패:', response.data.message);
+			}
+		} catch (error) {
+			console.error('API 호출 중 오류:', error);
+		}
+	};
+
 	const handleOpenAddBookmarkModal = () => {
-		closeArticleModal(); // 첫 번째 모달 닫기
-		setAddBookmarkModalOpen(true); // 두 번째 모달 열기
+		closeArticleModal();
+		setAddBookmarkModalOpen(true);
 	};
 
 	const handleCollectionCreate = (newCollectionId: number) => {
-        setCollectionId(newCollectionId); // 저장된 collectionId 업데이트
-        setAddBookmarkModalOpen(false);
-        openArticleModal(); // 첫 번째 모달 다시 열기
-    };
+		setCollectionId(newCollectionId);
+		setAddBookmarkModalOpen(false);
+		openArticleModal();
+	};
 
-	// 컬렉션 데이터를 가져오는 함수 (전체/검색)
 	const fetchCollections = async () => {
 		setIsLoading(true);
 		try {
@@ -61,20 +88,17 @@ const SharePage = () => {
 			let response;
 
 			if (searchQuery) {
-				// 검색 API 호출
 				response = await axios.get(`${BASE_URL}/api/v1/collections/search`, {
 					params: { search: searchQuery, page },
 					headers: { access: accessToken },
 				});
 			} else {
-				// 전체 컬렉션 API 호출
 				response = await axios.get(`${BASE_URL}/api/v1/collections`, {
 					params: { page },
 					headers: { access: accessToken },
 				});
 			}
 
-			// 검색어가 있든 없든 결과를 동일하게 처리
 			setCollections(response.data.result.collectionPreviewDTOList || []);
 		} catch (error) {
 			console.error('Error fetching collections:', error);
@@ -83,12 +107,10 @@ const SharePage = () => {
 		}
 	};
 
-	// 검색어가 변경되거나 페이지가 변경될 때 API 호출
 	useEffect(() => {
 		fetchCollections();
 	}, [searchQuery, page]);
 
-	// 검색어 입력 처리
 	const handleSearch = (query: string) => {
 		setSearchQuery(query);
 	};
@@ -103,32 +125,41 @@ const SharePage = () => {
 				{isLoading ? (
 					<p>Loading...</p>
 				) : collections.length > 0 ? (
-					collections.map((collection) => (
-						<Collection key={collection.collectionId} collection={collection} />
-					))
+					collections.map((collection) => <Collection key={collection.collectionId} collection={collection} />)
 				) : (
 					<p>No collections available.</p>
 				)}
 			</CollectionWrapper>
 
 			<NewArticleModal isOpen={isArticleModalOpen} onClose={closeArticleModal}>
-                <ArticleContent collectionId={collectionId} onPlusClick={handleOpenAddBookmarkModal} />
-                <BtnSubmitWrapper>
-                    <Btn id="submit" onClick={closeArticleModal} />
-                </BtnSubmitWrapper>
-            </NewArticleModal>
+				<ArticleContent
+					collectionId={collectionId}
+					onPlusClick={handleOpenAddBookmarkModal}
+					title={title}
+					content={content}
+					setTitle={setTitle}
+					setContent={setContent}
+				/>
+				<BtnSubmitWrapper>
+					<Btn id="submit" onClick={handleSubmit} />
+				</BtnSubmitWrapper>
+			</NewArticleModal>
 
-            {/* 두 번째 모달 */}
-            <NewArticleModal isOpen={isAddBookmarkModalOpen} onClose={() => setAddBookmarkModalOpen(false)}>
+			<NewArticleModal isOpen={isAddBookmarkModalOpen} onClose={() => setAddBookmarkModalOpen(false)}>
 				<Wrapper>
-				<Vector onClick ={()=>{openArticleModal()}}style={{ cursor: 'pointer' }} />
-				<Title>북마크 가져오기</Title>
+					<Vector
+						onClick={() => {
+							openArticleModal();
+						}}
+						style={{ cursor: 'pointer' }}
+					/>
+					<Title>북마크 가져오기</Title>
 				</Wrapper>
 				<Btns>
 					<Button>모든 북마크</Button>
 				</Btns>
-                <AddBookMark onCollectionCreate={handleCollectionCreate} />
-            </NewArticleModal>
+				<AddBookMark onCollectionCreate={handleCollectionCreate} />
+			</NewArticleModal>
 		</SharePageWrapper>
 	);
 };

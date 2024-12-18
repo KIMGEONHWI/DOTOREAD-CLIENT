@@ -30,43 +30,60 @@ function Header() {
 	const [url, setUrl] = useState('');
 	const [isBellOpen, setIsBellOpen] = useState(false);
 	const [earn, setEarn] = useState<DotoryHistory[]>([]);
+	const [use, setUse] = useState<DotoryHistory[]>([]);
 	const navigate = useNavigate();
+	const [totalDotory, setTotalDotory] = useState(0);
+
+	const calculateTotalDotory = () => {
+		const earnTotal = Array.isArray(earn) ? earn.reduce((sum, item) => sum - item.acorn, 0) : 0;
+		const useTotal = Array.isArray(use) ? use.reduce((sum, item) => sum + item.acorn, 0) : 0;
+		setTotalDotory(earnTotal + useTotal);
+	};
+
+	useEffect(() => {
+		calculateTotalDotory();
+	}, [earn, use]);
 
 	const handleAddBookmark = async () => {
 		await addBookmark(url, currentCategory);
-
 		setUrl('');
 		closeModal();
 	};
 
-	const toggleBellDropdown = () => setIsBellOpen((prev) => !prev);
+	const toggleBellDropdown = async () => {
+		setIsBellOpen((prev) => !prev);
+
+		if (!isBellOpen) {
+			try {
+				const accessToken = localStorage.getItem('access-token');
+
+				const earnResponse = await axios.get(`${BASE_URL}/api/v1/acorns-use/history`, {
+					params: { page: 1 },
+					headers: { access: accessToken },
+				});
+				setEarn(earnResponse.data.result);
+
+				const useResponse = await axios.get(`${BASE_URL}/api/v1/acorns-add/history`, {
+					params: { page: 1 },
+					headers: { access: accessToken },
+				});
+				setUse(useResponse.data.result.acornAddDTOList);
+			} catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		}
+	};
+
+	console.log('dd', setUse);
 
 	const handleLogoClick = () => {
 		navigate('/main');
 	};
 
-	useEffect(() => {
-		const getDotory = async () => {
-			try {
-				const accessToken = localStorage.getItem('access-token');
-				const response = await axios.get(`${BASE_URL}/api/v1/acorns-use/history`, {
-					params: { page: 1 },
-					headers: { access: accessToken },
-				});
-
-				setEarn(response.data.result);
-			} catch (error) {
-				console.error('Error fetching missions:', error);
-			}
-		};
-
-		getDotory();
-	}, []);
-
 	return (
 		<HeaderWrapper>
 			<HeaderLeftContent>
-				<LogoIcon style={{cursor:'pointer'}}onClick={handleLogoClick} />
+				<LogoIcon style={{ cursor: 'pointer' }} onClick={handleLogoClick} />
 				<SearchBar />
 				<PlusFileIcon onClick={openModal} style={{ cursor: 'pointer' }} />
 			</HeaderLeftContent>
@@ -81,15 +98,24 @@ function Header() {
 						</DropDownTitleContainer>
 						<TotalDotoryContainer>
 							<TotalDotory>TOTAL DOTORY</TotalDotory>
-							<Total>50</Total>
+							<Total>{totalDotory}</Total>
 						</TotalDotoryContainer>
-
 						<HistoryContainer>
+							{Array.isArray(use) && use.length > 0 ? (
+								use.map((item) => (
+									<HistoryItem key={item.addedAt}>
+										<TotalDotory>{item.content}</TotalDotory>
+										<Total>+{item.acorn}</Total>
+									</HistoryItem>
+								))
+							) : (
+								<p>사용 내역이 없습니다.</p>
+							)}
 							{Array.isArray(earn) && earn.length > 0 ? (
 								earn.map((item) => (
 									<HistoryItem key={item.addedAt}>
 										<TotalDotory>{item.content}</TotalDotory>
-										<Total>{item.acorn}</Total>
+										<EarnTotal>-{item.acorn}</EarnTotal>
 									</HistoryItem>
 								))
 							) : (
@@ -104,7 +130,6 @@ function Header() {
 
 			{/* Modal */}
 			<Modal id="plus" isOpen={isModalOpen} onClose={closeModal} onConfirm={handleAddBookmark}>
-				{' '}
 				<Title>URL로 북마크 추가하기</Title>
 				<Input type="text" placeholder="http://" value={url} onChange={(e) => setUrl(e.target.value)} />
 			</Modal>
@@ -204,11 +229,18 @@ const Total = styled.p`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_13px};
 `;
 
+const EarnTotal = styled.p`
+	color: ${({ theme }) => theme.colors.gray3};
+	${({ theme }) => theme.fonts.Pretendard_Semibold_13px};
+`;
+
 const HistoryContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
 	margin-top: 2.8rem;
+	overflow-y: auto;
+	max-height: 30rem;
 `;
 
 const HistoryItem = styled.div`
