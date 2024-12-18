@@ -1,12 +1,14 @@
 import Classified from '@/assets/Classified.svg?react';
 import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
+import BookMarkSlide from '@/components/BookMarkSlide/BookMarkSlide';
 import Btn from '@/components/common/Button/Btn';
 import SortBtn from '@/components/common/Button/SortBtn';
 import SortBtnFolder from '@/components/common/Button/SortBtnFolder';
 import SortBtnUnclassified from '@/components/common/Button/SortBtnUnclassified';
 import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
 import { useBookmarkContext } from '@/contexts/BookmarkContext';
+import { useCurrentCategory } from '@/contexts/CurrentCategoryContext';
 import BookMarkList from '@/pages/BookMark/BookMarkList';
 import Navbar from '@/pages/BookMark/Navbar';
 import axios from 'axios';
@@ -31,28 +33,34 @@ function Title({ text, Icon }: TitleProps) {
 }
 
 function BookMarkPage() {
+	const { currentCategory, setCurrentCategory } = useCurrentCategory();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { bookmarks, fetchBookmarks } = useBookmarkContext();
 	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
 
-	const [sortOption, setSortOption] = useState<string>('최신순'); // 정렬 상태
+	const [sortOption, setSortOption] = useState<string>('최신순');
 
 	useEffect(() => {
-		const fetchData = async () => {
-		  const sortType = sortOption === '최신순' ? 'DESC' : 'ASC'; // 정렬 옵션 변환
-		  if (category === '모든 북마크') {
+		const { category } = location.state || { category: '모든 북마크' };
+		setCurrentCategory(category);
+	}, [location, setCurrentCategory]);
+
+	const fetchData = async () => {
+		const sortType = sortOption === '최신순' ? 'DESC' : 'ASC';
+		if (category === '모든 북마크') {
 			await fetchBookmarks(`/api/v1/bookmarks/all?sortType=${sortType}`);
-		  } else if (category === '미분류') {
+		} else if (category === '미분류') {
 			await fetchBookmarks(`/api/v1/bookmarks/uncategorized?sortType=${sortType}`);
-		  } else if (iconType === 'classified') {
+		} else if (iconType === 'classified') {
 			await fetchBookmarks(`/api/v1/bookmarks/all/${category}?sortType=${sortType}`);
-		  }
-		};
-	
+		}
+	};
+
+	useEffect(() => {
 		fetchData();
-	  }, [category, iconType, sortOption]); 
+	}, [category, iconType, sortOption, currentCategory]);
 
 	const [isAiClassifyActive, setAiClassifyActive] = useState(false);
 	const [isAllSelected, setAllSelected] = useState(false);
@@ -146,6 +154,7 @@ function BookMarkPage() {
 
 	return (
 		<BookMarkPageWrapper>
+			<BookMarkSlide fetchData={fetchData} />
 			<BackgroundBox>
 				<Title text={text} Icon={Icon} />
 				{category === '미분류' && (
@@ -159,8 +168,13 @@ function BookMarkPage() {
 					</BtnWrapperForChooseAll>
 				)}
 				<SortBtnWrapper>
-				{category === '미분류' ? (<SortBtnUnclassified  onOptionChange={setSortOption} />): category === '모든 북마크' ? (<SortBtn  onOptionChange={setSortOption} />) : (<SortBtnFolder  onOptionChange={setSortOption} />)}
-
+					{category === '미분류' ? (
+						<SortBtnUnclassified onOptionChange={setSortOption} />
+					) : category === '모든 북마크' ? (
+						<SortBtn onOptionChange={setSortOption} />
+					) : (
+						<SortBtnFolder onOptionChange={setSortOption} />
+					)}
 				</SortBtnWrapper>
 				{!isAiClassifyActive && <Navbar />}
 				<BookMarkList

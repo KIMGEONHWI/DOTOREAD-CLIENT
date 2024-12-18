@@ -7,6 +7,7 @@ import LogoIcon from '@/assets/Logo.svg?react';
 import MiniAcornIcon from '@/assets/MiniAcorn.svg?react';
 import PlusFileIcon from '@/assets/PlusFile.svg?react';
 import { useBookmarkContext } from '@/contexts/BookmarkContext';
+import { useCurrentCategory } from '@/contexts/CurrentCategoryContext';
 import useModal from '@/hooks/useModal';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -23,6 +24,7 @@ interface DotoryHistory {
 }
 
 function Header() {
+	const { currentCategory } = useCurrentCategory();
 	const { addBookmark } = useBookmarkContext();
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
 	const [url, setUrl] = useState('');
@@ -31,7 +33,7 @@ function Header() {
 	const navigate = useNavigate();
 
 	const handleAddBookmark = async () => {
-		await addBookmark(url);
+		await addBookmark(url, currentCategory);
 
 		setUrl('');
 		closeModal();

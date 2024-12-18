@@ -2,6 +2,7 @@ import Lucide from '@/assets/Lucide.svg?react';
 import LucideGray from '@/assets/LucideGray.svg?react';
 import LucideOrange from '@/assets/LucideOrange.svg?react';
 import { useEffect, useState } from 'react';
+import { useDrag } from 'react-dnd';
 import styled from 'styled-components';
 
 interface ListItemProps {
@@ -32,6 +33,13 @@ function ListItem({
 	setSelectedBookmarks,
 	bookmarkId,
 }: ListItemProps) {
+	const [{ isDragging }, dragRef] = useDrag(() => ({
+		type: 'LIST_ITEM',
+		item: { id: bookmarkId, title, url },
+		collect: (monitor) => ({
+			isDragging: monitor.isDragging(),
+		}),
+	}));
 	const [isClicked, setIsClicked] = useState(isAllSelected);
 	const IconComponent = isClicked ? LucideOrange : isSelectable ? LucideGray : Lucide;
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -77,7 +85,12 @@ function ListItem({
 	}, [isAllSelected]);
 
 	return (
-		<ListItemWrapper onClick={handleClick} isClicked={isClicked}>
+		<ListItemWrapper
+			ref={dragRef}
+			style={{ opacity: isDragging ? 0.5 : 1 }}
+			onClick={handleClick}
+			isClicked={isClicked}
+		>
 			<Thumnail img={img}></Thumnail>
 			<Name>{title}</Name>
 			<Url>{url}</Url>

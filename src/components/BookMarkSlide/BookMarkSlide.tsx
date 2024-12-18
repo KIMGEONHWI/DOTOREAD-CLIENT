@@ -6,17 +6,22 @@ import LeeterIcon from '@/assets/Letter.svg?react';
 import LineIcon from '@/assets/Line.svg?react';
 import LucidIcon from '@/assets/Lucide.svg?react';
 import PlusIcon from '@/assets/Plus.svg?react';
+import { useCurrentCategory } from '@/contexts/CurrentCategoryContext';
 import { useFolders } from '@/contexts/FetchFoldersContext';
 import useModal from '@/hooks/useModal';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface BookMarkSlideProps {
-	show: boolean;
+	fetchData: () => void;
 }
 
-function BookMarkSlide({ show }: BookMarkSlideProps) {
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+function BookMarkSlide({ fetchData }: BookMarkSlideProps) {
+	const { currentCategory } = useCurrentCategory();
 	const navigate = useNavigate();
 	const { folders, addFolder, deleteFolder, fetchFolders } = useFolders();
 	const { isOpen: isModalOpen, openModal, closeModal } = useModal();
@@ -31,9 +36,15 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 			console.error('Folder name is empty');
 			return;
 		}
-		await addFolder(folderName);
-		await fetchFolders();
-		setFolderName('');
+		try {
+			console.log('Adding folder...');
+			await addFolder(folderName);
+			console.log('Folder added successfully');
+			await fetchFolders();
+			setFolderName('');
+		} catch (error) {
+			console.error('Error adding folder:', error);
+		}
 	};
 
 	const handleDeleteFolder = async (folderId: string) => {
@@ -44,8 +55,31 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 		navigate('/bookmark', { state: { text, iconType, category } });
 	};
 
+	console.log('c', currentCategory);
+
+	const handleDropToFolder = async (item: { id: string; title: string; url: string }, folderId: string) => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			await axios.patch(
+				`${BASE_URL}/api/v1/classify/patch/${item.id}/${folderId}`,
+				{},
+				{
+					headers: { access: accessToken },
+				},
+			);
+			console.log(`${item.title}를 폴더 ${folderId}로 이동했습니다.`);
+			console.log(folderId);
+			fetchFolders();
+			fetchData();
+
+			window.location.reload();
+		} catch (error) {
+			console.error('북마크 이동 실패:', error);
+		}
+	};
+
 	return (
-		<BookMarkSlideWrapper $show={show}>
+		<BookMarkSlideWrapper>
 			<BookMarksContent>
 				<BookMarkTitle>BookMarks</BookMarkTitle>
 				<BookMarkListBtn
@@ -74,6 +108,7 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 							rightIcon={<LucidIcon />}
 							onClick={() => handleNavigate(folder?.name || '', 'classified', folder?.id || '')}
 							onDelete={() => folder?.id && handleDeleteFolder(folder.id)}
+							onDropItem={(item) => handleDropToFolder(item, folder.id)}
 						/>
 					))}
 			</FoldersContent>
@@ -88,9 +123,9 @@ function BookMarkSlide({ show }: BookMarkSlideProps) {
 
 export default BookMarkSlide;
 
-const BookMarkSlideWrapper = styled.div<{ $show: boolean }>`
+const BookMarkSlideWrapper = styled.div`
 	position: fixed;
-	left: ${({ $show }) => ($show ? '12rem' : '-30rem')};
+	left: 12rem;
 	top: 17.3rem;
 	width: 28.2rem;
 	height: 100vw;
