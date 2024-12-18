@@ -37,7 +37,8 @@ function BookMarkPage() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { bookmarks, fetchBookmarks } = useBookmarkContext();
-	const { text, iconType, category } = location.state || { text: '', iconType: '', category: '' };
+	const defaultState = { text: '모든 북마크', iconType: 'everyBookmark', category: '모든 북마크' };
+	const { text, iconType, category } = location.state || defaultState;
 	const Icon = iconType === 'everyBookmark' ? EveryBookMark : iconType === 'unclassified' ? Unclassified : Classified;
 
 	const [sortOption, setSortOption] = useState<string>('최신순');
