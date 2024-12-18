@@ -1,3 +1,4 @@
+import BookMarkSlide from '../BookMarkSlide/BookMarkSlide';
 import AiClassificationBtn from '../common/Button/AiClassificationBtn';
 import Btn from '../common/Button/Btn';
 import Modal from '../common/Modal/Modal';
@@ -105,6 +106,7 @@ const AiClassificationPage = () => {
 
 	return (
 		<AiClassificationPageWrapper>
+			<BookMarkSlide />
 			<AiClassificationPageContent>
 				<Header>
 					<HeaderLeft>

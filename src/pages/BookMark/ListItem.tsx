@@ -1,6 +1,7 @@
 import Lucide from '@/assets/Lucide.svg?react';
 import LucideGray from '@/assets/LucideGray.svg?react';
 import LucideOrange from '@/assets/LucideOrange.svg?react';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 import styled from 'styled-components';
@@ -19,6 +20,8 @@ interface ListItemProps {
 	setSelectedBookmarks: (selected: string[]) => void;
 	bookmarkId: string;
 }
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function ListItem({
 	title,
@@ -44,7 +47,7 @@ function ListItem({
 	const IconComponent = isClicked ? LucideOrange : isSelectable ? LucideGray : Lucide;
 	const [showDropdown, setShowDropdown] = useState(false);
 
-	const handleClick = (event: React.MouseEvent) => {
+	const handleClick = async (event: React.MouseEvent) => {
 		event.stopPropagation();
 		if (isSelectable) {
 			const newClickedState = !isClicked;
@@ -57,6 +60,16 @@ function ListItem({
 			}
 			setHasSelectedItems(newClickedState || isAllSelected);
 		} else {
+			try {
+				const accessToken = localStorage.getItem('access-token');
+				const response = await axios.get(`${BASE_URL}/api/v1/bookmarks/${bookmarkId}`, {
+					headers: { access: accessToken },
+				});
+				console.log(response);
+			} catch (error) {
+				console.error('Error fetching missions:', error);
+			}
+
 			window.open(url, '_blank', 'noopener,noreferrer');
 		}
 	};

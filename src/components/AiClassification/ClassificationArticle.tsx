@@ -27,7 +27,22 @@ const ClassificationArticle = ({
 	url,
 	bookmarkId,
 }: ClassificationArticleProps) => {
-	const handleArticleClick = () => {
+	const handleArticleClick = async () => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			if (!accessToken) {
+				console.error('Access token not found');
+				return;
+			}
+
+			const response = await axios.get(`${BASE_URL}/api/v1/bookmarks/${bookmarkId}`, {
+				headers: { access: accessToken },
+			});
+			console.log(response);
+		} catch (error) {
+			console.error('Error fetching bookmark data:', error);
+		}
+
 		window.open(url, '_blank', 'noopener,noreferrer');
 	};
 

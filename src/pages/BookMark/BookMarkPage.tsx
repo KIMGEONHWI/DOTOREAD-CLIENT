@@ -3,6 +3,7 @@ import EveryBookMark from '@/assets/EveryBookMark.svg?react';
 import Unclassified from '@/assets/Unclassified.svg?react';
 import BookMarkSlide from '@/components/BookMarkSlide/BookMarkSlide';
 import Btn from '@/components/common/Button/Btn';
+import ExecutionBtn from '@/components/common/Button/ExecutionBtn';
 import SortBtn from '@/components/common/Button/SortBtn';
 import SortBtnFolder from '@/components/common/Button/SortBtnFolder';
 import SortBtnUnclassified from '@/components/common/Button/SortBtnUnclassified';
@@ -122,22 +123,6 @@ function BookMarkPage() {
 	};
 
 	useEffect(() => {
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === 'Enter' && hasSelectedItems) {
-				handleAiClassify();
-			}
-		};
-
-		if (isAiClassifyActive) {
-			window.addEventListener('keydown', handleKeyDown);
-		}
-
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
-	}, [isAiClassifyActive, hasSelectedItems, selectedBookmarks]);
-
-	useEffect(() => {
 		return () => {
 			setAiClassifyActive(false);
 			setAllSelected(false);
@@ -164,9 +149,17 @@ function BookMarkPage() {
 					</BtnWrapperForAiClassify>
 				)}
 				{isAiClassifyActive && (
-					<BtnWrapperForChooseAll onClick={handleChooseAllBtn}>
-						<Btn id="chooseAll" />
-					</BtnWrapperForChooseAll>
+					<>
+						<BtnWrapperForChooseAll onClick={handleChooseAllBtn}>
+							<Btn id="chooseAll" />
+						</BtnWrapperForChooseAll>
+
+						<BtnWrapperExecutionBtn>
+							<ExecutionBtn variant="#FF5733" isSelected={hasSelectedItems} onClick={handleAiClassify}>
+								실행
+							</ExecutionBtn>
+						</BtnWrapperExecutionBtn>
+					</>
 				)}
 				<SortBtnWrapper>
 					{category === '미분류' ? (
@@ -220,17 +213,24 @@ const TitleWrapper = styled.div`
 	align-items: center;
 `;
 
+const BtnWrapperExecutionBtn = styled.div`
+	position: absolute;
+	top: 3.7rem;
+	left: 105rem;
+	z-index: 1000;
+`;
+
 const BtnWrapperForAiClassify = styled.div`
 	position: absolute;
 	top: 3.7rem;
-	left: 97.3rem;
+	left: 84rem;
 	z-index: 10000;
 `;
 
 const BtnWrapperForChooseAll = styled.div`
 	position: absolute;
 	top: 3.7rem;
-	left: 76.3rem;
+	left: 63rem;
 	z-index: 10000;
 `;
 

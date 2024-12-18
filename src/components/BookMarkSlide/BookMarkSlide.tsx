@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface BookMarkSlideProps {
-	fetchData: () => void;
+	fetchData?: () => void;
 }
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -70,7 +70,7 @@ function BookMarkSlide({ fetchData }: BookMarkSlideProps) {
 			console.log(`${item.title}를 폴더 ${folderId}로 이동했습니다.`);
 			console.log(folderId);
 			fetchFolders();
-			fetchData();
+			fetchData?.();
 
 			window.location.reload();
 		} catch (error) {
