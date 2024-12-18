@@ -64,7 +64,7 @@ function Header() {
 	return (
 		<HeaderWrapper>
 			<HeaderLeftContent>
-				<LogoIcon onClick={handleLogoClick} />
+				<LogoIcon style={{cursor:'pointer'}}onClick={handleLogoClick} />
 				<SearchBar />
 				<PlusFileIcon onClick={openModal} style={{ cursor: 'pointer' }} />
 			</HeaderLeftContent>
