@@ -1,10 +1,10 @@
-import OnBoarding3center from '@/assets/OnBoard3.svg?react';
-import styled, { css }  from 'styled-components';
-import OnBoard1 from '@/assets/Onboard3-1.svg?react'
-import OnBoard2 from '@/assets/Onboard3-2.svg?react'
-import OnBoard3 from '@/assets/Onboard3-3.svg?react'
-import OnBoard4 from '@/assets/Onboard3-4.svg?react'
+import OnBoard1 from '@/assets/Onboard3-1.svg?react';
+import OnBoard2 from '@/assets/Onboard3-2.svg?react';
+import OnBoard3 from '@/assets/Onboard3-3.svg?react';
+import OnBoard4 from '@/assets/Onboard3-4.svg?react';
+import OnBoarding3center from '@/assets/Onboards3.svg?react';
 import { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
 
 const OnBoarding3 = () => {
 	const [scrollY, setScrollY] = useState(0);
@@ -23,14 +23,14 @@ const OnBoarding3 = () => {
 		<OnBoarding3Wrapper>
 			<Description>
 				<TextTitle isVisible={scrollY > 1500}>읽지 않은 북마크를 정리하며 도토리를 얻으세요</TextTitle>
-				<SubDescription  isVisible={scrollY > 1700}>
+				<SubDescription isVisible={scrollY > 1700}>
 					도토릿은 사용자가 저장한 북마크를 실제로 읽도록 돕습니다.
 					<br />
 					읽지 않은 북마크를 확인하고 미션을 통해 도토리를 얻으세요.
 				</SubDescription>
 				<Wrapper>
-					<CenterSvg isVisible={scrollY > 1900}>			
-					<OnBoarding3center />
+					<CenterSvg isVisible={scrollY > 1900}>
+						<OnBoarding3center />
 					</CenterSvg>
 					<LeftTopSvg isVisible={scrollY > 1920}>
 						<OnBoard1 />
@@ -89,16 +89,17 @@ const TextTitle = styled.div<{ isVisible: boolean }>`
 
 	${({ isVisible }) => isVisible && fadeInAnimation};
 `;
-const Wrapper=styled.div`
-	position: relative;`
+const Wrapper = styled.div`
+	position: relative;
+`;
 
-const CenterSvg=styled.div<{ isVisible: boolean }>`
+const CenterSvg = styled.div<{ isVisible: boolean }>`
 	opacity: 0;
 	transform: translateY(20px);
 	transition: all 0.8s ease-in-out 0.2s;
 
 	${({ isVisible }) => isVisible && fadeInAnimation};
-`
+`;
 
 const SubDescription = styled.div<{ isVisible: boolean }>`
 	${({ theme }) => theme.fonts.Pretendard_Semibold_25px};
@@ -112,7 +113,6 @@ const SubDescription = styled.div<{ isVisible: boolean }>`
 
 	${({ isVisible }) => isVisible && fadeInAnimation};
 `;
-
 
 const LeftTopSvg = styled.div<{ isVisible: boolean }>`
 	position: absolute;
@@ -129,7 +129,7 @@ const LeftTopSvg = styled.div<{ isVisible: boolean }>`
 const RightTopSvg = styled.div<{ isVisible: boolean }>`
 	position: absolute;
 	top: 5.5rem;
-	left : 74.9rem;
+	left: 74.9rem;
 
 	opacity: 0;
 	transform: translateY(20px);
@@ -161,4 +161,3 @@ const RightBottomSvg = styled.div<{ isVisible: boolean }>`
 
 	${({ isVisible }) => isVisible && fadeInAnimation};
 `;
-
