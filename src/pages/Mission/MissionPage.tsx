@@ -14,6 +14,10 @@ import IconBackground from '@/assets/IconBackground.svg?react'
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const MissionPage = () => {
+	const [missions, setMissions] = useState([]);
+	const [ownAcorn, setOwnAcorn] = useState(0);
+	const [useAcorn, setUseAcorn] = useState(0);
+
 	// 모달 상태를 두 개로 분리
 	const [isFirstModalOpen, setIsFirstModalOpen] = useState(false);
 	const [isSecondModalOpen, setIsSecondModalOpen] = useState(false);
@@ -26,9 +30,20 @@ const MissionPage = () => {
 	const openSecondModal = () => setIsSecondModalOpen(true);
 	const closeSecondModal = () => setIsSecondModalOpen(false);
 
-	const [missions, setMissions] = useState([]);
-	const [ownAcorn, setOwnAcorn] = useState(0);
-	const [useAcorn, setUseAcorn] = useState(0);
+	const handleFirstModalClose = () => {
+		postDonation('/api/v1/funds/world-wide-fund', useAcorn);
+		setUseAcorn(0); 
+		setOwnAcorn(ownAcorn-useAcorn);
+		closeFirstModal(); // 모달 닫기
+	};
+	
+	const handleSecondModalClose = () => {
+		postDonation('/api/v1/funds/kara', useAcorn);
+		setUseAcorn(0); 
+		setOwnAcorn(ownAcorn-useAcorn);
+		closeSecondModal(); // 모달 닫기
+	};
+
 
 	useEffect(() => {
 		const fetchMissions = async () => {
@@ -74,6 +89,25 @@ const MissionPage = () => {
 		}
 	};
 	
+	const postDonation = async (url: string, acornCount: number) => {
+		try {
+			const accessToken = localStorage.getItem('access-token');
+			const response = await axios.post(
+				`${BASE_URL}${url}`,
+				{ useAcorn: acornCount },
+				{
+					headers: {
+						access: accessToken,
+						'Content-Type': 'application/json',
+					},
+				}
+			);
+			console.log(response.data.message); 
+		} catch (error) {
+			console.error('Error during donation:', error); 
+		}
+	};
+	
 	return (
 		<MissionPageWrapper>
 			<MissionPageTopContainer>
@@ -113,57 +147,55 @@ const MissionPage = () => {
 			</MissionPageBottomContainer>
 		
 		{/* 첫 번째 모달 */}
-			<Modal isOpen={isFirstModalOpen} onClose={closeFirstModal}>
-				<ModalContent>
-					<Donate>후원하기</Donate>
-					<Img>
-						<PandaIcon/>
-					</Img>
-					<DonateContentTitle>{DONATE_CONTENT[0].title}</DonateContentTitle>
-						<OwnAcorn>
-							<Text>보유한 도토리</Text>
-							<AcornNum>{ownAcorn}</AcornNum>
-						</OwnAcorn>
-						<UseAcorn>
-							<Text>사용할 도토리</Text>
-							<BtnLeft onClick={decreaseAcorn}>
-								<IconBackground />
-							</BtnLeft>
-							<AcornNum>{useAcorn}</AcornNum>
-							<BtnRight onClick={increaseAcorn}>
-								<IconBackground />
-							</BtnRight>
-						</UseAcorn>
-					<ModalButton onClick={closeFirstModal}>후원하기</ModalButton>
-				</ModalContent>
-			</Modal>
-
-			{/* 두 번째 모달 */}
-			<Modal isOpen={isSecondModalOpen} onClose={closeSecondModal}>
-				<ModalContent>
-					<Donate>후원하기</Donate>
-					<Img>
-						<KaraIcon/>
-					</Img>
-					<DonateContentTitle>{DONATE_CONTENT[1].title}</DonateContentTitle>
-						<OwnAcorn>
-							<Text>보유한 도토리</Text>
-							<AcornNum>{ownAcorn}</AcornNum>
-						</OwnAcorn>
-						<UseAcorn>
-							<Text>사용할 도토리</Text>
-							<BtnLeft onClick={decreaseAcorn}>
-								<IconBackground />
-							</BtnLeft>
-							<AcornNum>{useAcorn}</AcornNum>
-							<BtnRight onClick={increaseAcorn}>
-								<IconBackground />
-							</BtnRight>
-						</UseAcorn>
-					<ModalButton onClick={closeSecondModal}>후원하기</ModalButton>
-				</ModalContent>
-			</Modal>
-
+		<Modal isOpen={isFirstModalOpen} onClose={closeFirstModal}>
+			<ModalContent>
+				<Donate>후원하기</Donate>
+				<Img>
+					<PandaIcon />
+				</Img>
+				<DonateContentTitle>{DONATE_CONTENT[0].title}</DonateContentTitle>
+				<OwnAcorn>
+					<Text>보유한 도토리</Text>
+					<AcornNum>{ownAcorn}</AcornNum>
+				</OwnAcorn>
+				<UseAcorn>
+					<Text>사용할 도토리</Text>
+					<BtnLeft onClick={decreaseAcorn}>
+						<IconBackground />
+					</BtnLeft>
+					<AcornNum>{useAcorn}</AcornNum>
+					<BtnRight onClick={increaseAcorn}>
+						<IconBackground />
+					</BtnRight>
+				</UseAcorn>
+				<ModalButton onClick={handleFirstModalClose}>후원하기</ModalButton>
+			</ModalContent>
+		</Modal>
+		{/* 두번째 모달 */}
+		<Modal isOpen={isSecondModalOpen} onClose={closeSecondModal}>
+			<ModalContent>
+				<Donate>후원하기</Donate>
+				<Img>
+					<KaraIcon />
+				</Img>
+				<DonateContentTitle>{DONATE_CONTENT[1].title}</DonateContentTitle>
+				<OwnAcorn>
+					<Text>보유한 도토리</Text>
+					<AcornNum>{ownAcorn}</AcornNum>
+				</OwnAcorn>
+				<UseAcorn>
+					<Text>사용할 도토리</Text>
+					<BtnLeft onClick={decreaseAcorn}>
+						<IconBackground />
+					</BtnLeft>
+					<AcornNum>{useAcorn}</AcornNum>
+					<BtnRight onClick={increaseAcorn}>
+						<IconBackground />
+					</BtnRight>
+				</UseAcorn>
+				<ModalButton onClick={handleSecondModalClose}>후원하기</ModalButton>
+			</ModalContent>
+		</Modal>
 		</MissionPageWrapper>
 	);
 };
