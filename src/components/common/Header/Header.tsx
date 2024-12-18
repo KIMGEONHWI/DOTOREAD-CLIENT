@@ -241,6 +241,10 @@ const HistoryContainer = styled.div`
 	margin-top: 2.8rem;
 	overflow-y: auto;
 	max-height: 30rem;
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 const HistoryItem = styled.div`
