@@ -95,7 +95,13 @@ const SubDescription = styled.div<{ isVisible: boolean }>`
 `;
 
 const Wrapper = styled.div`
-	margin-top:63.6rem;
+	width: 100vw;
+	display :flex;
+	justify-content: center;
+	padding-bottom : 6.462rem;
+	position : absolute;
+	top : 80rem;
+	background-color: ${({ theme }) => theme.colors.background};
 `;
 const Left=styled.div<{ isVisible: boolean }>`
 position : absolute;

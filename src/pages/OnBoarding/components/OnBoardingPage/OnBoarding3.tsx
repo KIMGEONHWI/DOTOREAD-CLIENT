@@ -32,16 +32,16 @@ const OnBoarding3 = () => {
 					<CenterSvg isVisible={scrollY > 1900}>			
 					<OnBoarding3center />
 					</CenterSvg>
-					<LeftTopSvg isVisible={scrollY > 2100}>
+					<LeftTopSvg isVisible={scrollY > 1920}>
 						<OnBoard1 />
 					</LeftTopSvg>
-					<LeftBottomSvg isVisible={scrollY > 2200}>
+					<LeftBottomSvg isVisible={scrollY > 2030}>
 						<OnBoard2 />
 					</LeftBottomSvg>
-					<RightTopSvg isVisible={scrollY > 2000}>
+					<RightTopSvg isVisible={scrollY > 1910}>
 						<OnBoard3 />
 					</RightTopSvg>
-					<RightBottomSvg isVisible={scrollY > 2300}>
+					<RightBottomSvg isVisible={scrollY > 2020}>
 						<OnBoard4 />
 					</RightBottomSvg>
 				</Wrapper>
