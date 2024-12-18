@@ -5,9 +5,10 @@ interface DonateArticleProps {
 	icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 	title: string;
 	text: string;
+	onButtonClick: () => void;
 }
 
-const DonateArticle = ({ icon: Icon, title, text }: DonateArticleProps) => {
+const DonateArticle = ({ icon: Icon, title, text, onButtonClick }: DonateArticleProps) => {
 	return (
 		<DonateArticleWrapper>
 			<Icon />
@@ -15,7 +16,7 @@ const DonateArticle = ({ icon: Icon, title, text }: DonateArticleProps) => {
 				<Title>{title}</Title>
 				<Text>{text}</Text>
 				<AiClassificationBtnContainer>
-					<AiClassificationBtn text="후원하기" color="white1" bordercolor="orange1" backgroundcolor="bookmark_click" />
+					<AiClassificationBtn text="후원하기" color="white1" bordercolor="orange1" backgroundcolor="bookmark_click" onClick={onButtonClick} />
 				</AiClassificationBtnContainer>
 			</TextContainer>
 		</DonateArticleWrapper>
