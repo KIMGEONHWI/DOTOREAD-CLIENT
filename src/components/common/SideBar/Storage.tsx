@@ -24,7 +24,7 @@ function Storage() {
 				const data = await response.json();
 
 				if (data.isSuccess && data.result) {
-					setTotal(data.result.ownStorage); 
+					setTotal(data.result.ownStorage);
 					setCurrent(Math.abs(data.result.usedStorage)); // 음수 제거
 				} else {
 					console.error('API 요청 실패:', data.message);
@@ -40,10 +40,12 @@ function Storage() {
 	return (
 		<StorageWrapper onMouseEnter={() => setShowToolTip(true)} onMouseLeave={() => setShowToolTip(false)}>
 			<WrapperForDisplay>
-				<Acorn />
-				<StorageCount>
-					{current}/{total}
-				</StorageCount>
+				<Div>
+					<Acorn />
+					<StorageCount>
+						{current}/{total}
+					</StorageCount>
+				</Div>
 				{showToolTip && <BookMarkToolTipStyled />}
 			</WrapperForDisplay>
 		</StorageWrapper>
@@ -68,6 +70,13 @@ const StorageCount = styled.div`
 	color: ${({ theme }) => theme.colors.orange1};
 	top: 0.82rem;
 	position: relative;
+`;
+
+const Div = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 `;
 
 const BookMarkToolTipStyled = styled(BookMarkToolTip)`
