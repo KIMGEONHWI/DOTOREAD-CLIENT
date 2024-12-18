@@ -9,8 +9,6 @@ import styled from 'styled-components';
 import Modal from '@/components/common/Modal/DonateModal';
 import KaraIcon from '@/assets/Karas.svg?react';
 import PandaIcon from '@/assets/Panda.svg?react';
-import Plus from '@/assets/PlusIc.svg?react';
-import Minus from '@/assets/MinusIc.svg?react'
 import IconBackground from '@/assets/IconBackground.svg?react'
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -29,6 +27,8 @@ const MissionPage = () => {
 	const closeSecondModal = () => setIsSecondModalOpen(false);
 
 	const [missions, setMissions] = useState([]);
+	const [ownAcorn, setOwnAcorn] = useState(0);
+	const [useAcorn, setUseAcorn] = useState(0);
 
 	useEffect(() => {
 		const fetchMissions = async () => {
@@ -45,8 +45,35 @@ const MissionPage = () => {
 		};
 
 		fetchMissions();
+
+		const fetchOwnAcorn = async () => {
+			try {
+				const accessToken = localStorage.getItem('access-token');
+				const response = await axios.get(`${BASE_URL}/api/v1/acorns`, {
+					headers: { access: accessToken },
+				});
+				setOwnAcorn(response.data.result.ownAcorn);
+			} catch (error) {
+				console.error('Error fetching own acorn:', error);
+			}
+		};
+	
+		fetchOwnAcorn();
+	
 	}, []);
 
+	const decreaseAcorn = () => {
+		if (useAcorn > 0) {
+			setUseAcorn(useAcorn - 1);
+		}
+	};
+	
+	const increaseAcorn = () => {
+		if (useAcorn < ownAcorn) { 
+			setUseAcorn(useAcorn + 1);
+		}
+	};
+	
 	return (
 		<MissionPageWrapper>
 			<MissionPageTopContainer>
@@ -95,18 +122,16 @@ const MissionPage = () => {
 					<DonateContentTitle>{DONATE_CONTENT[0].title}</DonateContentTitle>
 						<OwnAcorn>
 							<Text>보유한 도토리</Text>
-							<AcornNum>1</AcornNum>
+							<AcornNum>{ownAcorn}</AcornNum>
 						</OwnAcorn>
 						<UseAcorn>
 							<Text>사용할 도토리</Text>
-							<BtnLeft>
-								<IconBackground/>
+							<BtnLeft onClick={decreaseAcorn}>
+								<IconBackground />
 							</BtnLeft>
-							<AcornNum>
-							0
-							</AcornNum>
-							<BtnRight>
-								<IconBackground/>
+							<AcornNum>{useAcorn}</AcornNum>
+							<BtnRight onClick={increaseAcorn}>
+								<IconBackground />
 							</BtnRight>
 						</UseAcorn>
 					<ModalButton onClick={closeFirstModal}>후원하기</ModalButton>
@@ -123,18 +148,16 @@ const MissionPage = () => {
 					<DonateContentTitle>{DONATE_CONTENT[1].title}</DonateContentTitle>
 						<OwnAcorn>
 							<Text>보유한 도토리</Text>
-							<AcornNum>1</AcornNum>
+							<AcornNum>{ownAcorn}</AcornNum>
 						</OwnAcorn>
 						<UseAcorn>
 							<Text>사용할 도토리</Text>
-							<BtnLeft>
-								<IconBackground/>
+							<BtnLeft onClick={decreaseAcorn}>
+								<IconBackground />
 							</BtnLeft>
-							<AcornNum>
-							0
-							</AcornNum>
-							<BtnRight>
-								<IconBackground/>
+							<AcornNum>{useAcorn}</AcornNum>
+							<BtnRight onClick={increaseAcorn}>
+								<IconBackground />
 							</BtnRight>
 						</UseAcorn>
 					<ModalButton onClick={closeSecondModal}>후원하기</ModalButton>
@@ -276,10 +299,10 @@ const UseAcorn=styled.div`
 	top: 17.9rem;
 `
 const AcornNum=styled.div`
+	transform: translate(-50%);
 	position: absolute;
 	display : flex;
-	gap : 1.9rem;
-	left: 29.9rem;
+	left: 30.5rem;
 	color: ${({ theme }) => theme.colors.white1};
 	${({ theme }) => theme.fonts.Pretendard_Semibold_22px};
 `
