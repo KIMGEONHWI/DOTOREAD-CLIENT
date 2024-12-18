@@ -39,6 +39,11 @@ const baseFontStyle = css`
 `;
 
 const fonts = {
+	Pretendard_Bold_88px: css`
+		${baseFontStyle}
+		font-size: 88px;
+		font-weight: 700;
+	`,
 	Pretendard_Bold_70px: css`
 		${baseFontStyle}
 		font-size: 70px;

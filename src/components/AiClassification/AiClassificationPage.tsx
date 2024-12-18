@@ -2,7 +2,7 @@ import AiClassificationBtn from '../common/Button/AiClassificationBtn';
 import Btn from '../common/Button/Btn';
 import Modal from '../common/Modal/Modal';
 import ClassificationArticle from './ClassificationArticle';
-import AiIcon from '@/assets/Ai.svg?react';
+import AiIcon from '@/assets/AiChange.svg?react';
 import AiDefault from '@/assets/AiDefault.png';
 import { Buttons } from '@/constants/ButtonList';
 import { useAiClassificationContext } from '@/contexts/AiClassificationContext';
