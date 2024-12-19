@@ -60,7 +60,7 @@ const Collection = ({ collection }: CollectionContentProps) => {
 	console.log(modalData);
 
 	return (
-		<Container >
+		<Container>
 			<Header>
 				<NicknameProfile />
 				<NickName>{collection.nickname || '닉네임'}</NickName>
@@ -79,7 +79,7 @@ const Collection = ({ collection }: CollectionContentProps) => {
 				{collection.bookmarkSummaryDTOList.length >= 4 && (
 					<SeeMore>{isFetching ? 'Loading...' : '북마크 더보기'}</SeeMore>
 				)}
-				</ContentWrapper>
+			</ContentWrapper>
 			<CollectionModal isOpen={isModalOpen} onClose={closeModal}>
 				{modalData ? <ModalContent collection={modalData} /> : <p>Loading content...</p>}
 			</CollectionModal>
@@ -163,7 +163,7 @@ const Title = styled.div`
 	margin-top: 2.9rem;
 `;
 const Memo = styled.div`
-	height: 4.8rem;
+	height: auto;
 	${({ theme }) => theme.fonts.Pretendard_Medium_20px};
 	color: ${({ theme }) => theme.colors.white1};
 	margin-left: 1.2rem;
