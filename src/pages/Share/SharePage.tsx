@@ -38,8 +38,8 @@ const SharePage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [collectionId, setCollectionId] = useState<number | null>(null);
-	const [title, setTitle] = useState<string>(''); // Manage title state
-	const [content, setContent] = useState<string>(''); // Manage content state
+	const [title, setTitle] = useState<string>('');
+	const [memo, setMemo] = useState<string>('');
 
 	const page = searchParams.get('page') || 1;
 
@@ -53,7 +53,7 @@ const SharePage = () => {
 			const accessToken = localStorage.getItem('access-token');
 			const response = await axios.patch(
 				`${BASE_URL}/api/v1/collections/${collectionId}`,
-				{ title, content }, // Request body
+				{ title, memo }, // Request body
 				{
 					headers: { access: accessToken },
 				},
@@ -69,6 +69,8 @@ const SharePage = () => {
 			console.error('API 호출 중 오류:', error);
 		}
 	};
+
+	console.log('숭실', setTitle);
 
 	const handleOpenAddBookmarkModal = () => {
 		closeArticleModal();
@@ -136,9 +138,9 @@ const SharePage = () => {
 					collectionId={collectionId}
 					onPlusClick={handleOpenAddBookmarkModal}
 					title={title}
-					content={content}
+					memo={memo}
 					setTitle={setTitle}
-					setContent={setContent}
+					setMemo={setMemo}
 				/>
 				<BtnSubmitWrapper>
 					<Btn id="submit" onClick={handleSubmit} />
