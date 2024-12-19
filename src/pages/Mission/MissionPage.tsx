@@ -9,7 +9,8 @@ import styled from 'styled-components';
 import Modal from '@/components/common/Modal/DonateModal';
 import KaraIcon from '@/assets/Karas.svg?react';
 import PandaIcon from '@/assets/Panda.svg?react';
-import IconBackground from '@/assets/IconBackground.svg?react'
+import Minus from '@/assets/GrayMinusIcon.svg?react';
+import Plus from '@/assets/GrayPlusIcon.svg?react';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -161,11 +162,11 @@ const MissionPage = () => {
 				<UseAcorn>
 					<Text>사용할 도토리</Text>
 					<BtnLeft onClick={decreaseAcorn}>
-						<IconBackground />
+						<Minus />
 					</BtnLeft>
 					<AcornNum>{useAcorn}</AcornNum>
 					<BtnRight onClick={increaseAcorn}>
-						<IconBackground />
+						<Plus />
 					</BtnRight>
 				</UseAcorn>
 				<ModalButton onClick={handleFirstModalClose}>후원하기</ModalButton>
@@ -186,11 +187,11 @@ const MissionPage = () => {
 				<UseAcorn>
 					<Text>사용할 도토리</Text>
 					<BtnLeft onClick={decreaseAcorn}>
-						<IconBackground />
+						<Minus />
 					</BtnLeft>
 					<AcornNum>{useAcorn}</AcornNum>
 					<BtnRight onClick={increaseAcorn}>
-						<IconBackground />
+						<Plus/>
 					</BtnRight>
 				</UseAcorn>
 				<ModalButton onClick={handleSecondModalClose}>후원하기</ModalButton>
