@@ -10,9 +10,9 @@ interface ArticleContentProps {
 	onPlusClick: () => void;
 	collectionId: number | null;
 	title: string;
-	content: string;
+	memo: string;
 	setTitle: (value: string) => void;
-	setContent: (value: string) => void;
+	setMemo: (value: string) => void;
 }
 
 interface Bookmark {
@@ -21,7 +21,7 @@ interface Bookmark {
 	url: string;
 }
 
-const ArticleContent = ({ collectionId, onPlusClick, title, content, setTitle, setContent }: ArticleContentProps) => {
+const ArticleContent = ({ collectionId, onPlusClick, title, memo, setTitle, setMemo }: ArticleContentProps) => {
 	const currentDate = new Date();
 	const month = currentDate.getMonth() + 1;
 	const day = currentDate.getDate();
@@ -31,10 +31,7 @@ const ArticleContent = ({ collectionId, onPlusClick, title, content, setTitle, s
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const fetchBookmarks = async () => {
-		if (!collectionId) {
-			console.log('collectionID 없음');
-			return;
-		}
+		if (!collectionId) return; // collectionId가 없으면 실행하지 않음
 		setIsLoading(true);
 		try {
 			const accessToken = localStorage.getItem('access-token');
@@ -45,8 +42,6 @@ const ArticleContent = ({ collectionId, onPlusClick, title, content, setTitle, s
 
 			if (response.data.isSuccess) {
 				setBookmarks(response.data.result.bookmarkSummaryDTOList || []);
-			} else {
-				console.error('북마크 데이터 로드 실패:', response.data.message);
 			}
 		} catch (error) {
 			console.error('API 호출 중 오류:', error);
@@ -56,7 +51,7 @@ const ArticleContent = ({ collectionId, onPlusClick, title, content, setTitle, s
 	};
 
 	useEffect(() => {
-		fetchBookmarks();
+		if (collectionId) fetchBookmarks();
 	}, [collectionId]);
 
 	return (
@@ -74,8 +69,8 @@ const ArticleContent = ({ collectionId, onPlusClick, title, content, setTitle, s
 					<Content>내용</Content>
 					<InputContent
 						placeholder="ex) 국내 IT기업 개발직군의 채용일정이 매일 업데이트 됩니다."
-						value={content}
-						onChange={(e) => setContent(e.target.value)}
+						value={memo}
+						onChange={(e) => setMemo(e.target.value)}
 					/>
 				</InputContentContainer>
 				<ArticleWrapper>
