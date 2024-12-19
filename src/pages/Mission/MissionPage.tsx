@@ -9,7 +9,6 @@ import styled from 'styled-components';
 import Modal from '@/components/common/Modal/DonateModal';
 import KaraIcon from '@/assets/Karas.svg?react';
 import PandaIcon from '@/assets/Panda.svg?react';
-import IconBackground from '@/assets/IconBackground.svg?react'
 import Minus from '@/assets/GrayMinusIcon.svg?react';
 import Plus from '@/assets/GrayPlusIcon.svg?react';
 
