@@ -1,15 +1,18 @@
-import BackgroundImage from '@/assets/Onboard1backgroudn.svg?react';
-import styled, { keyframes }  from 'styled-components';
-import Arrow from '@/assets/ArrowDown.svg?react'
+import Arrow from '@/assets/ArrowDown.svg?react';
+import BackgroundImage from '@/assets/OnBoardingBgBg.svg?react';
+import styled, { keyframes } from 'styled-components';
 
 const OnBoarding1 = () => {
 	return (
 		<OnBoarding1Wrapper>
 			<Background />
-			<Title>언제든 맛있게 꺼내먹는<br/>
-			Read It Later 서비스</Title>
+			<Title>
+				언제든 맛있게 꺼내먹는
+				<br />
+				Read It Later 서비스
+			</Title>
 			<Wrapper>
-				<Arrow/>
+				<Arrow />
 			</Wrapper>
 		</OnBoarding1Wrapper>
 	);
@@ -18,11 +21,11 @@ const OnBoarding1 = () => {
 export default OnBoarding1;
 
 const OnBoarding1Wrapper = styled.div`
-	position: relative; 
+	position: relative;
 	width: 100%;
 	height: 100vh;
 	display: flex;
-	justify-content:center;
+	justify-content: center;
 `;
 
 const Background = styled(BackgroundImage)`
@@ -34,12 +37,11 @@ const Background = styled(BackgroundImage)`
 `;
 
 const Title = styled.div`
-	position: relative; 
-	z-index: 10; 
+	position: relative;
+	z-index: 10;
 	${({ theme }) => theme.fonts.Pretendard_Bold_88px};
 	color: ${({ theme }) => theme.colors.white1};
 	top: 74.1rem;
-
 `;
 
 const bounceAnimation = keyframes`

@@ -12,9 +12,9 @@ function OnBoardingStartPage() {
 			<ContentWrapper>
 				<TextTitle>DOTOREAD</TextTitle>
 				<SubDescription>
-					어쩌구 저쩌구
+					북마크의 모든 것,
 					<br />
-					지금 바로 도토릿에서 시작해보세요
+					지금 바로 도토릿에서 해결하세요
 				</SubDescription>
 				<Button />
 			</ContentWrapper>
