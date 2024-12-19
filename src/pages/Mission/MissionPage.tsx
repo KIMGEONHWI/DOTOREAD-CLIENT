@@ -28,8 +28,8 @@ const MissionPage = () => {
 	const closeFirstModal = () => setIsFirstModalOpen(false);
 
 	// 두 번째 모달 열기/닫기
-	const openSecondModal = () => setIsSecondModalOpen(true);
-	const closeSecondModal = () => setIsSecondModalOpen(false);
+	const openSecondModal = () => {setIsSecondModalOpen(true), setUseAcorn(0)};
+	const closeSecondModal = () =>{setIsSecondModalOpen(false), setUseAcorn(0)};
 
 	const handleFirstModalClose = () => {
 		postDonation('/api/v1/funds/world-wide-fund', useAcorn);
